@@ -3,7 +3,7 @@
 ; DESCRIPTION : "POR HACER"
 ; AUTHOR      : JOSEP GABRIEL FORNÉS REYNÉS
 ;               JORDI FLORIT ENSENYAT
-                PAU GIRÓN RODRÍGUEZ
+;               PAU GIRÓN RODRÍGUEZ
 ; HISTORY     : "POR HACER"
 ; ==============================================================================
             ORG    $1000
