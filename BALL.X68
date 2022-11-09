@@ -1,10 +1,10 @@
 ; ==============================================================================
-; BALL MANAGEMENT
+; PAC-MAN MANAGEMENT
 ; ==============================================================================
             
 ; ------------------------------------------------------------------------------
-BALINIT
-; INITIALIZE BALL.
+PMINIT
+; INITIALIZE PAC-MAN.
 ; INPUT    : NONE 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
@@ -12,8 +12,8 @@ BALINIT
             RTS
             
 ; ------------------------------------------------------------------------------
-BALUPD
-; UPDATES THE BALL.
+PMUPD
+; UPDATES THE PAC-MAN.
 ; INPUT    : NONE 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
@@ -21,14 +21,15 @@ BALUPD
             RTS
             
 ; ------------------------------------------------------------------------------
-BALPLOT
+PMPLOT
 ; PLOT THE BALL.
 ; INPUT    : NONE 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             RTS
+
 *~Font name~Fixedsys~
-*~Font size~24~
+*~Font size~9~
 *~Tab type~0~
 *~Tab size~4~

@@ -2,12 +2,12 @@
 ; GAME CONSTANTS
 ; ==============================================================================
 
-; --- BALL RELATED CONTANTS ----------------------------------------------------
+; --- PM RELATED CONTANTS ----------------------------------------------------
 
-BALRAD      EQU     8                       ; BALL RADIUS
-BALPCOL     EQU     $00AA0000               ; BALL CONTOUR COLOR
-BALFCOL     EQU     $00FF0000               ; BALL FILL COLOR
-BALSPEED    EQU     3                       ; MAGNITUDE OF THE X AND Y VEL.
+;BALRAD      EQU     8                       ; BALL RADIUS
+PMPCOL      EQU     $00FFCC00               ; PM CONTOUR COLOR
+PMFCOL      EQU     $00FFFF00               ; PM FILL COLOR
+PMSPEED     EQU     3                       ; MAGNITUDE OF THE X AND Y VEL.
 
 ; --- PAD RELATED CONSTANTS ----------------------------------------------------
 
@@ -23,7 +23,8 @@ PADFCOL     EQU     $0000AA00               ; PAD FILL COLOR
 SCOFCOL     EQU     $00000000               ; TEXT BACKGROUND COLOR
 SCOLINE1    EQU     $0101                   ; FIRST TEXT LINE COORDINATES
 SCOLINE2    EQU     $0102                   ; SECOND TEXT LINE COORDINATES
+
 *~Font name~Fixedsys~
-*~Font size~24~
+*~Font size~9~
 *~Tab type~0~
 *~Tab size~4~

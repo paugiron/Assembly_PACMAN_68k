@@ -7,7 +7,8 @@
 SCRWIDTH    EQU     640                     ; SCREEN WIDTH
 SCRHEIGH    EQU     480                     ; SCREEN HEIGHT
 
+
 *~Font name~Fixedsys~
-*~Font size~24~
+*~Font size~9~
 *~Tab type~0~
 *~Tab size~4~
