@@ -1,11 +1,7 @@
 ; ==============================================================================
-; SYSTEM CONSTANTS
+; SYSTEM VARIABLES
 ; ==============================================================================
-
-; --- SCREEN RELATED CONSTANTS -------------------------------------------------
-
-SCRWIDTH    EQU     640                     ; SCREEN WIDTH
-SCRHEIGH    EQU     480                     ; SCREEN HEIGHT
+            
 
 *~Font name~Fixedsys~
 *~Font size~24~
