@@ -2,23 +2,34 @@
 ; GAME CONSTANTS
 ; ==============================================================================
 
-; --- PM RELATED CONTANTS ----------------------------------------------------
+; --- PAC-MAN RELATED CONTANTS ----------------------------------------------------
 
 ;BALRAD      EQU     8                       ; BALL RADIUS
 PMPCOL      EQU     $00FFCC00               ; PM CONTOUR COLOR
 PMFCOL      EQU     $00FFFF00               ; PM FILL COLOR
 PMSPEED     EQU     3                       ; MAGNITUDE OF THE X AND Y VEL.
 
-; --- PAD RELATED CONSTANTS ----------------------------------------------------
+; --- GHOST RELATED CONSTANTS ----------------------------------------------------
 
-PADWIDTH    EQU     16                      ; PAD WIDTH
-PADHEIGH    EQU     64                      ; PAD HEIGHT
-PADPOSX     EQU     48                      ; PAD X POSITION
-PADSPEED    EQU     7                       ; MAGNITUDE OF THE Y DISPLACEMENT
-PADPCOL     EQU     $0000FF00               ; PAD CONTOUR COLOR
-PADFCOL     EQU     $0000AA00               ; PAD FILL COLOR
+GSTSPEED    EQU     7                       ; MAGNITUDE OF THE NORMAL DISPLACEMENT
+GSTSPEED2   EQU     5                       ; MAGNITUDE OF THE ATACKED DISPLACEMENT
+
+GSTCOL1     EQU     $00FF0000               ; GHOST 1 CONTOUR COLOR RED
+GSTFCOL1    EQU     $00000000               ; GHOST 1 FILL COLOR
+
+GSTCOL2     EQU     $00FF0080               ; GHOST 2 CONTOUR COLOR PINK
+GSTFCOL2    EQU     $00000000               ; GHOST 1 FILL COLOR
+
+GSTCOL3     EQU     $00FFFF00               ; GHOST 3 CONTOUR COLOR CYAN
+GSTFCOL3    EQU     $00000000               ; GHOST 3 FILL COLOR
+
+GSTCOL4     EQU     $000080FF               ; GHOST 4 CONTOUR COLOR ORANGE
+GSTFCOL4    EQU     $00000000               ; GHOST 4 FILL COLOR 
+
+GSTCOL5     EQU     $00800000               ; COLOR OF ATACKED MODE
 
 ; --- SCOREBOARD RELATED CONSTANTS ---------------------------------------------
+;MODIFICATE
 
 SCOFCOL     EQU     $00000000               ; TEXT BACKGROUND COLOR
 SCOLINE1    EQU     $0101                   ; FIRST TEXT LINE COORDINATES
