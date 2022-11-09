@@ -1,9 +1,11 @@
-*-----------------------------------------------------------
-* Title      : PAC-MAN
-* Written by : 
-* Date       :
-* Description:
-*-----------------------------------------------------------
+; ==============================================================================
+; TITLE       : PAC-MAN
+; DESCRIPTION : "POR HACER"
+; AUTHOR      : JOSEP GABRIEL FORNÉS REYNÉS
+;               JORDI FLORIT ENSENYAT
+                PAU GIRÓN RODRÍGUEZ
+; HISTORY     : "POR HACER"
+; ==============================================================================
             ORG    $1000
     
 START:      
@@ -12,6 +14,7 @@ START:
             SIMHALT             
 
             END    START        
+
 
 *~Font name~Fixedsys~
 *~Font size~9~
