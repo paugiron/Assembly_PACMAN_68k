@@ -11,8 +11,12 @@ SYSINIT
 ; ------------------------------------------------------------------------------
             
             MOVE.L  #SCRUPD,($80+0*4)          ;INSTALL SUBRUTINE TO TRAP #0
+            MOVE.L  #KBDUPD,($80+1*4)          ;INSTALL SUBRUTINE TO TRAP #1
+            
+            MOVE.L  #SCRTIM,($60+1*4)          ;INSTALL INTERRUPT #1
             
             JSR     SCRINIT
+            JSR     KBDINIT
             
             MOVE.W  SR,-(A7)
             ANDI.W  #$D8FF,(A7)                ;BIT SUPERVISOR TO O AND INTERRPUT MASK 000 (FOR REACTIVATE INTERRUPTIONS)             
@@ -52,13 +56,13 @@ SCRINIT
             MOVE.W  #32,D0
             MOVE.B  #6,D1
             MOVE.B  #$81,D2                   ;INDICATE THAT INTERRUPT 1 IS ACTIVATED PERIODICALLY
-            MOVE.L  #20,D3                    ;INDICATE THE MILISECONDS FOR THAT PERIOD
+            MOVE.L  #20,D3                    ;INDICATE THE MILISECONDS FOR THAT PERIOD (20 ms == 50 FPS)
             TRAP    #15
             
             ;CLEAR INTERRUPT COUNTER
             CLR.B   (SCRINTCT)
             
-            MOVEM.L (A7)+,D0-D1                 ;RESTORE REGISTERS FROM STACK
+            MOVEM.L (A7)+,D0-D1               ;RESTORE REGISTERS FROM STACK
             
             RTS
             
@@ -84,7 +88,72 @@ SCRUPD
             MOVEM.W (A7)+,D0-D1
             
             RTE
+            
+;------------------------------------------------------------------------------            
+SCRTIM
+; TIME INTERRPUT SERVICE ROUTINE FOR SYNC
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
 
+            ADDQ.B  #1,(SCRINTCT)
+            RTE
+            
+;------------------------------------------------------------------------------            
+KBDINIT
+; INIT THE KEYBOARD
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
+
+            CLR.B   (KBDVAL)
+            CLR.B   (KBDEDGE)
+
+            RTS
+
+;------------------------------------------------------------------------------            
+KBDUPD
+; UPDATES KEYBOARD INFO
+; 3 -> DOWN
+; 2 -> RIGHT
+; 1 -> UP
+; 0 -> LEFT
+; ------------------------------------------------------------------------------
+            
+            MOVEM.L D0-D3,-(A7)
+            
+            MOVE.W  #19,D0
+            ;GET INFO OF THE KEYS
+            MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
+            TRAP    #15
+            
+            ;CONVERT TO DESIRED FORMAT
+            JSR .CONVERT
+            
+            ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
+            MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
+            NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
+            AND.B   D2,D0
+            MOVE.B  D0,(KBDEDGE)
+            
+            ;STORE NEW KBDVAL
+            MOVE.B  D2,(KBDVAL)
+            
+            MOVEM.L (A7)+,D0-D3
+            
+            RTE    
+            
+.CONVERT 
+            MOVE.W  #3,D3
+            
+.LOOP       LSL.L   #8,D1
+            ROXL.B  #1,D2
+            DBRA.W  D3,.LOOP
+            RTS
+           
+            
 
 
 

@@ -1,0 +1,169 @@
+0000112E Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 10/11/2022 15:47:12
+
+00000000                             1  ; ==============================================================================
+00000000                             2  ; SYSTEM
+00000000                             3  ; ==============================================================================
+00000000                             4              
+00000000                             5  ; ------------------------------------------------------------------------------
+00000000                             6  SYSINIT
+00000000                             7  ; INITIALIZE SYSTEM.
+00000000                             8  ; INPUT    : NONE
+00000000                             9  ; OUTPUT   : NONE
+00000000                            10  ; MODIFIES : NONE
+00000000                            11  ; ------------------------------------------------------------------------------
+00000000                            12              
+00000000  21FC 00000070 0080        13              MOVE.L  #SCRUPD,($80+0*4)          ;INSTALL SUBRUTINE TO TRAP #0
+00000008  21FC 000000A0 0084        14              MOVE.L  #KBDUPD,($80+1*4)          ;INSTALL SUBRUTINE TO TRAP #1
+00000010                            15              
+00000010  21FC 0000008A 0064        16              MOVE.L  #SCRTIM,($60+1*4)          ;INSTALL INTERRUPT #1
+00000018                            17              
+00000018  4EB9 0000002C             18              JSR     SCRINIT
+0000001E  4EB9 00000092             19              JSR     KBDINIT
+00000024                            20              
+00000024  40E7                      21              MOVE.W  SR,-(A7)
+00000026  0257 D8FF                 22              ANDI.W  #$D8FF,(A7)                ;BIT SUPERVISOR TO O AND INTERRPUT MASK 000 (FOR REACTIVATE INTERRUPTIONS)             
+0000002A  4E73                      23              RTE
+0000002C                            24     
+0000002C                            25  ; ------------------------------------------------------------------------------
+0000002C                            26  SCRINIT
+0000002C                            27  ; INIT SCREEN. SET SCREEN RESOLUTION, SET WINDOWED MODE, CLEAR SCREEN, ENABLE BUFFER
+0000002C                            28  ; ENABLE TIMED INTERRUPTION
+0000002C                            29  ; INPUT    : NONE
+0000002C                            30  ; OUTPUT   : NONE
+0000002C                            31  ; MODIFIES : NONE
+0000002C                            32  ; ------------------------------------------------------------------------------
+0000002C                            33  
+0000002C  48E7 C000                 34              MOVEM.L D0-D1,-(A7)                 ;SAFE REGISTERS IN STACK
+00000030                            35  
+00000030                            36              ; SET SCREEN RESOLUTION
+00000030  103C 0021                 37              MOVE.B  #33,D0
+Line 38 ERROR: Invalid syntax
+00000034                            38              MOVE.L  #SCRWIDTH<<16|SCRHEIGH,D1
+00000034  4E4F                      39              TRAP    #15
+00000036                            40              
+00000036                            41              ; SET WINDOWED MODE
+00000036  7201                      42              MOVE.L  #1,D1
+00000038  4E4F                      43              TRAP    #15
+0000003A                            44              
+0000003A                            45              ; ENABLE DOUBLE BUFFER
+0000003A  103C 005C                 46              MOVE.B  #92,D0
+0000003E  123C 0011                 47              MOVE.B  #17,D1
+00000042  4E4F                      48              TRAP    #15
+00000044                            49              
+00000044                            50              ; CLEAR SCREEN
+00000044  103C 000B                 51              MOVE.B  #11,D0
+00000048  323C FF00                 52              MOVE.W  #$FF00,D1
+0000004C  4E4F                      53              TRAP    #15
+0000004E                            54              
+0000004E                            55              ;ENABLE TIMED INTERRPUT
+0000004E  303C 0020                 56              MOVE.W  #32,D0
+00000052  123C 0006                 57              MOVE.B  #6,D1
+00000056  143C 0081                 58              MOVE.B  #$81,D2                   ;INDICATE THAT INTERRUPT 1 IS ACTIVATED PERIODICALLY
+0000005A  7614                      59              MOVE.L  #20,D3                    ;INDICATE THE MILISECONDS FOR THAT PERIOD (20 ms == 50 FPS)
+0000005C  4E4F                      60              TRAP    #15
+0000005E                            61              
+0000005E                            62              ;CLEAR INTERRUPT COUNTER
+Line 63 ERROR: Undefined symbol
+0000005E  4239 004DBD16             63              CLR.B   (SCRINTCT)
+00000064                            64              
+00000064  4CDF 0003                 65              MOVEM.L (A7)+,D0-D1               ;RESTORE REGISTERS FROM STACK
+00000068                            66              
+00000068  4E75                      67              RTS
+0000006A                            68              
+0000006A                            69  ;------------------------------------------------------------------------------            
+Line 70 ERROR: Symbol value differs between first and second pass
+0000006A                            70  SCRUPD
+0000006A                            71  ; UPDATES DOUBLE BUFFER
+0000006A                            72  ; INPUT    : NONE
+0000006A                            73  ; OUTPUT   : NONE
+0000006A                            74  ; MODIFIES : NONE
+0000006A                            75  ; ------------------------------------------------------------------------------
+0000006A                            76  
+0000006A  48A7 C000                 77              MOVEM.W D0-D1,-(A7)
+0000006E                            78              
+0000006E                            79              ;SWITCH BUFFERS
+0000006E  103C 005E                 80              MOVE.B #94,D0
+00000072  4E4F                      81              TRAP #15
+00000074                            82              
+00000074                            83              ;CLEAR HIDDEN BUFFER
+00000074  103C 000B                 84              MOVE.B  #11,D0
+00000078  323C FF00                 85              MOVE.W  #$FF00,D1
+0000007C  4E4F                      86              TRAP    #15
+0000007E                            87              
+0000007E  4C9F 0003                 88              MOVEM.W (A7)+,D0-D1
+00000082                            89              
+00000082  4E73                      90              RTE
+00000084                            91              
+00000084                            92  ;------------------------------------------------------------------------------            
+Line 93 ERROR: Symbol value differs between first and second pass
+00000084                            93  SCRTIM
+00000084                            94  ; TIME INTERRPUT SERVICE ROUTINE FOR SYNC
+00000084                            95  ; INPUT    : NONE
+00000084                            96  ; OUTPUT   : NONE
+00000084                            97  ; MODIFIES : NONE
+00000084                            98  ; ------------------------------------------------------------------------------
+00000084                            99  
+Line 100 ERROR: Undefined symbol
+00000084  5239 005455B8            100              ADDQ.B  #1,(SCRINTCT)
+0000008A  4E73                     101              RTE
+0000008C                           102              
+0000008C                           103  ;------------------------------------------------------------------------------            
+Line 104 ERROR: Symbol value differs between first and second pass
+0000008C                           104  KBDINIT
+0000008C                           105  ; INIT THE KEYBOARD
+0000008C                           106  ; INPUT    : NONE
+0000008C                           107  ; OUTPUT   : NONE
+0000008C                           108  ; MODIFIES : NONE
+0000008C                           109  ; ------------------------------------------------------------------------------
+0000008C                           110  
+Line 111 ERROR: Undefined symbol
+0000008C  4239 004DBD16            111              CLR.B   (KBDVAL)
+Line 112 ERROR: Undefined symbol
+00000092  4239 004DBD16            112              CLR.B   (KBDEDGE)
+00000098                           113  
+00000098  4E75                     114              RTS
+0000009A                           115  
+0000009A                           116  ;------------------------------------------------------------------------------            
+Line 117 ERROR: Symbol value differs between first and second pass
+0000009A                           117  KBDUPD
+0000009A                           118  ; UPDATES KEYBOARD INFO
+0000009A                           119  ; INPUT    : NONE
+0000009A                           120  ; OUTPUT   : NONE
+0000009A                           121  ; MODIFIES : NONE
+0000009A                           122  ; ------------------------------------------------------------------------------
+0000009A                           123  
+0000009A  48E7 C000                124              MOVEM.L D0-D1,-(A7)
+0000009E                           125  
+0000009E                           126              ;MOVE THE KBD CODES TO D1 (EVERY BYTE IS A CODE)
+0000009E  303C 0013                127              MOVE.W  #19,D0
+000000A2                           128              ;MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
+000000A2  4E4F                     129              TRAP    #15
+000000A4                           130              
+000000A4                           131              ;STORE
+Line 132 ERROR: Undefined symbol
+000000A4  13C1 005455B8            132              MOVE.B  D1,(KBDVAL)
+000000AA                           133              
+000000AA  4CDF 0003                134              MOVEM.L (A7)+,D0-D1
+000000AE                           135  
+000000AE  4E73                     136              RTE
+000000B0                           137              
+000000B0                           138  
+000000B0                           139  
+000000B0                           140  
+Line 141 WARNING: END directive missing, starting address not set
+
+10 errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+KBDINIT             92
+KBDUPD              A0
+SCRINIT             2C
+SCRTIM              8A
+SCRUPD              70
+SYSINIT             0

@@ -2,8 +2,8 @@
 ; TITLE       : PAC-MAN 68000
 ; DESCRIPTION : GAME IN MOTOROLA 68000 BASED ON PAC-MAN GAME
 ; AUTHOR      : JORDI FLORIT ENSENYAT
-;               JOSEP GABRIEL FORN�S REYN�S
-;               PAU GIR�N RODR�GUEZ
+;               JOSEP GABRIEL FORNES REYNES
+;               PAU GIRON RODRIGUEZ
 ; ==============================================================================
             ORG    $1000
 
@@ -13,8 +13,7 @@
             INCLUDE "SCORE.X68"
             INCLUDE "SYSCONST.X68"
             INCLUDE "SYSTEM.X68"
-            INCLUDE "SYSVARS.X68"
-            INCLUDE "VARS.X68"
+            
     
 START:
 
@@ -33,7 +32,7 @@ START:
 
 ; READ INPUT DEVICES
 
-
+            TRAP    #1
 
 ; UPDATE GAME LOGIC
 
@@ -41,21 +40,30 @@ START:
             JSR     GSTUPD            
 
 ; --- SYNC ---------------------------------------------------------------------
+            ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
+            ;THE BUCLE
+            
+.WAITINIT   TST.B   (SCRINTCT)
+            BEQ     .WAITINIT
+            CLR.B   (SCRINTCT)
 
 ; --- PLOT ---------------------------------------------------------------------
 
             JSR     SCOPLOT
             JSR     PMPLOT
             JSR     GSTPLOT
+            
+            TRAP    #0                      ;CHANGE BUFFER
 
             BRA     .LOOP
 
-
-         
-
-            SIMHALT             
-
+            SIMHALT  
+           
+            INCLUDE "SYSVARS.X68"
+            INCLUDE "VARS.X68"
+            
             END    START        
+
 
 
 

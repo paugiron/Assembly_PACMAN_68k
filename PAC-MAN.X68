@@ -24,6 +24,36 @@ PMUPD
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
+            
+            MOVEM.W D0-D1,-(A7)
+            
+            ;UPDATE COORDS
+            MOVE.W  (PMPOSY),D0
+            MOVE.W  (PMPOSX),D1
+            
+            ;UPDATE COORDINATE
+            BTST.B  #0,(KBDVAL)
+            BEQ     .NOTPRESSLEFT
+            SUB.W   #PMSPEED,D1
+.NOTPRESSLEFT
+            BTST.B  #1,(KBDVAL)
+            BEQ     .NOTPRESSUP
+            SUB.W   #PMSPEED,D0
+.NOTPRESSUP
+            BTST.B  #2,(KBDVAL)
+            BEQ     .NOTPRESSRIGHT
+            ADD.W   #PMSPEED,D1
+.NOTPRESSRIGHT
+            BTST.B  #3,(KBDVAL)
+            BEQ     .NOTPRESSDOWN
+            ADD.W   #PMSPEED,D0
+.NOTPRESSDOWN  
+
+            MOVE.W  D0,(PMPOSY)
+            MOVE.W  D1,(PMPOSX)
+            
+            MOVEM.W (A7)+,D0-D1 
+            
             RTS
             
 ; ------------------------------------------------------------------------------
@@ -64,6 +94,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 *~Font name~Fixedsys~
