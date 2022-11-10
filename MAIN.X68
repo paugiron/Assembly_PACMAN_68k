@@ -20,6 +20,8 @@ START:
 
 ;--- INITIALIZATION -----------------------------------------------------------
 
+            ORI.W   #$0700,SR               ;DISABLE INTERRUPTIONS
+
             JSR     SYSINIT
             JSR     PMINIT
             JSR     GSTINIT
@@ -30,6 +32,8 @@ START:
 ; --- UPDATE -------------------------------------------------------------------
 
 ; READ INPUT DEVICES
+
+
 
 ; UPDATE GAME LOGIC
 
@@ -52,6 +56,7 @@ START:
             SIMHALT             
 
             END    START        
+
 
 
 *~Font name~Fixedsys~
