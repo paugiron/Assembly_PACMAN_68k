@@ -4,8 +4,8 @@
 
 ; --- PAC-MAN RELATED CONTANTS ----------------------------------------------------
 
-PMPCOL      EQU     $00FFCC00               ; PAC-MAN CONTOUR COLOR
-PMFCOL      EQU     $00FFFF00               ; PAC-MAN FILL COLOR
+PMPCOL      EQU     $0000FFFF               ; PAC-MAN CONTOUR COLOR
+PMFCOL      EQU     $0000FFFF               ; PAC-MAN FILL COLOR
 PMSPEED     EQU     3                       ; MAGNITUDE OF THE X AND Y VEL.
 PMRAD       EQU     8                       ; PAC-MAN RADIUS
 
@@ -34,6 +34,7 @@ GSTCOL5     EQU     $00800000               ; COLOR OF ATACKED MODE
 SCOFCOL     EQU     $00000000               ; TEXT BACKGROUND COLOR
 SCOLINE1    EQU     $0101                   ; FIRST TEXT LINE COORDINATES
 SCOLINE2    EQU     $0102                   ; SECOND TEXT LINE COORDINATES
+
 
 
 *~Font name~Fixedsys~
