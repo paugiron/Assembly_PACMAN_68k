@@ -122,7 +122,7 @@ KBDUPD
 ; 0 -> LEFT
 ; ------------------------------------------------------------------------------
             
-            MOVEM.L D0-D3,-(A7)
+            MOVEM.L D0-D4,-(A7)
             
             MOVE.W  #19,D0
             ;GET INFO OF THE KEYS
@@ -132,16 +132,23 @@ KBDUPD
             ;CONVERT TO DESIRED FORMAT
             JSR .CONVERT
             
+            
+            
             ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
             MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
             NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
             AND.B   D2,D0
             MOVE.B  D0,(KBDEDGE)
             
+       
+            CMP.B   #0,D0
+            BEQ     .NOACT          
+            
             ;STORE NEW KBDVAL
             MOVE.B  D2,(KBDVAL)
+.NOACT
             
-            MOVEM.L (A7)+,D0-D3
+            MOVEM.L (A7)+,D0-D4
             
             RTE    
             
@@ -154,6 +161,7 @@ KBDUPD
             RTS
            
             
+
 
 
 

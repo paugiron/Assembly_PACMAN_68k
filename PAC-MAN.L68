@@ -1,6 +1,6 @@
-000011AA Starting Address
+00000000 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 11/11/2022 11:01:54
+Created On: 11/11/2022 19:25:26
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; PAC-MAN MANAGEMENT
@@ -43,95 +43,97 @@ Line 32 ERROR: Undefined symbol
 0000001C  3239 004DBD16             32              MOVE.W  (PMPOSX),D1
 00000022                            33              
 00000022                            34              ;UPDATE COORDINATE
-Line 35 ERROR: Undefined symbol
-00000022  0839 0000 005455B8        35              BTST.B  #0,(KBDVAL)
-0000002A  6700 0016                 36              BEQ     .NOTPRESSLEFT
+00000022                            35              
+00000022                            36              
 Line 37 ERROR: Undefined symbol
-0000002E  0441 BD16                 37              SUB.W   #PMSPEED,D1
-Line 38 ERROR: Symbol value differs between first and second pass
-00000032                            38  .NOTPRESSLEFT
+00000022  0839 0000 005455B8        37              BTST.B  #0,(KBDVAL)
+0000002A  6700 0016                 38              BEQ     .NOTPRESSLEFT
 Line 39 ERROR: Undefined symbol
-00000032  0839 0001 005455B8        39              BTST.B  #1,(KBDVAL)
-0000003A  6700 0016                 40              BEQ     .NOTPRESSUP
+0000002E  0441 BD16                 39              SUB.W   #PMSPEED,D1
+Line 40 ERROR: Symbol value differs between first and second pass
+00000032                            40  .NOTPRESSLEFT
 Line 41 ERROR: Undefined symbol
-0000003E  0440 BD16                 41              SUB.W   #PMSPEED,D0
-Line 42 ERROR: Symbol value differs between first and second pass
-00000042                            42  .NOTPRESSUP
+00000032  0839 0001 005455B8        41              BTST.B  #1,(KBDVAL)
+0000003A  6700 0016                 42              BEQ     .NOTPRESSUP
 Line 43 ERROR: Undefined symbol
-00000042  0839 0002 005455B8        43              BTST.B  #2,(KBDVAL)
-0000004A  6700 0016                 44              BEQ     .NOTPRESSRIGHT
+0000003E  0440 BD16                 43              SUB.W   #PMSPEED,D0
+Line 44 ERROR: Symbol value differs between first and second pass
+00000042                            44  .NOTPRESSUP
 Line 45 ERROR: Undefined symbol
-0000004E  0641 BD16                 45              ADD.W   #PMSPEED,D1
-Line 46 ERROR: Symbol value differs between first and second pass
-00000052                            46  .NOTPRESSRIGHT
+00000042  0839 0002 005455B8        45              BTST.B  #2,(KBDVAL)
+0000004A  6700 0016                 46              BEQ     .NOTPRESSRIGHT
 Line 47 ERROR: Undefined symbol
-00000052  0839 0003 005455B8        47              BTST.B  #3,(KBDVAL)
-0000005A  6700 0016                 48              BEQ     .NOTPRESSDOWN
+0000004E  0641 BD16                 47              ADD.W   #PMSPEED,D1
+Line 48 ERROR: Symbol value differs between first and second pass
+00000052                            48  .NOTPRESSRIGHT
 Line 49 ERROR: Undefined symbol
-0000005E  0640 BD16                 49              ADD.W   #PMSPEED,D0
-Line 50 ERROR: Symbol value differs between first and second pass
-00000062                            50  .NOTPRESSDOWN  
-00000062                            51  
-Line 52 ERROR: Undefined symbol
-00000062  33C0 005455B8             52              MOVE.W  D0,(PMPOSY)
-Line 53 ERROR: Undefined symbol
-00000068  33C1 005455B8             53              MOVE.W  D1,(PMPOSX)
-0000006E                            54              
-0000006E  4C9F 0003                 55              MOVEM.W (A7)+,D0-D1 
-00000072                            56              
-00000072  4E75                      57              RTS
-00000074                            58              
-00000074                            59  ; ------------------------------------------------------------------------------
-Line 60 ERROR: Symbol value differs between first and second pass
-00000074                            60  PMPLOT
-00000074                            61  ; PLOT THE BALL.
-00000074                            62  ; INPUT    : NONE 
-00000074                            63  ; OUTPUT   : NONE
-00000074                            64  ; MODIFIES : NONE
-00000074                            65  ; ------------------------------------------------------------------------------
-00000074                            66  
-00000074  48E7 F800                 67              MOVEM.L D0-D4,-(A7)
-00000078                            68  
-00000078                            69              ;SET PEN COLOR
-00000078  303C 0050                 70              MOVE.W  #80,D0
-Line 71 ERROR: Undefined symbol
-0000007C  223C 004DBD16             71              MOVE.L  #PMPCOL,D1
-00000082  4E4F                      72              TRAP    #15
-00000084                            73              
-00000084                            74              ;SET FILL COLOR
-00000084  303C 0051                 75              MOVE.W  #81,D0
-Line 76 ERROR: Undefined symbol
-00000088  223C 004DBD16             76              MOVE.L  #PMFCOL,D1
-0000008E  4E4F                      77              TRAP    #15
-00000090                            78              
-00000090                            79              ;SET COORDS
-Line 80 ERROR: Undefined symbol
-00000090  3239 004DBD16             80              MOVE.W  (PMPOSX),D1
-Line 81 ERROR: Undefined symbol
-00000096  0441 BD16                 81              SUB.W   #PMRAD,D1
+00000052  0839 0003 005455B8        49              BTST.B  #3,(KBDVAL)
+0000005A  6700 0016                 50              BEQ     .NOTPRESSDOWN
+Line 51 ERROR: Undefined symbol
+0000005E  0640 BD16                 51              ADD.W   #PMSPEED,D0
+Line 52 ERROR: Symbol value differs between first and second pass
+00000062                            52  .NOTPRESSDOWN  
+00000062                            53  
+Line 54 ERROR: Undefined symbol
+00000062  33C0 005455B8             54              MOVE.W  D0,(PMPOSY)
+Line 55 ERROR: Undefined symbol
+00000068  33C1 005455B8             55              MOVE.W  D1,(PMPOSX)
+0000006E                            56              
+0000006E  4C9F 0003                 57              MOVEM.W (A7)+,D0-D1 
+00000072                            58              
+00000072  4E75                      59              RTS
+00000074                            60              
+00000074                            61  ; ------------------------------------------------------------------------------
+Line 62 ERROR: Symbol value differs between first and second pass
+00000074                            62  PMPLOT
+00000074                            63  ; PLOT THE BALL.
+00000074                            64  ; INPUT    : NONE 
+00000074                            65  ; OUTPUT   : NONE
+00000074                            66  ; MODIFIES : NONE
+00000074                            67  ; ------------------------------------------------------------------------------
+00000074                            68  
+00000074  48E7 F800                 69              MOVEM.L D0-D4,-(A7)
+00000078                            70  
+00000078                            71              ;SET PEN COLOR
+00000078  303C 0050                 72              MOVE.W  #80,D0
+Line 73 ERROR: Undefined symbol
+0000007C  223C 004DBD16             73              MOVE.L  #PMPCOL,D1
+00000082  4E4F                      74              TRAP    #15
+00000084                            75              
+00000084                            76              ;SET FILL COLOR
+00000084  303C 0051                 77              MOVE.W  #81,D0
+Line 78 ERROR: Undefined symbol
+00000088  223C 004DBD16             78              MOVE.L  #PMFCOL,D1
+0000008E  4E4F                      79              TRAP    #15
+00000090                            80              
+00000090                            81              ;SET COORDS
 Line 82 ERROR: Undefined symbol
-0000009A  3439 004DBD16             82              MOVE.W  (PMPOSY),D2
+00000090  3239 004DBD16             82              MOVE.W  (PMPOSX),D1
 Line 83 ERROR: Undefined symbol
-000000A0  0442 BD16                 83              SUB.W   #PMRAD,D2
-000000A4                            84              
-000000A4  3601                      85              MOVE.W  D1,D3
-Line 86 ERROR: Invalid syntax
-000000A6                            86              ADD.W   #PMRAD*2,D3
-000000A6  3802                      87              MOVE.W  D2,D4
+00000096  0441 BD16                 83              SUB.W   #PMRAD,D1
+Line 84 ERROR: Undefined symbol
+0000009A  3439 004DBD16             84              MOVE.W  (PMPOSY),D2
+Line 85 ERROR: Undefined symbol
+000000A0  0442 BD16                 85              SUB.W   #PMRAD,D2
+000000A4                            86              
+000000A4  3601                      87              MOVE.W  D1,D3
 Line 88 ERROR: Invalid syntax
-000000A8                            88              ADD.W   #PMRAD*2,D4
-000000A8                            89                
-000000A8                            90              ;DRAW PAC-MAN
-000000A8  303C 0058                 91              MOVE.W  #88,D0
-000000AC  4E4F                      92              TRAP    #15
-000000AE                            93              
-000000AE  4CDF 001F                 94              MOVEM.L (A7)+,D0-D4
-000000B2                            95              
-000000B2  4E75                      96              RTS
-000000B4                            97  
-000000B4                            98  
+000000A6                            88              ADD.W   #PMRAD*2,D3
+000000A6  3802                      89              MOVE.W  D2,D4
+Line 90 ERROR: Invalid syntax
+000000A8                            90              ADD.W   #PMRAD*2,D4
+000000A8                            91                
+000000A8                            92              ;DRAW PAC-MAN
+000000A8  303C 0058                 93              MOVE.W  #88,D0
+000000AC  4E4F                      94              TRAP    #15
+000000AE                            95              
+000000AE  4CDF 001F                 96              MOVEM.L (A7)+,D0-D4
+000000B2                            97              
+000000B2  4E75                      98              RTS
 000000B4                            99  
-Line 100 WARNING: END directive missing, starting address not set
+000000B4                           100  
+000000B4                           101  
+Line 102 WARNING: END directive missing, starting address not set
 
 30 errors detected
 1 warning generated
