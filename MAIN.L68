@@ -1,6 +1,6 @@
-000011C2 Starting Address
+000011BA Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 14/11/2022 11:29:15
+Created On: 17/11/2022 9:49:59
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; TITLE       : PAC-MAN 68000
@@ -97,10 +97,10 @@ Created On: 14/11/2022 11:29:15
 00001006                            93  ; MODIFIES : NONE
 00001006                            94  ; ------------------------------------------------------------------------------
 00001006                            95  
-00001006  33FC 0140 00001206        96              MOVE.W  #SCRWIDTH/2,(PMPOSX)
-0000100E  33FC 00F0 00001208        97              MOVE.W  #SCRHEIGH/2,(PMPOSY)
-00001016  33FC 0003 0000120A        98              MOVE.W  #PMSPEED,(PMVELX)
-0000101E  33FC 0003 0000120C        99              MOVE.W  #PMSPEED,(PMVELY)
+00001006  33FC 0140 000011FE        96              MOVE.W  #SCRWIDTH/2,(PMPOSX)
+0000100E  33FC 00F0 00001200        97              MOVE.W  #SCRHEIGH/2,(PMPOSY)
+00001016  33FC 0003 00001202        98              MOVE.W  #PMSPEED,(PMVELX)
+0000101E  33FC 0003 00001204        99              MOVE.W  #PMSPEED,(PMVELY)
 00001026                           100  
 00001026  4E75                     101              RTS
 00001028                           102              
@@ -115,35 +115,35 @@ Created On: 14/11/2022 11:29:15
 00001028  48A7 C000                111              MOVEM.W D0-D1,-(A7)
 0000102C                           112              
 0000102C                           113              ;UPDATE COORDS
-0000102C  3039 00001208            114              MOVE.W  (PMPOSY),D0
-00001032  3239 00001206            115              MOVE.W  (PMPOSX),D1
+0000102C  3039 00001200            114              MOVE.W  (PMPOSY),D0
+00001032  3239 000011FE            115              MOVE.W  (PMPOSX),D1
 00001038                           116              
 00001038                           117              ;UPDATE COORDINATE
 00001038                           118              
 00001038                           119              
-00001038  0839 0000 00001202       120              BTST.B  #0,(KBDVAL)
+00001038  0839 0000 000011FA       120              BTST.B  #0,(KBDVAL)
 00001040  6700 0008                121              BEQ     .NOTPRESSLEFT
 00001044  5741                     122              SUB.W   #PMSPEED,D1
 00001046  6000 0038                123              BRA     .DONE
 0000104A                           124  .NOTPRESSLEFT
-0000104A  0839 0001 00001202       125              BTST.B  #1,(KBDVAL)
+0000104A  0839 0001 000011FA       125              BTST.B  #1,(KBDVAL)
 00001052  6700 0008                126              BEQ     .NOTPRESSUP
 00001056  5740                     127              SUB.W   #PMSPEED,D0
 00001058  6000 0026                128              BRA     .DONE
 0000105C                           129  .NOTPRESSUP
-0000105C  0839 0002 00001202       130              BTST.B  #2,(KBDVAL)
+0000105C  0839 0002 000011FA       130              BTST.B  #2,(KBDVAL)
 00001064  6700 0008                131              BEQ     .NOTPRESSRIGHT
 00001068  5641                     132              ADD.W   #PMSPEED,D1
 0000106A  6000 0014                133              BRA     .DONE
 0000106E                           134  .NOTPRESSRIGHT
-0000106E  0839 0003 00001202       135              BTST.B  #3,(KBDVAL)
+0000106E  0839 0003 000011FA       135              BTST.B  #3,(KBDVAL)
 00001076  6700 0008                136              BEQ     .NOTPRESSDOWN
 0000107A  5640                     137              ADD.W   #PMSPEED,D0
 0000107C  6000 0002                138              BRA     .DONE
 00001080                           139  .NOTPRESSDOWN  
 00001080                           140  .DONE
-00001080  33C0 00001208            141              MOVE.W  D0,(PMPOSY)
-00001086  33C1 00001206            142              MOVE.W  D1,(PMPOSX)
+00001080  33C0 00001200            141              MOVE.W  D0,(PMPOSY)
+00001086  33C1 000011FE            142              MOVE.W  D1,(PMPOSX)
 0000108C                           143              
 0000108C  4C9F 0003                144              MOVEM.W (A7)+,D0-D1 
 00001090                           145              
@@ -170,9 +170,9 @@ Created On: 14/11/2022 11:29:15
 000010AC  4E4F                     166              TRAP    #15
 000010AE                           167              
 000010AE                           168              ;SET COORDS
-000010AE  3239 00001206            169              MOVE.W  (PMPOSX),D1
+000010AE  3239 000011FE            169              MOVE.W  (PMPOSX),D1
 000010B4  5141                     170              SUB.W   #PMRAD,D1
-000010B6  3439 00001208            171              MOVE.W  (PMPOSY),D2
+000010B6  3439 00001200            171              MOVE.W  (PMPOSY),D2
 000010BC  5142                     172              SUB.W   #PMRAD,D2
 000010BE                           173              
 000010BE  3601                     174              MOVE.W  D1,D3
@@ -306,7 +306,7 @@ Created On: 14/11/2022 11:29:15
 0000113C  4E4F                     302              TRAP    #15
 0000113E                           303              
 0000113E                           304              ;CLEAR INTERRUPT COUNTER
-0000113E  4239 00001204            305              CLR.B   (SCRINTCT)
+0000113E  4239 000011FC            305              CLR.B   (SCRINTCT)
 00001144                           306              
 00001144  4CDF 0003                307              MOVEM.L (A7)+,D0-D1               ;RESTORE REGISTERS FROM STACK
 00001148                           308              
@@ -343,7 +343,7 @@ Created On: 14/11/2022 11:29:15
 00001164                           339  ; MODIFIES : NONE
 00001164                           340  ; ------------------------------------------------------------------------------
 00001164                           341  
-00001164  5239 00001204            342              ADDQ.B  #1,(SCRINTCT)
+00001164  5239 000011FC            342              ADDQ.B  #1,(SCRINTCT)
 0000116A  4E73                     343              RTE
 0000116C                           344              
 0000116C                           345  ;------------------------------------------------------------------------------            
@@ -354,8 +354,8 @@ Created On: 14/11/2022 11:29:15
 0000116C                           350  ; MODIFIES : NONE
 0000116C                           351  ; ------------------------------------------------------------------------------
 0000116C                           352  
-0000116C  4239 00001202            353              CLR.B   (KBDVAL)
-00001172  4239 00001203            354              CLR.B   (KBDEDGE)
+0000116C  4239 000011FA            353              CLR.B   (KBDVAL)
+00001172  4239 000011FB            354              CLR.B   (KBDEDGE)
 00001178                           355  
 00001178  4E75                     356              RTS
 0000117A                           357  
@@ -376,139 +376,138 @@ Created On: 14/11/2022 11:29:15
 00001188  4E4F                     372              TRAP    #15
 0000118A                           373              
 0000118A                           374              ;CONVERT TO DESIRED FORMAT
-0000118A  4EB9 000011B4            375              JSR .CONVERT
-00001190                           376              
-00001190                           377              
-00001190                           378              
-00001190                           379              ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
-00001190  1039 00001202            380              MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
-00001196  4600                     381              NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
-00001198  C002                     382              AND.B   D2,D0
-0000119A  13C0 00001203            383              MOVE.B  D0,(KBDEDGE)
-000011A0                           384              
-000011A0                           385         
-000011A0  B03C 0000                386              CMP.B   #0,D0
-000011A4  6700 0008                387              BEQ     .NOACT          
-000011A8                           388              
-000011A8                           389              ;STORE NEW KBDVAL
-000011A8  13C2 00001202            390              MOVE.B  D2,(KBDVAL)
-000011AE                           391  .NOACT
-000011AE                           392              
-000011AE  4CDF 001F                393              MOVEM.L (A7)+,D0-D4
-000011B2                           394              
-000011B2  4E73                     395              RTE    
-000011B4                           396              
-000011B4                           397  .CONVERT 
-000011B4  363C 0003                398              MOVE.W  #3,D3
-000011B8                           399              
-000011B8  E189                     400  .LOOP       LSL.L   #8,D1
-000011BA  E312                     401              ROXL.B  #1,D2
-000011BC  51CB FFFA                402              DBRA.W  D3,.LOOP
-000011C0  4E75                     403              RTS
-000011C2                           404             
-000011C2                           405              
-000011C2                           406  
-000011C2                           407  
-000011C2                           408  
-000011C2                           409  
-000011C2                           410  
-000011C2                           411  -------------------- end include --------------------
-000011C2                           412              
-000011C2                           413      
-000011C2                           414  START:
-000011C2                           415  
-000011C2                           416  ;--- INITIALIZATION -----------------------------------------------------------
-000011C2                           417  
-000011C2  007C 0700                418              ORI.W   #$0700,SR               ;DISABLE INTERRUPTIONS
-000011C6                           419  
-000011C6  4EB8 10DA                420              JSR     SYSINIT
-000011CA  4EB8 1006                421              JSR     PMINIT
-000011CE  4EB8 1000                422              JSR     GSTINIT
-000011D2  4EB8 10D6                423              JSR     SCOINIT
-000011D6                           424  
-000011D6                           425  .LOOP
-000011D6                           426  
-000011D6                           427  ; --- UPDATE -------------------------------------------------------------------
-000011D6                           428  
-000011D6                           429  ; READ INPUT DEVICES
-000011D6                           430  
-000011D6  4E41                     431              TRAP    #1
-000011D8                           432  
-000011D8                           433  ; UPDATE GAME LOGIC
-000011D8                           434  
-000011D8  4EB8 1028                435              JSR     PMUPD
-000011DC  4EB8 1002                436              JSR     GSTUPD            
-000011E0                           437  
-000011E0                           438  ; --- SYNC ---------------------------------------------------------------------
-000011E0                           439              ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
-000011E0                           440              ;THE BUCLE
-000011E0                           441              
-000011E0  4A39 00001204            442  .WAITINIT   TST.B   (SCRINTCT)
-000011E6  67F8                     443              BEQ     .WAITINIT
-000011E8  4239 00001204            444              CLR.B   (SCRINTCT)
-000011EE                           445  
-000011EE                           446  ; --- PLOT ---------------------------------------------------------------------
-000011EE                           447  
-000011EE  4EB8 10D8                448              JSR     SCOPLOT
-000011F2  4EB8 1092                449              JSR     PMPLOT
-000011F6  4EB8 1004                450              JSR     GSTPLOT
-000011FA                           451              
-000011FA  4E40                     452              TRAP    #0                      ;CHANGE BUFFER
-000011FC                           453  
-000011FC  60D8                     454              BRA     .LOOP
-000011FE                           455  
-000011FE  FFFF FFFF                456              SIMHALT  
-00001202                           457             
-00001202                           458              INCLUDE "SYSVARS.X68"
-00001202                           459  ; ==============================================================================
-00001202                           460  ; SYSTEM VARIABLES
-00001202                           461  ; ==============================================================================
-00001202                           462   
-00001202                           463  ; --- KEYBOARD RELATED VARIABLES -----------------------------------------------
-00001202                           464  
-00001202                           465  KBDVAL      DS.B    1                       ; KEY STATE
-00001203                           466  KBDEDGE     DS.B    1                       ; KEY EDGE
-00001204                           467  
-00001204                           468  ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
-00001204                           469  
-00001204                           470  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
-00001205                           471              DS.B    0           
-00001205                           472  
-00001205                           473  
-00001205                           474  
-00001205                           475  -------------------- end include --------------------
-00001205                           476              INCLUDE "VARS.X68"
-00001205                           477  ; ==============================================================================
-00001205                           478  ; GAME VARIABLES
-00001205                           479  ; ==============================================================================
-00001205                           480  
-00001205                           481  ; --- PAC-MAN RELATED VARIABLES ------------------------------------------------
-00001205                           482  
-00001206                           483  PMPOSX      DS.W    1                       ; PM X COORDINATE
-00001208                           484  PMPOSY      DS.W    1                       ; PM Y COORDINATE
-0000120A                           485  PMVELX      DS.W    1                       ; PM X VELOCITY
-0000120C                           486  PMVELY      DS.W    1                       ; PM Y VELOCITY
-0000120E                           487  PMEAT       DS.B    1                       ; PM BOOLEAN EAT GST
-0000120F                           488              DS.B    0
-0000120F                           489  
-0000120F                           490  ; --- GHOST RELATED VARIABLES --------------------------------------------------
-0000120F                           491  
-00001210                           492  GSTPOSX     DS.W    1                       ; GST X COORDINATE
-00001212                           493  GSTPOSY     DS.W    1                       ; GST Y COORDINATE
-00001214                           494  GSTVELX     DS.W    1                       ; GST X VELOCITY
-00001216                           495  GSTVELY     DS.W    1                       ; GST Y VELOCITY
-00001218                           496  GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
-00001219                           497              DS.B    0
-00001219                           498  
-00001219                           499  ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
-00001219                           500  
-0000121A                           501  SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
-0000121C                           502  SCOBNS      DS.W    1                       ; NUMBER OF BONUS
-0000121E                           503  
-0000121E                           504  
-0000121E                           505  -------------------- end include --------------------
-0000121E                           506              
-0000121E                           507              END    START        
+0000118A  4EB9 000011AC            375              JSR .CONVERT
+00001190                           376  
+00001190                           377              ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
+00001190  1039 000011FA            378              MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
+00001196  4600                     379              NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
+00001198  C002                     380              AND.B   D2,D0
+0000119A  13C0 000011FB            381              MOVE.B  D0,(KBDEDGE)
+000011A0                           382              
+000011A0                           383         
+000011A0                           384  ;            CMP.B   #0,D0
+000011A0                           385  ;            BEQ     .NOACT          
+000011A0                           386              
+000011A0                           387              ;STORE NEW KBDVAL
+000011A0  13C2 000011FA            388              MOVE.B  D2,(KBDVAL)
+000011A6                           389  .NOACT
+000011A6                           390              
+000011A6  4CDF 001F                391              MOVEM.L (A7)+,D0-D4
+000011AA                           392              
+000011AA  4E73                     393              RTE    
+000011AC                           394              
+000011AC                           395  .CONVERT 
+000011AC  363C 0003                396              MOVE.W  #3,D3
+000011B0                           397              
+000011B0  E189                     398  .LOOP       LSL.L   #8,D1
+000011B2  E312                     399              ROXL.B  #1,D2
+000011B4  51CB FFFA                400              DBRA.W  D3,.LOOP
+000011B8  4E75                     401              RTS
+000011BA                           402             
+000011BA                           403              
+000011BA                           404  
+000011BA                           405  
+000011BA                           406  
+000011BA                           407  
+000011BA                           408  
+000011BA                           409  
+000011BA                           410  -------------------- end include --------------------
+000011BA                           411              
+000011BA                           412      
+000011BA                           413  START:
+000011BA                           414  
+000011BA                           415  ;--- INITIALIZATION -----------------------------------------------------------
+000011BA                           416  
+000011BA  007C 0700                417              ORI.W   #$0700,SR               ;DISABLE INTERRUPTIONS
+000011BE                           418  
+000011BE  4EB8 10DA                419              JSR     SYSINIT
+000011C2  4EB8 1006                420              JSR     PMINIT
+000011C6  4EB8 1000                421              JSR     GSTINIT
+000011CA  4EB8 10D6                422              JSR     SCOINIT
+000011CE                           423  
+000011CE                           424  .LOOP
+000011CE                           425  
+000011CE                           426  ; --- UPDATE -------------------------------------------------------------------
+000011CE                           427  
+000011CE                           428  ; READ INPUT DEVICES
+000011CE                           429  
+000011CE  4E41                     430              TRAP    #1
+000011D0                           431  
+000011D0                           432  ; UPDATE GAME LOGIC
+000011D0                           433  
+000011D0  4EB8 1028                434              JSR     PMUPD
+000011D4  4EB8 1002                435              JSR     GSTUPD            
+000011D8                           436  
+000011D8                           437  ; --- SYNC ---------------------------------------------------------------------
+000011D8                           438              ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
+000011D8                           439              ;THE BUCLE
+000011D8                           440              
+000011D8  4A39 000011FC            441  .WAITINIT   TST.B   (SCRINTCT)
+000011DE  67F8                     442              BEQ     .WAITINIT
+000011E0  4239 000011FC            443              CLR.B   (SCRINTCT)
+000011E6                           444  
+000011E6                           445  ; --- PLOT ---------------------------------------------------------------------
+000011E6                           446  
+000011E6  4EB8 10D8                447              JSR     SCOPLOT
+000011EA  4EB8 1092                448              JSR     PMPLOT
+000011EE  4EB8 1004                449              JSR     GSTPLOT
+000011F2                           450              
+000011F2  4E40                     451              TRAP    #0                      ;CHANGE BUFFER
+000011F4                           452  
+000011F4  60D8                     453              BRA     .LOOP
+000011F6                           454  
+000011F6  FFFF FFFF                455              SIMHALT  
+000011FA                           456             
+000011FA                           457              INCLUDE "SYSVARS.X68"
+000011FA                           458  ; ==============================================================================
+000011FA                           459  ; SYSTEM VARIABLES
+000011FA                           460  ; ==============================================================================
+000011FA                           461   
+000011FA                           462  ; --- KEYBOARD RELATED VARIABLES -----------------------------------------------
+000011FA                           463  
+000011FA                           464  KBDVAL      DS.B    1                       ; KEY STATE
+000011FB                           465  KBDEDGE     DS.B    1                       ; KEY EDGE
+000011FC                           466  
+000011FC                           467  ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
+000011FC                           468  
+000011FC                           469  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
+000011FD                           470              DS.B    0           
+000011FD                           471  
+000011FD                           472  
+000011FD                           473  
+000011FD                           474  -------------------- end include --------------------
+000011FD                           475              INCLUDE "VARS.X68"
+000011FD                           476  ; ==============================================================================
+000011FD                           477  ; GAME VARIABLES
+000011FD                           478  ; ==============================================================================
+000011FD                           479  
+000011FD                           480  ; --- PAC-MAN RELATED VARIABLES ------------------------------------------------
+000011FD                           481  
+000011FE                           482  PMPOSX      DS.W    1                       ; PM X COORDINATE
+00001200                           483  PMPOSY      DS.W    1                       ; PM Y COORDINATE
+00001202                           484  PMVELX      DS.W    1                       ; PM X VELOCITY
+00001204                           485  PMVELY      DS.W    1                       ; PM Y VELOCITY
+00001206                           486  PMEAT       DS.B    1                       ; PM BOOLEAN EAT GST
+00001207                           487              DS.B    0
+00001207                           488  
+00001207                           489  ; --- GHOST RELATED VARIABLES --------------------------------------------------
+00001207                           490  
+00001208                           491  GSTPOSX     DS.W    1                       ; GST X COORDINATE
+0000120A                           492  GSTPOSY     DS.W    1                       ; GST Y COORDINATE
+0000120C                           493  GSTVELX     DS.W    1                       ; GST X VELOCITY
+0000120E                           494  GSTVELY     DS.W    1                       ; GST Y VELOCITY
+00001210                           495  GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
+00001211                           496              DS.B    0
+00001211                           497  
+00001211                           498  ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
+00001211                           499  
+00001212                           500  SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
+00001214                           501  SCOBNS      DS.W    1                       ; NUMBER OF BONUS
+00001216                           502  
+00001216                           503  
+00001216                           504  -------------------- end include --------------------
+00001216                           505              
+00001216                           506              END    START        
 
 No errors detected
 No warnings generated
@@ -522,22 +521,22 @@ GSTCOL2             FF0080
 GSTCOL3             FFFF00
 GSTCOL4             80FF
 GSTCOL5             800000
-GSTDEAD             1218
+GSTDEAD             1210
 GSTFCOL1            0
 GSTFCOL2            0
 GSTFCOL3            0
 GSTFCOL4            0
 GSTINIT             1000
 GSTPLOT             1004
-GSTPOSX             1210
-GSTPOSY             1212
+GSTPOSX             1208
+GSTPOSY             120A
 GSTSPEED            7
 GSTSPEED2           5
 GSTUPD              1002
-GSTVELX             1214
-GSTVELY             1216
+GSTVELX             120C
+GSTVELY             120E
 KBDDOWN             28
-KBDEDGE             1203
+KBDEDGE             11FB
 KBDFIRE1            20
 KBDFIRE2            4D
 KBDFIRE3            10
@@ -547,17 +546,17 @@ KBDPAUSE            50
 KBDRIGHT            27
 KBDUP               26
 KBDUPD              117A
-KBDUPD:CONVERT      11B4
-KBDUPD:LOOP         11B8
-KBDUPD:NOACT        11AE
-KBDVAL              1202
-PMEAT               120E
+KBDUPD:CONVERT      11AC
+KBDUPD:LOOP         11B0
+KBDUPD:NOACT        11A6
+KBDVAL              11FA
+PMEAT               1206
 PMFCOL              FFFF
 PMINIT              1006
 PMPCOL              FFFF
 PMPLOT              1092
-PMPOSX              1206
-PMPOSY              1208
+PMPOSX              11FE
+PMPOSY              1200
 PMRAD               8
 PMSPEED             3
 PMUPD               1028
@@ -566,22 +565,22 @@ PMUPD:NOTPRESSDOWN  1080
 PMUPD:NOTPRESSLEFT  104A
 PMUPD:NOTPRESSRIGHT  106E
 PMUPD:NOTPRESSUP    105C
-PMVELX              120A
-PMVELY              120C
-SCOBNS              121C
+PMVELX              1202
+PMVELY              1204
+SCOBNS              1214
 SCOFCOL             0
 SCOINIT             10D6
-SCOLIFE             121A
+SCOLIFE             1212
 SCOLINE1            101
 SCOLINE2            102
 SCOPLOT             10D8
 SCRHEIGH            1E0
 SCRINIT             1106
-SCRINTCT            1204
+SCRINTCT            11FC
 SCRTIM              1164
 SCRUPD              114A
 SCRWIDTH            280
-START               11C2
-START:LOOP          11D6
-START:WAITINIT      11E0
+START               11BA
+START:LOOP          11CE
+START:WAITINIT      11D8
 SYSINIT             10DA

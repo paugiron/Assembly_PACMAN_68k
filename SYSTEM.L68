@@ -1,6 +1,6 @@
-0000112E Starting Address
+000011C2 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 10/11/2022 15:47:12
+Created On: 17/11/2022 9:49:52
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; SYSTEM
@@ -129,32 +129,64 @@ Line 112 ERROR: Undefined symbol
 Line 117 ERROR: Symbol value differs between first and second pass
 0000009A                           117  KBDUPD
 0000009A                           118  ; UPDATES KEYBOARD INFO
-0000009A                           119  ; INPUT    : NONE
-0000009A                           120  ; OUTPUT   : NONE
-0000009A                           121  ; MODIFIES : NONE
-0000009A                           122  ; ------------------------------------------------------------------------------
-0000009A                           123  
-0000009A  48E7 C000                124              MOVEM.L D0-D1,-(A7)
-0000009E                           125  
-0000009E                           126              ;MOVE THE KBD CODES TO D1 (EVERY BYTE IS A CODE)
+0000009A                           119  ; 3 -> DOWN
+0000009A                           120  ; 2 -> RIGHT
+0000009A                           121  ; 1 -> UP
+0000009A                           122  ; 0 -> LEFT
+0000009A                           123  ; ------------------------------------------------------------------------------
+0000009A                           124              
+0000009A  48E7 F800                125              MOVEM.L D0-D4,-(A7)
+0000009E                           126              
 0000009E  303C 0013                127              MOVE.W  #19,D0
-000000A2                           128              ;MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
-000000A2  4E4F                     129              TRAP    #15
-000000A4                           130              
-000000A4                           131              ;STORE
-Line 132 ERROR: Undefined symbol
-000000A4  13C1 005455B8            132              MOVE.B  D1,(KBDVAL)
-000000AA                           133              
-000000AA  4CDF 0003                134              MOVEM.L (A7)+,D0-D1
-000000AE                           135  
-000000AE  4E73                     136              RTE
-000000B0                           137              
-000000B0                           138  
-000000B0                           139  
-000000B0                           140  
-Line 141 WARNING: END directive missing, starting address not set
+000000A2                           128              ;GET INFO OF THE KEYS
+Line 129 ERROR: Invalid syntax
+000000A2                           129              MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
+000000A2  4E4F                     130              TRAP    #15
+000000A4                           131              
+000000A4                           132              ;CONVERT TO DESIRED FORMAT
+000000A4  4EB9 000000D2            133              JSR .CONVERT
+000000AA                           134  
+000000AA                           135              ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
+Line 136 ERROR: Undefined symbol
+000000AA  1039 004DBD16            136              MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
+000000B0  4600                     137              NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
+000000B2  C002                     138              AND.B   D2,D0
+Line 139 ERROR: Undefined symbol
+000000B4  13C0 005455B8            139              MOVE.B  D0,(KBDEDGE)
+000000BA                           140              
+000000BA                           141         
+000000BA                           142  ;            CMP.B   #0,D0
+000000BA                           143  ;            BEQ     .NOACT          
+000000BA                           144              
+000000BA                           145              ;STORE NEW KBDVAL
+Line 146 ERROR: Undefined symbol
+000000BA  13C2 005455B8            146              MOVE.B  D2,(KBDVAL)
+Line 147 ERROR: Symbol value differs between first and second pass
+000000C0                           147  .NOACT
+000000C0                           148              
+000000C0  4CDF 001F                149              MOVEM.L (A7)+,D0-D4
+000000C4                           150              
+000000C4  4E73                     151              RTE    
+000000C6                           152              
+Line 153 ERROR: Symbol value differs between first and second pass
+000000C6                           153  .CONVERT 
+000000C6  363C 0003                154              MOVE.W  #3,D3
+000000CA                           155              
+Line 156 ERROR: Symbol value differs between first and second pass
+000000CA                           156  .LOOP       LSL.L   #8,D1
+000000CA  E312                     157              ROXL.B  #1,D2
+000000CC  51CB 0008                158              DBRA.W  D3,.LOOP
+000000D0  4E75                     159              RTS
+000000D2                           160             
+000000D2                           161              
+000000D2                           162  
+000000D2                           163  
+000000D2                           164  
+000000D2                           165  
+000000D2                           166  
+Line 167 WARNING: END directive missing, starting address not set
 
-10 errors detected
+16 errors detected
 1 warning generated
 
 
@@ -163,6 +195,9 @@ Symbol-name         Value
 -------------------------
 KBDINIT             92
 KBDUPD              A0
+KBDUPD:CONVERT      D2
+KBDUPD:LOOP         D6
+KBDUPD:NOACT        CC
 SCRINIT             2C
 SCRTIM              8A
 SCRUPD              70

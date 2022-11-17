@@ -131,9 +131,7 @@ KBDUPD
             
             ;CONVERT TO DESIRED FORMAT
             JSR .CONVERT
-            
-            
-            
+
             ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
             MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
             NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
@@ -141,8 +139,8 @@ KBDUPD
             MOVE.B  D0,(KBDEDGE)
             
        
-            CMP.B   #0,D0
-            BEQ     .NOACT          
+;            CMP.B   #0,D0
+;            BEQ     .NOACT          
             
             ;STORE NEW KBDVAL
             MOVE.B  D2,(KBDVAL)
@@ -161,6 +159,7 @@ KBDUPD
             RTS
            
             
+
 
 
 

@@ -30,30 +30,47 @@ PMUPD
             ;UPDATE COORDS
             MOVE.W  (PMPOSY),D0
             MOVE.W  (PMPOSX),D1
+            MOVE.W  #PMSPEED,D4
+            
+            ;LAST 4 COORDS
+            MOVE.W  DO,D2
+            MOVE.W  D1,D3
+            
+            AND     #$000F,D2
+            AND     #$000F,D3
             
             ;UPDATE COORDINATE
-            
-            
             BTST.B  #0,(KBDVAL)
-            BEQ     .NOTPRESSLEFT
+            BEQ     .NOTPRESSLEFT 
+            CMP     #%0000,D2
+            BNE     .NOTPRESSLEFT
+            
             SUB.W   #PMSPEED,D1
             BRA     .DONE
 .NOTPRESSLEFT
             BTST.B  #1,(KBDVAL)
             BEQ     .NOTPRESSUP
+            CMP     #%0000,D2
+            BNE     .NOTPRESSUP
+            
             SUB.W   #PMSPEED,D0
             BRA     .DONE
 .NOTPRESSUP
             BTST.B  #2,(KBDVAL)
             BEQ     .NOTPRESSRIGHT
+            
+            
             ADD.W   #PMSPEED,D1
             BRA     .DONE
 .NOTPRESSRIGHT
             BTST.B  #3,(KBDVAL)
             BEQ     .NOTPRESSDOWN
+            
+            
             ADD.W   #PMSPEED,D0
             BRA     .DONE
 .NOTPRESSDOWN  
+
 .DONE
             MOVE.W  D0,(PMPOSY)
             MOVE.W  D1,(PMPOSX)
@@ -100,6 +117,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
