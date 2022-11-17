@@ -26,8 +26,13 @@ GSTFCOL3    EQU     $00000000               ; GHOST 3 FILL COLOR
 GSTCOL4     EQU     $000080FF               ; GHOST 4 CONTOUR COLOR ORANGE
 GSTFCOL4    EQU     $00000000               ; GHOST 4 FILL COLOR 
 
-GSTCOL5     EQU     $00800000               ; COLOR OF ATACKED MODE
+GSTCOL5     EQU     $00800000               ; CONTOUR COLOR OF ATACKED MODE
+GSTFCOL5    EQU     $00000000               ; FILL COLOR OF ATACKED MODE
 
+GSTHEIGH    EQU     16                      ; GHOST HEIGH
+GSRWIDHT    EQU     16                      ; GHOST WEIDTH
+
+            
 ; --- SCOREBOARD RELATED CONSTANTS ---------------------------------------------
 ;MODIFICATE
 
@@ -69,6 +74,7 @@ MAPMAT      DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
             DC.B    $1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1
             DC.B    $1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
             DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+
 
 
 
