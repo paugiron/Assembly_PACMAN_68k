@@ -1,6 +1,6 @@
-00001660 Starting Address
+000016D4 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 23/11/2022 22:17:12
+Created On: 23/11/2022 22:37:07
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; TITLE       : PAC-MAN 68000
@@ -139,10 +139,10 @@ Created On: 23/11/2022 22:17:12
 00001406                           135  ; MODIFIES : NONE
 00001406                           136  ; ------------------------------------------------------------------------------
 00001406                           137  
-00001406  33FC 0140 000016A4       138              MOVE.W  #SCRWIDTH/2,(PMPOSX)
-0000140E  33FC 00F0 000016A6       139              MOVE.W  #SCRHEIGH/2,(PMPOSY)
-00001416  33FC 0004 000016A8       140              MOVE.W  #PMSPEED,(PMVELX)
-0000141E  33FC 0004 000016AA       141              MOVE.W  #PMSPEED,(PMVELY)
+00001406  33FC 0140 00001718       138              MOVE.W  #SCRWIDTH/2,(PMPOSX)
+0000140E  33FC 00F0 0000171A       139              MOVE.W  #SCRHEIGH/2,(PMPOSY)
+00001416  33FC 0004 0000171C       140              MOVE.W  #PMSPEED,(PMVELX)
+0000141E  33FC 0004 0000171E       141              MOVE.W  #PMSPEED,(PMVELY)
 00001426                           142  
 00001426  4E75                     143              RTS
 00001428                           144              
@@ -156,35 +156,35 @@ Created On: 23/11/2022 22:17:12
 00001428                           152              
 00001428  48A7 C000                153              MOVEM.W D0-D1,-(A7)
 0000142C                           154              
-0000142C  3039 000016A8            155              MOVE.W  (PMVELX),D0
-00001432  3239 000016AA            156              MOVE.W  (PMVELY),D1
+0000142C  3039 0000171C            155              MOVE.W  (PMVELX),D0
+00001432  3239 0000171E            156              MOVE.W  (PMVELY),D1
 00001438                           157              
-00001438  0839 0000 000016A0       158              BTST.B  #0,(KBDVAL)
+00001438  0839 0000 00001714       158              BTST.B  #0,(KBDVAL)
 00001440  6700 0008                159              BEQ     .NOTPRESSLEFT
 00001444  4440                     160              NEG.W   D0
 00001446  6000 0038                161              BRA     .ACTX
 0000144A                           162  .NOTPRESSLEFT
-0000144A  0839 0002 000016A0       163              BTST.B  #2,(KBDVAL)
+0000144A  0839 0002 00001714       163              BTST.B  #2,(KBDVAL)
 00001452  6700 0006                164              BEQ     .NOTPRESSRIGHT
 00001456  6000 0028                165              BRA     .ACTX
 0000145A                           166  .NOTPRESSRIGHT
-0000145A  0839 0001 000016A0       167              BTST.B  #1,(KBDVAL)
+0000145A  0839 0001 00001714       167              BTST.B  #1,(KBDVAL)
 00001462  6700 0008                168              BEQ     .NOTPRESSUP
 00001466  4441                     169              NEG     D1
 00001468  6000 0020                170              BRA     .ACTY
 0000146C                           171  .NOTPRESSUP
-0000146C  0839 0003 000016A0       172              BTST.B  #3,(KBDVAL)
+0000146C  0839 0003 00001714       172              BTST.B  #3,(KBDVAL)
 00001474  6700 0006                173              BEQ     .NOTPRESSDOWN
 00001478  6000 0010                174              BRA     .ACTY
 0000147C                           175  .NOTPRESSDOWN
 0000147C  6000 0012                176              BRA     .NOTPRESSED
 00001480                           177   
 00001480                           178  .ACTX
-00001480  D179 000016A4            179              ADD.W   D0,(PMPOSX)
+00001480  D179 00001718            179              ADD.W   D0,(PMPOSX)
 00001486  6000 0008                180              BRA     .DONE
 0000148A                           181              
 0000148A                           182  .ACTY
-0000148A  D379 000016A6            183              ADD.W   D1,(PMPOSY)
+0000148A  D379 0000171A            183              ADD.W   D1,(PMPOSY)
 00001490                           184           
 00001490                           185  .DONE     
 00001490                           186  .NOTPRESSED
@@ -203,8 +203,8 @@ Created On: 23/11/2022 22:17:12
 00001496  48A7 F800                199              MOVEM.W D0-D4,-(A7)
 0000149A                           200              
 0000149A                           201              ;UPDATE COORDS
-0000149A  3039 000016A6            202              MOVE.W  (PMPOSY),D0
-000014A0  3239 000016A4            203              MOVE.W  (PMPOSX),D1
+0000149A  3039 0000171A            202              MOVE.W  (PMPOSY),D0
+000014A0  3239 00001718            203              MOVE.W  (PMPOSX),D1
 000014A6  383C 0004                204              MOVE.W  #PMSPEED,D4
 000014AA                           205              
 000014AA                           206              ;LAST 4 COORDS
@@ -215,7 +215,7 @@ Created On: 23/11/2022 22:17:12
 000014B2  C67C 000F                211              AND     #$000F,D3
 000014B6                           212              
 000014B6                           213              ;UPDATE COORDINATE
-000014B6  0839 0000 000016A0       214              BTST.B  #0,(KBDVAL)
+000014B6  0839 0000 00001714       214              BTST.B  #0,(KBDVAL)
 000014BE  6700 0010                215              BEQ     .NOTPRESSLEFT 
 000014C2  B47C 0000                216              CMP     #%0000,D2
 000014C6  6600 0008                217              BNE     .NOTPRESSLEFT
@@ -224,7 +224,7 @@ Created On: 23/11/2022 22:17:12
 000014CA  4444                     220              NEG.W   D4
 000014CC  6000 0050                221              BRA     .DONE
 000014D0                           222  .NOTPRESSLEFT
-000014D0  0839 0001 000016A0       223              BTST.B  #1,(KBDVAL)
+000014D0  0839 0001 00001714       223              BTST.B  #1,(KBDVAL)
 000014D8  6700 0010                224              BEQ     .NOTPRESSUP
 000014DC  B67C 0000                225              CMP     #%0000,D3
 000014E0  6600 0008                226              BNE     .NOTPRESSUP
@@ -233,7 +233,7 @@ Created On: 23/11/2022 22:17:12
 000014E4  4444                     229              NEG.W   D4
 000014E6  6000 0036                230              BRA     .DONE
 000014EA                           231  .NOTPRESSUP
-000014EA  0839 0002 000016A0       232              BTST.B  #2,(KBDVAL)
+000014EA  0839 0002 00001714       232              BTST.B  #2,(KBDVAL)
 000014F2  6700 000E                233              BEQ     .NOTPRESSRIGHT
 000014F6  B47C 0000                234              CMP     #%0000,D2
 000014FA  6600 0006                235              BNE     .NOTPRESSRIGHT
@@ -241,7 +241,7 @@ Created On: 23/11/2022 22:17:12
 000014FE                           237              ;ADD.W   #PMSPEED,D1
 000014FE  6000 001E                238              BRA     .DONE
 00001502                           239  .NOTPRESSRIGHT
-00001502  0839 0003 000016A0       240              BTST.B  #3,(KBDVAL)
+00001502  0839 0003 00001714       240              BTST.B  #3,(KBDVAL)
 0000150A  6700 000E                241              BEQ     .NOTPRESSDOWN
 0000150E  B67C 0000                242              CMP     #%0000,D3 
 00001512  6600 0006                243              BNE     .NOTPRESSDOWN              
@@ -254,8 +254,8 @@ Created On: 23/11/2022 22:17:12
 0000151A  6000 000E                250              BRA     .NOTPRESS
 0000151E                           251  .DONE
 0000151E                           252  
-0000151E  D979 000016A6            253              ADD.W   D4,(PMPOSY)
-00001524  D979 000016A4            254              ADD.W   D4,(PMPOSX)
+0000151E  D979 0000171A            253              ADD.W   D4,(PMPOSY)
+00001524  D979 00001718            254              ADD.W   D4,(PMPOSX)
 0000152A                           255              
 0000152A                           256              ;MOVE.W  D0,(PMPOSY)
 0000152A                           257              ;MOVE.W  D1,(PMPOSX)
@@ -286,9 +286,9 @@ Created On: 23/11/2022 22:17:12
 0000154A  4E4F                     282              TRAP    #15
 0000154C                           283              
 0000154C                           284              ;SET COORDS
-0000154C  3239 000016A4            285              MOVE.W  (PMPOSX),D1
+0000154C  3239 00001718            285              MOVE.W  (PMPOSX),D1
 00001552  5141                     286              SUB.W   #PMRAD,D1
-00001554  3439 000016A6            287              MOVE.W  (PMPOSY),D2
+00001554  3439 0000171A            287              MOVE.W  (PMPOSY),D2
 0000155A  5142                     288              SUB.W   #PMRAD,D2
 0000155C                           289              
 0000155C  3601                     290              MOVE.W  D1,D3
@@ -374,259 +374,332 @@ Created On: 23/11/2022 22:17:12
 00001578                           370  ; MODIFIES : NONE
 00001578                           371  ; ------------------------------------------------------------------------------
 00001578                           372              
-00001578  21FC 000015E8 0080       373              MOVE.L  #SCRUPD,($80+0*4)          ;INSTALL SUBRUTINE TO TRAP #0
-00001580  21FC 00001618 0084       374              MOVE.L  #KBDUPD,($80+1*4)          ;INSTALL SUBRUTINE TO TRAP #1
-00001588                           375              
-00001588  21FC 00001602 0064       376              MOVE.L  #SCRTIM,($60+1*4)          ;INSTALL INTERRUPT #1
-00001590                           377              
-00001590  4EB9 000015A4            378              JSR     SCRINIT
-00001596  4EB9 0000160A            379              JSR     KBDINIT
-0000159C                           380              
-0000159C  40E7                     381              MOVE.W  SR,-(A7)
-0000159E  0257 D8FF                382              ANDI.W  #$D8FF,(A7)                ;BIT SUPERVISOR TO O AND INTERRPUT MASK 000 (FOR REACTIVATE INTERRUPTIONS)             
-000015A2  4E73                     383              RTE
-000015A4                           384     
-000015A4                           385  ; ------------------------------------------------------------------------------
-000015A4                           386  SCRINIT
-000015A4                           387  ; INIT SCREEN. SET SCREEN RESOLUTION, SET WINDOWED MODE, CLEAR SCREEN, ENABLE BUFFER
-000015A4                           388  ; ENABLE TIMED INTERRUPTION
-000015A4                           389  ; INPUT    : NONE
-000015A4                           390  ; OUTPUT   : NONE
-000015A4                           391  ; MODIFIES : NONE
-000015A4                           392  ; ------------------------------------------------------------------------------
-000015A4                           393  
-000015A4  48E7 C000                394              MOVEM.L D0-D1,-(A7)                 ;SAFE REGISTERS IN STACK
-000015A8                           395  
-000015A8                           396              ; SET SCREEN RESOLUTION
-000015A8  103C 0021                397              MOVE.B  #33,D0
-000015AC  223C 028001E0            398              MOVE.L  #SCRWIDTH<<16|SCRHEIGH,D1
-000015B2  4E4F                     399              TRAP    #15
-000015B4                           400              
-000015B4                           401              ; SET WINDOWED MODE
-000015B4  7201                     402              MOVE.L  #1,D1
-000015B6  4E4F                     403              TRAP    #15
-000015B8                           404              
-000015B8                           405              ; ENABLE DOUBLE BUFFER
-000015B8  103C 005C                406              MOVE.B  #92,D0
-000015BC  123C 0011                407              MOVE.B  #17,D1
-000015C0  4E4F                     408              TRAP    #15
-000015C2                           409              
-000015C2                           410              ; CLEAR SCREEN
-000015C2  103C 000B                411              MOVE.B  #11,D0
-000015C6  323C FF00                412              MOVE.W  #$FF00,D1
-000015CA  4E4F                     413              TRAP    #15
-000015CC                           414              
-000015CC                           415              ;ENABLE TIMED INTERRPUT
-000015CC  303C 0020                416              MOVE.W  #32,D0
-000015D0  123C 0006                417              MOVE.B  #6,D1
-000015D4  143C 0081                418              MOVE.B  #$81,D2                   ;INDICATE THAT INTERRUPT 1 IS ACTIVATED PERIODICALLY
-000015D8  7614                     419              MOVE.L  #20,D3                    ;INDICATE THE MILISECONDS FOR THAT PERIOD (20 ms == 50 FPS)
-000015DA  4E4F                     420              TRAP    #15
-000015DC                           421              
-000015DC                           422              ;CLEAR INTERRUPT COUNTER
-000015DC  4239 000016A2            423              CLR.B   (SCRINTCT)
-000015E2                           424              
-000015E2  4CDF 0003                425              MOVEM.L (A7)+,D0-D1               ;RESTORE REGISTERS FROM STACK
-000015E6                           426              
-000015E6  4E75                     427              RTS
-000015E8                           428              
-000015E8                           429  ;------------------------------------------------------------------------------            
-000015E8                           430  SCRUPD
-000015E8                           431  ; UPDATES DOUBLE BUFFER
-000015E8                           432  ; INPUT    : NONE
-000015E8                           433  ; OUTPUT   : NONE
-000015E8                           434  ; MODIFIES : NONE
-000015E8                           435  ; ------------------------------------------------------------------------------
-000015E8                           436  
-000015E8  48A7 C000                437              MOVEM.W D0-D1,-(A7)
-000015EC                           438              
-000015EC                           439              ;SWITCH BUFFERS
-000015EC  103C 005E                440              MOVE.B #94,D0
-000015F0  4E4F                     441              TRAP #15
-000015F2                           442              
-000015F2                           443              ;CLEAR HIDDEN BUFFER
-000015F2  103C 000B                444              MOVE.B  #11,D0
-000015F6  323C FF00                445              MOVE.W  #$FF00,D1
-000015FA  4E4F                     446              TRAP    #15
-000015FC                           447              
-000015FC  4C9F 0003                448              MOVEM.W (A7)+,D0-D1
-00001600                           449              
-00001600  4E73                     450              RTE
-00001602                           451              
-00001602                           452  ;------------------------------------------------------------------------------            
-00001602                           453  SCRTIM
-00001602                           454  ; TIME INTERRPUT SERVICE ROUTINE FOR SYNC
-00001602                           455  ; INPUT    : NONE
-00001602                           456  ; OUTPUT   : NONE
-00001602                           457  ; MODIFIES : NONE
-00001602                           458  ; ------------------------------------------------------------------------------
-00001602                           459  
-00001602  5239 000016A2            460              ADDQ.B  #1,(SCRINTCT)
-00001608  4E73                     461              RTE
-0000160A                           462              
-0000160A                           463  ;------------------------------------------------------------------------------            
-0000160A                           464  KBDINIT
-0000160A                           465  ; INIT THE KEYBOARD
-0000160A                           466  ; INPUT    : NONE
-0000160A                           467  ; OUTPUT   : NONE
-0000160A                           468  ; MODIFIES : NONE
-0000160A                           469  ; ------------------------------------------------------------------------------
-0000160A                           470  
-0000160A  4239 000016A0            471              CLR.B   (KBDVAL)
-00001610  4239 000016A1            472              CLR.B   (KBDEDGE)
-00001616                           473  
-00001616  4E75                     474              RTS
-00001618                           475  
-00001618                           476  ;------------------------------------------------------------------------------            
-00001618                           477  KBDUPD
-00001618                           478  ; UPDATES KEYBOARD INFO
-00001618                           479  ; 3 -> DOWN
-00001618                           480  ; 2 -> RIGHT
-00001618                           481  ; 1 -> UP
-00001618                           482  ; 0 -> LEFT
-00001618                           483  ; ------------------------------------------------------------------------------
-00001618                           484              
-00001618  48E7 F800                485              MOVEM.L D0-D4,-(A7)
-0000161C                           486              
-0000161C  303C 0013                487              MOVE.W  #19,D0
-00001620                           488              ;GET INFO OF THE KEYS
-00001620  223C 28272625            489              MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
-00001626  4E4F                     490              TRAP    #15
-00001628                           491              
-00001628                           492              ;CONVERT TO DESIRED FORMAT
-00001628  4EB9 00001652            493              JSR .CONVERT
-0000162E                           494  
-0000162E                           495              ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
-0000162E  1039 000016A0            496              MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
-00001634  4600                     497              NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
-00001636  C002                     498              AND.B   D2,D0
-00001638  13C0 000016A1            499              MOVE.B  D0,(KBDEDGE)
-0000163E                           500              
-0000163E                           501         
-0000163E  B03C 0000                502              CMP.B   #0,D0
-00001642  6700 0008                503              BEQ     .NOACT          
-00001646                           504              
-00001646                           505              ;STORE NEW KBDVAL
-00001646  13C2 000016A0            506              MOVE.B  D2,(KBDVAL)
-0000164C                           507  .NOACT
-0000164C                           508              
-0000164C  4CDF 001F                509              MOVEM.L (A7)+,D0-D4
-00001650                           510              
-00001650  4E73                     511              RTE    
-00001652                           512              
-00001652                           513  .CONVERT 
-00001652  363C 0003                514              MOVE.W  #3,D3
-00001656                           515              
-00001656  E189                     516  .LOOP       LSL.L   #8,D1
-00001658  E312                     517              ROXL.B  #1,D2
-0000165A  51CB FFFA                518              DBRA.W  D3,.LOOP
-0000165E  4E75                     519              RTS
-00001660                           520             
-00001660                           521              
-00001660                           522  
-00001660                           523  
-00001660                           524  
-00001660                           525  
-00001660                           526  
-00001660                           527  
-00001660                           528  
-00001660                           529  -------------------- end include --------------------
-00001660                           530              
-00001660                           531      
-00001660                           532  START:
-00001660                           533  
-00001660                           534  ;--- INITIALIZATION -----------------------------------------------------------
-00001660                           535  
-00001660  007C 0700                536              ORI.W   #$0700,SR               ;DISABLE INTERRUPTIONS
-00001664                           537  
-00001664  4EB8 1578                538              JSR     SYSINIT
-00001668  4EB8 1406                539              JSR     PMINIT
-0000166C  4EB8 1400                540              JSR     GSTINIT
-00001670  4EB8 1574                541              JSR     SCOINIT
-00001674                           542  
-00001674                           543  .LOOP
-00001674                           544  
-00001674                           545  ; --- UPDATE -------------------------------------------------------------------
-00001674                           546  
-00001674                           547  ; READ INPUT DEVICES
-00001674                           548  
-00001674  4E41                     549              TRAP    #1
-00001676                           550  
-00001676                           551  ; UPDATE GAME LOGIC
-00001676                           552  
-00001676  4EB8 1428                553              JSR     PMUPD
-0000167A  4EB8 1402                554              JSR     GSTUPD            
-0000167E                           555  
-0000167E                           556  ; --- SYNC ---------------------------------------------------------------------
-0000167E                           557              ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
-0000167E                           558              ;THE BUCLE
-0000167E                           559              
-0000167E  4A39 000016A2            560  .WAITINIT   TST.B   (SCRINTCT)
-00001684  67F8                     561              BEQ     .WAITINIT
-00001686  4239 000016A2            562              CLR.B   (SCRINTCT)
-0000168C                           563  
-0000168C                           564  ; --- PLOT ---------------------------------------------------------------------
-0000168C                           565  
-0000168C  4EB8 1576                566              JSR     SCOPLOT
-00001690  4EB8 1530                567              JSR     PMPLOT
-00001694  4EB8 1404                568              JSR     GSTPLOT
-00001698                           569              
-00001698  4E40                     570              TRAP    #0                      ;CHANGE BUFFER
-0000169A                           571  
-0000169A  60D8                     572              BRA     .LOOP
-0000169C                           573  
-0000169C  FFFF FFFF                574              SIMHALT  
-000016A0                           575             
-000016A0                           576              INCLUDE "SYSVARS.X68"
-000016A0                           577  ; ==============================================================================
-000016A0                           578  ; SYSTEM VARIABLES
-000016A0                           579  ; ==============================================================================
-000016A0                           580   
-000016A0                           581  ; --- KEYBOARD RELATED VARIABLES -----------------------------------------------
-000016A0                           582  
-000016A0                           583  KBDVAL      DS.B    1                       ; KEY STATE
-000016A1                           584  KBDEDGE     DS.B    1                       ; KEY EDGE
-000016A2                           585  
-000016A2                           586  ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
-000016A2                           587  
-000016A2                           588  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
-000016A3                           589              DS.B    0           
-000016A3                           590  
-000016A3                           591  
-000016A3                           592  
-000016A3                           593  -------------------- end include --------------------
-000016A3                           594              INCLUDE "VARS.X68"
-000016A3                           595  ; ==============================================================================
-000016A3                           596  ; GAME VARIABLES
-000016A3                           597  ; ==============================================================================
-000016A3                           598  
-000016A3                           599  ; --- PAC-MAN RELATED VARIABLES ------------------------------------------------
-000016A3                           600  
-000016A4                           601  PMPOSX      DS.W    1                       ; PM X COORDINATE
-000016A6                           602  PMPOSY      DS.W    1                       ; PM Y COORDINATE
-000016A8                           603  PMVELX      DS.W    1                       ; PM X VELOCITY
-000016AA                           604  PMVELY      DS.W    1                       ; PM Y VELOCITY
-000016AC                           605  PMEAT       DS.B    1                       ; PM BOOLEAN EAT GST
-000016AD                           606              DS.B    0
-000016AD                           607  
-000016AD                           608  ; --- GHOST RELATED VARIABLES --------------------------------------------------
-000016AD                           609  
-000016AE                           610  GSTPOSX     DS.W    1                       ; GST X COORDINATE
-000016B0                           611  GSTPOSY     DS.W    1                       ; GST Y COORDINATE
-000016B2                           612  GSTVELX     DS.W    1                       ; GST X VELOCITY
-000016B4                           613  GSTVELY     DS.W    1                       ; GST Y VELOCITY
-000016B6                           614  GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
-000016B7                           615              DS.B    0
-000016B7                           616  
-000016B7                           617  ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
-000016B7                           618  
-000016B8                           619  SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
-000016BA                           620  SCOBNS      DS.W    1                       ; NUMBER OF BONUS
-000016BC                           621  
-000016BC                           622  
-000016BC                           623  -------------------- end include --------------------
-000016BC                           624              
-000016BC                           625              END    START        
+00001578  21FC 0000165C 0080       373              MOVE.L  #SCRUPD,($80+0*4)          ;INSTALL SUBRUTINE TO TRAP #0
+00001580  21FC 0000168C 0084       374              MOVE.L  #KBDUPD,($80+1*4)          ;INSTALL SUBRUTINE TO TRAP #1
+00001588  21FC 00001628 0088       375              MOVE.L  #DIBFIG,($80+2*4)          ;INSTALL SUBRUTINE TO TRAP #2
+00001590                           376              
+00001590  21FC 00001676 0064       377              MOVE.L  #SCRTIM,($60+1*4)          ;INSTALL INTERRUPT #1
+00001598                           378              
+00001598  4EB9 000015B2            379              JSR     SCRINIT
+0000159E  4EB9 000015F6            380              JSR     MAPINIT
+000015A4  4EB9 0000167E            381              JSR     KBDINIT
+000015AA                           382              
+000015AA                           383              
+000015AA  40E7                     384              MOVE.W  SR,-(A7)
+000015AC  0257 D8FF                385              ANDI.W  #$D8FF,(A7)                ;BIT SUPERVISOR TO O AND INTERRPUT MASK 000 (FOR REACTIVATE INTERRUPTIONS)             
+000015B0  4E73                     386              RTE
+000015B2                           387     
+000015B2                           388  ; ------------------------------------------------------------------------------
+000015B2                           389  SCRINIT
+000015B2                           390  ; INIT SCREEN. SET SCREEN RESOLUTION, SET WINDOWED MODE, CLEAR SCREEN, ENABLE BUFFER
+000015B2                           391  ; ENABLE TIMED INTERRUPTION
+000015B2                           392  ; INPUT    : NONE
+000015B2                           393  ; OUTPUT   : NONE
+000015B2                           394  ; MODIFIES : NONE
+000015B2                           395  ; ------------------------------------------------------------------------------
+000015B2                           396  
+000015B2  48E7 C000                397              MOVEM.L D0-D1,-(A7)                 ;SAFE REGISTERS IN STACK
+000015B6                           398  
+000015B6                           399              ; SET SCREEN RESOLUTION
+000015B6  103C 0021                400              MOVE.B  #33,D0
+000015BA  223C 028001E0            401              MOVE.L  #SCRWIDTH<<16|SCRHEIGH,D1
+000015C0  4E4F                     402              TRAP    #15
+000015C2                           403              
+000015C2                           404              ; SET WINDOWED MODE
+000015C2  7201                     405              MOVE.L  #1,D1
+000015C4  4E4F                     406              TRAP    #15
+000015C6                           407              
+000015C6                           408              ; ENABLE DOUBLE BUFFER
+000015C6  103C 005C                409              MOVE.B  #92,D0
+000015CA  123C 0011                410              MOVE.B  #17,D1
+000015CE  4E4F                     411              TRAP    #15
+000015D0                           412              
+000015D0                           413              ; CLEAR SCREEN
+000015D0  103C 000B                414              MOVE.B  #11,D0
+000015D4  323C FF00                415              MOVE.W  #$FF00,D1
+000015D8  4E4F                     416              TRAP    #15
+000015DA                           417              
+000015DA                           418              ;ENABLE TIMED INTERRPUT
+000015DA  303C 0020                419              MOVE.W  #32,D0
+000015DE  123C 0006                420              MOVE.B  #6,D1
+000015E2  143C 0081                421              MOVE.B  #$81,D2                   ;INDICATE THAT INTERRUPT 1 IS ACTIVATED PERIODICALLY
+000015E6  7614                     422              MOVE.L  #20,D3                    ;INDICATE THE MILISECONDS FOR THAT PERIOD (20 ms == 50 FPS)
+000015E8  4E4F                     423              TRAP    #15
+000015EA                           424              
+000015EA                           425              ;CLEAR INTERRUPT COUNTER
+000015EA  4239 00001716            426              CLR.B   (SCRINTCT)
+000015F0                           427              
+000015F0  4CDF 0003                428              MOVEM.L (A7)+,D0-D1               ;RESTORE REGISTERS FROM STACK
+000015F4                           429              
+000015F4  4E75                     430              RTS
+000015F6                           431  
+000015F6                           432  ; ------------------------------------------------------------------------------
+000015F6                           433  MAPINIT
+000015F6                           434  ; INIT MAP
+000015F6                           435  ; INPUT    : NONE
+000015F6                           436  ; OUTPUT   : NONE
+000015F6                           437  ; MODIFIES : NONE
+000015F6                           438  ; ------------------------------------------------------------------------------            
+000015F6                           439              
+000015F6                           440  
+000015F6  41F8 1000                441              LEA.L   MAPMAT,A0
+000015FA  3C3C 0030                442              MOVE.W  #48,D6
+000015FE  343C 001F                443              MOVE.W  #31,D2
+00001602                           444  BUCLE_FILA
+00001602  3A3C 0030                445              MOVE.W  #48,D5
+00001606  323C 001F                446              MOVE.W  #31,D1
+0000160A  0646 0010                447              ADD.W   #16,D6
+0000160E                           448  
+0000160E                           449  BUCLE_COLUMNA
+0000160E  0645 0010                450              ADD.W   #16,D5
+00001612                           451  
+00001612  1018                     452              MOVE.B  (A0)+,D0
+00001614  B07C 0000                453              CMP     #0,D0
+00001618  6700 0004                454              BEQ     ZERO
+0000161C  4E42                     455              TRAP    #2
+0000161E                           456  
+0000161E                           457  ZERO
+0000161E  51C9 FFEE                458              DBRA    D1,BUCLE_COLUMNA
+00001622                           459              
+00001622  51CA FFDE                460              DBRA    D2,BUCLE_FILA
+00001626                           461              
+00001626  4E75                     462              RTS            
+00001628                           463              
+00001628                           464  ; -----------------------------------------------------------------------------
+00001628                           465  DIBFIG
+00001628                           466  ; SUBRUTINE DRAW MAP
+00001628                           467  ; INPUT    : D5=POSITION X, D6=POSITION Y
+00001628                           468  ; OUTPUT   : NONE
+00001628                           469  ; MODIFIES : NONE
+00001628                           470  ; -----------------------------------------------------------------------------
+00001628  48E7 FE00                471              MOVEM.L D0-D6,-(A7)
+0000162C                           472              ; SET CONTOURN COLOR
+0000162C  103C 0050                473              MOVE.B  #80,D0
+00001630  223C 00FF0000            474              MOVE.L  #$00FF0000,D1
+00001636  4E4F                     475              TRAP    #15
+00001638                           476              
+00001638                           477              ; SET FILL COLOR
+00001638  103C 0051                478              MOVE.B  #81,D0
+0000163C  7200                     479              MOVE.L  #$00000000,D1
+0000163E  4E4F                     480              TRAP    #15
+00001640                           481              
+00001640                           482              ; DEFINE COORDINATES RACTANGLE
+00001640  3205                     483              MOVE.W  D5,D1
+00001642  3406                     484              MOVE.W  D6,D2
+00001644  0645 0010                485              ADD.W   #16,D5
+00001648  0646 0010                486              ADD.W   #16,D6
+0000164C  3605                     487              MOVE.W  D5,D3
+0000164E  3806                     488              MOVE.W  D6,D4
+00001650                           489              
+00001650                           490              ; DRAW RECTANGLE
+00001650  103C 0057                491              MOVE.B  #87,D0
+00001654  4E4F                     492              TRAP    #15
+00001656                           493              
+00001656  4CDF 007F                494              MOVEM.L (A7)+,D0-D6
+0000165A                           495  
+0000165A  4E73                     496              RTE
+0000165C                           497  
+0000165C                           498  
+0000165C                           499  
+0000165C                           500              
+0000165C                           501  ;------------------------------------------------------------------------------            
+0000165C                           502  SCRUPD
+0000165C                           503  ; UPDATES DOUBLE BUFFER
+0000165C                           504  ; INPUT    : NONE
+0000165C                           505  ; OUTPUT   : NONE
+0000165C                           506  ; MODIFIES : NONE
+0000165C                           507  ; ------------------------------------------------------------------------------
+0000165C                           508  
+0000165C  48A7 C000                509              MOVEM.W D0-D1,-(A7)
+00001660                           510              
+00001660                           511              ;SWITCH BUFFERS
+00001660  103C 005E                512              MOVE.B #94,D0
+00001664  4E4F                     513              TRAP #15
+00001666                           514              
+00001666                           515              ;CLEAR HIDDEN BUFFER
+00001666  103C 000B                516              MOVE.B  #11,D0
+0000166A  323C FF00                517              MOVE.W  #$FF00,D1
+0000166E  4E4F                     518              TRAP    #15
+00001670                           519              
+00001670  4C9F 0003                520              MOVEM.W (A7)+,D0-D1
+00001674                           521              
+00001674  4E73                     522              RTE
+00001676                           523              
+00001676                           524  ;------------------------------------------------------------------------------            
+00001676                           525  SCRTIM
+00001676                           526  ; TIME INTERRPUT SERVICE ROUTINE FOR SYNC
+00001676                           527  ; INPUT    : NONE
+00001676                           528  ; OUTPUT   : NONE
+00001676                           529  ; MODIFIES : NONE
+00001676                           530  ; ------------------------------------------------------------------------------
+00001676                           531  
+00001676  5239 00001716            532              ADDQ.B  #1,(SCRINTCT)
+0000167C  4E73                     533              RTE
+0000167E                           534              
+0000167E                           535  ;------------------------------------------------------------------------------            
+0000167E                           536  KBDINIT
+0000167E                           537  ; INIT THE KEYBOARD
+0000167E                           538  ; INPUT    : NONE
+0000167E                           539  ; OUTPUT   : NONE
+0000167E                           540  ; MODIFIES : NONE
+0000167E                           541  ; ------------------------------------------------------------------------------
+0000167E                           542  
+0000167E  4239 00001714            543              CLR.B   (KBDVAL)
+00001684  4239 00001715            544              CLR.B   (KBDEDGE)
+0000168A                           545  
+0000168A  4E75                     546              RTS
+0000168C                           547  
+0000168C                           548  ;------------------------------------------------------------------------------            
+0000168C                           549  KBDUPD
+0000168C                           550  ; UPDATES KEYBOARD INFO
+0000168C                           551  ; 3 -> DOWN
+0000168C                           552  ; 2 -> RIGHT
+0000168C                           553  ; 1 -> UP
+0000168C                           554  ; 0 -> LEFT
+0000168C                           555  ; ------------------------------------------------------------------------------
+0000168C                           556              
+0000168C  48E7 F800                557              MOVEM.L D0-D4,-(A7)
+00001690                           558              
+00001690  303C 0013                559              MOVE.W  #19,D0
+00001694                           560              ;GET INFO OF THE KEYS
+00001694  223C 28272625            561              MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
+0000169A  4E4F                     562              TRAP    #15
+0000169C                           563              
+0000169C                           564              ;CONVERT TO DESIRED FORMAT
+0000169C  4EB9 000016C6            565              JSR .CONVERT
+000016A2                           566  
+000016A2                           567              ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
+000016A2  1039 00001714            568              MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
+000016A8  4600                     569              NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
+000016AA  C002                     570              AND.B   D2,D0
+000016AC  13C0 00001715            571              MOVE.B  D0,(KBDEDGE)
+000016B2                           572              
+000016B2                           573         
+000016B2  B03C 0000                574              CMP.B   #0,D0
+000016B6  6700 0008                575              BEQ     .NOACT          
+000016BA                           576              
+000016BA                           577              ;STORE NEW KBDVAL
+000016BA  13C2 00001714            578              MOVE.B  D2,(KBDVAL)
+000016C0                           579  .NOACT
+000016C0                           580              
+000016C0  4CDF 001F                581              MOVEM.L (A7)+,D0-D4
+000016C4                           582              
+000016C4  4E73                     583              RTE    
+000016C6                           584              
+000016C6                           585  .CONVERT 
+000016C6  363C 0003                586              MOVE.W  #3,D3
+000016CA                           587              
+000016CA  E189                     588  .LOOP       LSL.L   #8,D1
+000016CC  E312                     589              ROXL.B  #1,D2
+000016CE  51CB FFFA                590              DBRA.W  D3,.LOOP
+000016D2  4E75                     591              RTS
+000016D4                           592             
+000016D4                           593              
+000016D4                           594  
+000016D4                           595  
+000016D4                           596  
+000016D4                           597  
+000016D4                           598  
+000016D4                           599  
+000016D4                           600  
+000016D4                           601  
+000016D4                           602  -------------------- end include --------------------
+000016D4                           603              
+000016D4                           604      
+000016D4                           605  START:
+000016D4                           606  
+000016D4                           607  ;--- INITIALIZATION -----------------------------------------------------------
+000016D4                           608  
+000016D4  007C 0700                609              ORI.W   #$0700,SR               ;DISABLE INTERRUPTIONS
+000016D8                           610  
+000016D8  4EB8 1578                611              JSR     SYSINIT
+000016DC  4EB8 1406                612              JSR     PMINIT
+000016E0  4EB8 1400                613              JSR     GSTINIT
+000016E4  4EB8 1574                614              JSR     SCOINIT
+000016E8                           615  
+000016E8                           616  .LOOP
+000016E8                           617  
+000016E8                           618  ; --- UPDATE -------------------------------------------------------------------
+000016E8                           619  
+000016E8                           620  ; READ INPUT DEVICES
+000016E8                           621  
+000016E8  4E41                     622              TRAP    #1
+000016EA                           623  
+000016EA                           624  ; UPDATE GAME LOGIC
+000016EA                           625  
+000016EA  4EB8 1428                626              JSR     PMUPD
+000016EE  4EB8 1402                627              JSR     GSTUPD            
+000016F2                           628  
+000016F2                           629  ; --- SYNC ---------------------------------------------------------------------
+000016F2                           630              ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
+000016F2                           631              ;THE BUCLE
+000016F2                           632              
+000016F2  4A39 00001716            633  .WAITINIT   TST.B   (SCRINTCT)
+000016F8  67F8                     634              BEQ     .WAITINIT
+000016FA  4239 00001716            635              CLR.B   (SCRINTCT)
+00001700                           636  
+00001700                           637  ; --- PLOT ---------------------------------------------------------------------
+00001700                           638  
+00001700  4EB8 1576                639              JSR     SCOPLOT
+00001704  4EB8 1530                640              JSR     PMPLOT
+00001708  4EB8 1404                641              JSR     GSTPLOT
+0000170C                           642              
+0000170C  4E40                     643              TRAP    #0                      ;CHANGE BUFFER
+0000170E                           644  
+0000170E  60D8                     645              BRA     .LOOP
+00001710                           646  
+00001710  FFFF FFFF                647              SIMHALT  
+00001714                           648             
+00001714                           649              INCLUDE "SYSVARS.X68"
+00001714                           650  ; ==============================================================================
+00001714                           651  ; SYSTEM VARIABLES
+00001714                           652  ; ==============================================================================
+00001714                           653   
+00001714                           654  ; --- KEYBOARD RELATED VARIABLES -----------------------------------------------
+00001714                           655  
+00001714                           656  KBDVAL      DS.B    1                       ; KEY STATE
+00001715                           657  KBDEDGE     DS.B    1                       ; KEY EDGE
+00001716                           658  
+00001716                           659  ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
+00001716                           660  
+00001716                           661  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
+00001717                           662              DS.B    0           
+00001717                           663  
+00001717                           664  
+00001717                           665  
+00001717                           666  -------------------- end include --------------------
+00001717                           667              INCLUDE "VARS.X68"
+00001717                           668  ; ==============================================================================
+00001717                           669  ; GAME VARIABLES
+00001717                           670  ; ==============================================================================
+00001717                           671  
+00001717                           672  ; --- PAC-MAN RELATED VARIABLES ------------------------------------------------
+00001717                           673  
+00001718                           674  PMPOSX      DS.W    1                       ; PM X COORDINATE
+0000171A                           675  PMPOSY      DS.W    1                       ; PM Y COORDINATE
+0000171C                           676  PMVELX      DS.W    1                       ; PM X VELOCITY
+0000171E                           677  PMVELY      DS.W    1                       ; PM Y VELOCITY
+00001720                           678  PMEAT       DS.B    1                       ; PM BOOLEAN EAT GST
+00001721                           679              DS.B    0
+00001721                           680  
+00001721                           681  ; --- GHOST RELATED VARIABLES --------------------------------------------------
+00001721                           682  
+00001722                           683  GSTPOSX     DS.W    1                       ; GST X COORDINATE
+00001724                           684  GSTPOSY     DS.W    1                       ; GST Y COORDINATE
+00001726                           685  GSTVELX     DS.W    1                       ; GST X VELOCITY
+00001728                           686  GSTVELY     DS.W    1                       ; GST Y VELOCITY
+0000172A                           687  GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
+0000172B                           688              DS.B    0
+0000172B                           689  
+0000172B                           690  ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
+0000172B                           691  
+0000172C                           692  SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
+0000172E                           693  SCOBNS      DS.W    1                       ; NUMBER OF BONUS
+00001730                           694  
+00001730                           695  
+00001730                           696  -------------------- end include --------------------
+00001730                           697              
+00001730                           698              END    START        
 
 No errors detected
 No warnings generated
@@ -635,13 +708,16 @@ No warnings generated
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
+BUCLE_COLUMNA       160E
+BUCLE_FILA          1602
+DIBFIG              1628
 GSRWIDHT            10
 GSTCOL1             FF0000
 GSTCOL2             FF0080
 GSTCOL3             FFFF00
 GSTCOL4             80FF
 GSTCOL5             800000
-GSTDEAD             16B6
+GSTDEAD             172A
 GSTFCOL1            0
 GSTFCOL2            0
 GSTFCOL3            0
@@ -650,36 +726,37 @@ GSTFCOL5            0
 GSTHEIGH            10
 GSTINIT             1400
 GSTPLOT             1404
-GSTPOSX             16AE
-GSTPOSY             16B0
+GSTPOSX             1722
+GSTPOSY             1724
 GSTSPEED            7
 GSTSPEED2           5
 GSTUPD              1402
-GSTVELX             16B2
-GSTVELY             16B4
+GSTVELX             1726
+GSTVELY             1728
 KBDDOWN             28
-KBDEDGE             16A1
+KBDEDGE             1715
 KBDFIRE1            20
 KBDFIRE2            4D
 KBDFIRE3            10
-KBDINIT             160A
+KBDINIT             167E
 KBDLEFT             25
 KBDPAUSE            50
 KBDRIGHT            27
 KBDUP               26
-KBDUPD              1618
-KBDUPD:CONVERT      1652
-KBDUPD:LOOP         1656
-KBDUPD:NOACT        164C
-KBDVAL              16A0
+KBDUPD              168C
+KBDUPD:CONVERT      16C6
+KBDUPD:LOOP         16CA
+KBDUPD:NOACT        16C0
+KBDVAL              1714
+MAPINIT             15F6
 MAPMAT              1000
-PMEAT               16AC
+PMEAT               1720
 PMFCOL              FFFF
 PMINIT              1406
 PMPCOL              FFFF
 PMPLOT              1530
-PMPOSX              16A4
-PMPOSY              16A6
+PMPOSX              1718
+PMPOSY              171A
 PMRAD               8
 PMSPEED             4
 PMUPD               1428
@@ -698,22 +775,23 @@ PMUPD:NOTPRESSED    1490
 PMUPD:NOTPRESSLEFT  144A
 PMUPD:NOTPRESSRIGHT  145A
 PMUPD:NOTPRESSUP    146C
-PMVELX              16A8
-PMVELY              16AA
-SCOBNS              16BA
+PMVELX              171C
+PMVELY              171E
+SCOBNS              172E
 SCOFCOL             0
 SCOINIT             1574
-SCOLIFE             16B8
+SCOLIFE             172C
 SCOLINE1            101
 SCOLINE2            102
 SCOPLOT             1576
 SCRHEIGH            1E0
-SCRINIT             15A4
-SCRINTCT            16A2
-SCRTIM              1602
-SCRUPD              15E8
+SCRINIT             15B2
+SCRINTCT            1716
+SCRTIM              1676
+SCRUPD              165C
 SCRWIDTH            280
-START               1660
-START:LOOP          1674
-START:WAITINIT      167E
+START               16D4
+START:LOOP          16E8
+START:WAITINIT      16F2
 SYSINIT             1578
+ZERO                161E
