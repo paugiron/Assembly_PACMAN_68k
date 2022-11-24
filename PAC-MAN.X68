@@ -12,6 +12,8 @@ PMINIT
 
             MOVE.W  #SCRWIDTH/2,(PMPOSX)
             MOVE.W  #SCRHEIGH/2,(PMPOSY)
+            ADDQ.W  #8,(PMPOSX)
+            ADDQ.W  #8,(PMPOSY)
             MOVE.W  #PMSPEED,(PMVELX)
             MOVE.W  #PMSPEED,(PMVELY)
 
@@ -25,27 +27,44 @@ PMUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             
-            MOVEM.W D0-D1,-(A7)
+            MOVEM.W D0-D3,-(A7)
             
             MOVE.W  (PMVELX),D0
             MOVE.W  (PMVELY),D1
             
-            BTST.B  #0,(KBDVAL)
+            MOVE.W  (PMPOSX),D2
+            MOVE.W  (PMPOSY),D3
+            ADDQ.W  #8,D2
+            ADDQ.W  #8,D3
+            
+            ;MASK OF THE LAST NIBBLE        
+            AND.W   #$000F,D2
+            AND.W   #$000F,D3
+            
+            BTST.B  #0,(KBDVAL) 
             BEQ     .NOTPRESSLEFT
+            CMP     #$0000,D3
+            BNE     .NOTPRESSLEFT
             NEG.W   D0
             BRA     .ACTX
 .NOTPRESSLEFT
             BTST.B  #2,(KBDVAL)
             BEQ     .NOTPRESSRIGHT
+            CMP     #$0000,D3
+            BNE     .NOTPRESSRIGHT
             BRA     .ACTX
 .NOTPRESSRIGHT
             BTST.B  #1,(KBDVAL)
             BEQ     .NOTPRESSUP
+            ;CMP     #$0000,D2
+            ;BNE     .NOTPRESSUP
             NEG     D1
             BRA     .ACTY
 .NOTPRESSUP
             BTST.B  #3,(KBDVAL)
             BEQ     .NOTPRESSDOWN
+            ;CMP     #$0000,D2
+            ;BNE     .NOTPRESSDOWN
             BRA     .ACTY
 .NOTPRESSDOWN
             BRA     .NOTPRESSED
@@ -59,7 +78,7 @@ PMUPD
          
 .DONE     
 .NOTPRESSED
-            MOVEM.W (A7)+,D0-D1
+            MOVEM.W (A7)+,D0-D3
             
             RTS
                         
@@ -101,6 +120,9 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
+
+
 
 
 
