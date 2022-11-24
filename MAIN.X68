@@ -13,6 +13,7 @@
             INCLUDE "SCORE.X68"
             INCLUDE "SYSCONST.X68"
             INCLUDE "SYSTEM.X68"
+            INCLUDE "MAP.X68"
             
     
 START:
@@ -23,6 +24,7 @@ START:
 
             JSR     SYSINIT
             JSR     PMINIT
+            JSR     MAPINIT
             JSR     GSTINIT
             JSR     SCOINIT
 
@@ -37,7 +39,8 @@ START:
 ; UPDATE GAME LOGIC
 
             JSR     PMUPD
-            JSR     GSTUPD            
+            JSR     GSTUPD 
+            JSR     MAPINIT               
 
 ; --- SYNC ---------------------------------------------------------------------
             ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
@@ -63,6 +66,7 @@ START:
             INCLUDE "VARS.X68"
             
             END    START        
+
 
 
 

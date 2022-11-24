@@ -5,7 +5,7 @@
 ; --- SCREEN RELATED CONSTANTS -------------------------------------------------
 
 SCRWIDTH    EQU     640                     ; SCREEN WIDTH
-SCRHEIGH    EQU     480                     ; SCREEN HEIGHT
+SCRHEIGH    EQU     640                     ; SCREEN HEIGHT
 
 ;---KEYCODES--------------------------------------------------------------------
 
@@ -17,6 +17,7 @@ KBDFIRE1    EQU     ' '
 KBDFIRE2    EQU     'M'                         
 KBDFIRE3    EQU     $10
 KBDPAUSE    EQU     'P'
+
 
 
 
