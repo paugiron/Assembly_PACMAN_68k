@@ -38,8 +38,8 @@ PMUPD
             ADDQ.W  #8,D3
             
             ;MASK OF THE LAST NIBBLE        
-            AND.W   #$000F,D2
-            AND.W   #$000F,D3
+            AND.W   #$000F,D2               ; COORDENADA Y
+            AND.W   #$000F,D3               ; COORDENADA X
             
             BTST.B  #0,(KBDVAL) 
             BEQ     .NOTPRESSLEFT
@@ -120,6 +120,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 

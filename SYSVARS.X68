@@ -11,6 +11,11 @@ KBDEDGE     DS.B    1                       ; KEY EDGE
 
 SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
             DS.B    0           
+            
+; --- MAP RELATED VARIABLE -----------------------------------------------------
+
+MAPVAR      DS.B    1024
+
 
 
 

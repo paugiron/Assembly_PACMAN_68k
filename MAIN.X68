@@ -39,8 +39,8 @@ START:
 ; UPDATE GAME LOGIC
 
             JSR     PMUPD
-            JSR     GSTUPD 
-            JSR     MAPINIT               
+            JSR     GSTUPD
+            ;JSR     MAPINIT
 
 ; --- SYNC ---------------------------------------------------------------------
             ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
@@ -51,10 +51,12 @@ START:
             CLR.B   (SCRINTCT)
 
 ; --- PLOT ---------------------------------------------------------------------
-
+            
+            JSR     MAPPLOT
             JSR     SCOPLOT
             JSR     PMPLOT
             JSR     GSTPLOT
+            
             
             
             TRAP    #0                      ;CHANGE BUFFER
@@ -67,6 +69,7 @@ START:
             INCLUDE "VARS.X68"
             
             END    START        
+
 
 
 
