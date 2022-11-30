@@ -56,6 +56,7 @@ START:
             JSR     PMPLOT
             JSR     GSTPLOT
             
+            
             TRAP    #0                      ;CHANGE BUFFER
 
             BRA     .LOOP
@@ -66,6 +67,7 @@ START:
             INCLUDE "VARS.X68"
             
             END    START        
+
 
 
 
