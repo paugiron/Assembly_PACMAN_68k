@@ -143,8 +143,8 @@ KBDUPD
             MOVE.B  D0,(KBDEDGE)
             
        
-            CMP.B   #0,D0
-            BEQ     .NOACT          
+            ;CMP.B   #0,D0
+            ;BEQ     .NOACT          
             
             ;STORE NEW KBDVAL
             MOVE.B  D2,(KBDVAL)
@@ -163,6 +163,7 @@ KBDUPD
             RTS
            
             
+
 
 
 

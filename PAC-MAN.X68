@@ -56,15 +56,15 @@ PMUPD
 .NOTPRESSRIGHT
             BTST.B  #1,(KBDVAL)
             BEQ     .NOTPRESSUP
-            ;CMP     #$0000,D2
-            ;BNE     .NOTPRESSUP
+            CMP     #$0000,D2
+            BNE     .NOTPRESSUP
             NEG     D1
             BRA     .ACTY
 .NOTPRESSUP
             BTST.B  #3,(KBDVAL)
             BEQ     .NOTPRESSDOWN
-            ;CMP     #$0000,D2
-            ;BNE     .NOTPRESSDOWN
+            CMP     #$0000,D2
+            BNE     .NOTPRESSDOWN
             BRA     .ACTY
 .NOTPRESSDOWN
             BRA     .NOTPRESSED
@@ -120,6 +120,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
