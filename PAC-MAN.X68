@@ -55,26 +55,30 @@ PMUPD
             BTST.B  #0,(KBDVAL)             ;CHECK LEFT
             BEQ     .NOTLEFT
             NEG     D0
-            MOVE.B  #0,D4
+            MOVE.B  #$0,D4
             BRA     .ACTX
 .NOTLEFT            
             BTST.B   #2,(KBDVAL)             ;CHECK RIGHT
             BEQ     .NOTRIGHT
-            MOVE.B  #0,D4
+            MOVE.B   #$0,D4
             BRA     .ACTX
 .NOTRIGHT            
             BTST.B   #1,(KBDVAL)             ;CHECK UP
             BEQ     .NOTUP
             NEG     D1
-            MOVE.B  #1,D4
+            MOVE.B  #$1,D4
             BRA     .ACTY
 .NOTUP            
             BTST.B   #3,(KBDVAL)             ;CHECK DOWN
             BEQ     .NOTDOWN
-            MOVE.B   #1,D4
+            MOVE.B   #$1,D4
             BRA     .ACTY
 .NOTDOWN
             BRA     .DONE
+            
+            
+            ;UPDATE COORDS
+            
 .ACTX       
             ADD.W   D0,(PMPOSX)
             BRA     .DONE
@@ -82,11 +86,10 @@ PMUPD
             ADD.W   D1,(PMPOSY)
             BRA     .DONE
 .NOTMULT     
-            CMP     #0,D4
+            CMP     #$0,D4
             BEQ     .ACTX
             BRA     .ACTY
 .DONE
-
             ;RESTORE
             MOVE.B  D4,(PMLAMO)
             MOVE.W  D0,(PMVELX)
@@ -133,6 +136,8 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
+
 
 
 
