@@ -39,7 +39,7 @@ START:
 ; UPDATE GAME LOGIC
 
             JSR     PMUPD
-            JSR     GSTUPD
+            ;JSR     GSTUPD
             ;JSR     MAPINIT
 
 ; --- SYNC ---------------------------------------------------------------------

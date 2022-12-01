@@ -93,12 +93,12 @@ DIBFIG
             MOVEM.L D0-D6,-(A7)
             ; SET CONTOURN COLOR
             MOVE.B  #80,D0
-            MOVE.L  #$00FF0000,D1
+            MOVE.L  #$00AA0000,D1
             TRAP    #15
             
             ; SET FILL COLOR
             MOVE.B  #81,D0
-            MOVE.L  #$00000000,D1
+            MOVE.L  #$00FF0000,D1
             TRAP    #15
             
             ; DEFINE COORDINATES RACTANGLE
@@ -116,6 +116,7 @@ DIBFIG
             MOVEM.L (A7)+,D0-D6
 
             RTE
+
 
 
 *~Font name~Fixedsys~
