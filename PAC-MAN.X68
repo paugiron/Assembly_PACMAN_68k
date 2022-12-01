@@ -34,50 +34,49 @@ PMUPD
             
             MOVE.W  (PMPOSX),D2
             MOVE.W  (PMPOSY),D3
-            ADDQ.W  #8,D2
-            ADDQ.W  #8,D3
+           
             
             ;MASK OF THE LAST NIBBLE        
-            AND.W   #$000F,D2               ; COORDENADA Y
-            AND.W   #$000F,D3               ; COORDENADA X
+            AND.W   #$000F,D2               ; COORDENADA X
+            AND.W   #$000F,D3               ; COORDENADA Y
             
-            BTST.B  #0,(KBDVAL) 
-            BEQ     .NOTPRESSLEFT
-            CMP     #$0000,D3
-            BNE     .NOTPRESSLEFT
-            NEG.W   D0
-            BRA     .ACTX
-.NOTPRESSLEFT
-            BTST.B  #2,(KBDVAL)
-            BEQ     .NOTPRESSRIGHT
-            CMP     #$0000,D3
-            BNE     .NOTPRESSRIGHT
-            BRA     .ACTX
-.NOTPRESSRIGHT
-            BTST.B  #1,(KBDVAL)
-            BEQ     .NOTPRESSUP
+            ;CHECK IF COORDS ARE MULTIPLES OF 16
             CMP     #$0000,D2
-            BNE     .NOTPRESSUP
+            BNE     .NOTMULT
+            CMP     #$0000,D3
+            BNE     .NOTMULT
+
+            ;CHECK THE DIRECTION
+            BTST.B  #0,(KBDVAL)             ;CHECK LEFT
+            BEQ     .NOTLEFT
+            NEG     D0
+            BRA     .ACTX
+.NOTLEFT            
+            BTST.B   #2,(KBDVAL)             ;CHECK RIGHT
+            BEQ     .NOTRIGHT
+            BRA     .ACTX
+.NOTRIGHT            
+            BTST.B   #1,(KBDVAL)             ;CHECK UP
+            BEQ     .NOTUP
             NEG     D1
             BRA     .ACTY
-.NOTPRESSUP
-            BTST.B  #3,(KBDVAL)
-            BEQ     .NOTPRESSDOWN
-            CMP     #$0000,D2
-            BNE     .NOTPRESSDOWN
+.NOTUP            
+            BTST.B   #3,(KBDVAL)             ;CHECK DOWN
+            BEQ     .NOTDOWN
             BRA     .ACTY
-.NOTPRESSDOWN
-            BRA     .NOTPRESSED
- 
-.ACTX
-            ADD.W   D0,(PMPOSX)
+.NOTDOWN
+.ACTX       
+            ADD.W   D2,(PMPOSX)
             BRA     .DONE
-            
 .ACTY
-            ADD.W   D1,(PMPOSY)
-         
-.DONE     
-.NOTPRESSED
+            ADD.W   D3,(PMPOSY)
+            BRA     .DONE
+.NOTMULT     
+.DONE
+
+            ;RESTORE
+            MOVE.W  D0,(PMVELX)
+            MOVE.W  D1,(PMVELY)
             MOVEM.W (A7)+,D0-D3
             
             RTS
@@ -120,6 +119,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
