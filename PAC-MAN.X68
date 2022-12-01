@@ -16,6 +16,7 @@ PMINIT
             ADDQ.W  #8,(PMPOSY)
             MOVE.W  #PMSPEED,(PMVELX)
             MOVE.W  #PMSPEED,(PMVELY)
+            CLR.B   (PMLAMO)
 
             RTS
             
@@ -27,14 +28,18 @@ PMUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             
-            MOVEM.W D0-D3,-(A7)
+            MOVEM.W D0-D4,-(A7)
             
             MOVE.W  (PMVELX),D0
             MOVE.W  (PMVELY),D1
             
             MOVE.W  (PMPOSX),D2
             MOVE.W  (PMPOSY),D3
-           
+            
+            ADDQ.W  #8,D2              
+            ADDQ.W  #8,D3  
+            
+            MOVE.B  (PMLAMO),D4
             
             ;MASK OF THE LAST NIBBLE        
             AND.W   #$000F,D2               ; COORDENADA X
@@ -50,34 +55,43 @@ PMUPD
             BTST.B  #0,(KBDVAL)             ;CHECK LEFT
             BEQ     .NOTLEFT
             NEG     D0
+            MOVE.B  #0,D4
             BRA     .ACTX
 .NOTLEFT            
             BTST.B   #2,(KBDVAL)             ;CHECK RIGHT
             BEQ     .NOTRIGHT
+            MOVE.B  #0,D4
             BRA     .ACTX
 .NOTRIGHT            
             BTST.B   #1,(KBDVAL)             ;CHECK UP
             BEQ     .NOTUP
             NEG     D1
+            MOVE.B  #1,D4
             BRA     .ACTY
 .NOTUP            
             BTST.B   #3,(KBDVAL)             ;CHECK DOWN
             BEQ     .NOTDOWN
+            MOVE.B   #1,D4
             BRA     .ACTY
 .NOTDOWN
+            BRA     .DONE
 .ACTX       
-            ADD.W   D2,(PMPOSX)
+            ADD.W   D0,(PMPOSX)
             BRA     .DONE
 .ACTY
-            ADD.W   D3,(PMPOSY)
+            ADD.W   D1,(PMPOSY)
             BRA     .DONE
 .NOTMULT     
+            CMP     #0,D4
+            BEQ     .ACTX
+            BRA     .ACTY
 .DONE
 
             ;RESTORE
+            MOVE.B  D4,(PMLAMO)
             MOVE.W  D0,(PMVELX)
             MOVE.W  D1,(PMVELY)
-            MOVEM.W (A7)+,D0-D3
+            MOVEM.W (A7)+,D0-D4
             
             RTS
                         
@@ -119,6 +133,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
