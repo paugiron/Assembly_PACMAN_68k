@@ -30,8 +30,8 @@ PMUPD
             
             MOVEM.W D0-D4,-(A7)
             
-            MOVE.W  (PMVELX),D0
-            MOVE.W  (PMVELY),D1
+            MOVE.W  #PMSPEED,D0
+            
             
             MOVE.W  (PMPOSX),D2
             MOVE.W  (PMPOSY),D3
@@ -54,46 +54,61 @@ PMUPD
             ;CHECK THE DIRECTION
             BTST.B  #0,(KBDVAL)             ;CHECK LEFT
             BEQ     .NOTLEFT
-            NEG     D0
-            MOVE.B  #$0,D4
-            BRA     .ACTX
+            CLR.B   D4
+            MOVE.B  #0,D4
+            BRA     .ACTXLEFT
 .NOTLEFT            
             BTST.B   #2,(KBDVAL)             ;CHECK RIGHT
             BEQ     .NOTRIGHT
-            MOVE.B   #$0,D4
-            BRA     .ACTX
+            CLR.B   D4
+            MOVE.B   #1,D4
+            BRA     .ACTXRIGHT
 .NOTRIGHT            
             BTST.B   #1,(KBDVAL)             ;CHECK UP
             BEQ     .NOTUP
-            NEG     D1
-            MOVE.B  #$1,D4
-            BRA     .ACTY
+            CLR.B   D4
+            MOVE.B  #2,D4
+            BRA     .ACTYUP
 .NOTUP            
             BTST.B   #3,(KBDVAL)             ;CHECK DOWN
             BEQ     .NOTDOWN
-            MOVE.B   #$1,D4
-            BRA     .ACTY
+            CLR.B   D4
+            MOVE.B   #3,D4
+            BRA     .ACTYDOWN
 .NOTDOWN
             BRA     .DONE
             
             
             ;UPDATE COORDS
             
-.ACTX       
+.ACTXRIGHT      
             ADD.W   D0,(PMPOSX)
             BRA     .DONE
-.ACTY
-            ADD.W   D1,(PMPOSY)
+.ACTXLEFT
+            SUB.W   D0,(PMPOSX)
             BRA     .DONE
+    
+.ACTYDOWN
+            ADD.W   D0,(PMPOSY)
+            BRA     .DONE
+.ACTYUP     
+            SUB.W   D0,(PMPOSY)
+            BRA     .DONE
+            
+            
+            ;IF NOT MULT DO
 .NOTMULT     
-            CMP     #$0,D4
-            BEQ     .ACTX
-            BRA     .ACTY
+            CMP.B     #0,D4
+            BEQ     .ACTXLEFT
+            CMP.B     #1,D4
+            BEQ     .ACTXRIGHT
+            CMP.B     #2,D4
+            BEQ     .ACTYUP
+            BRA     .ACTYDOWN
 .DONE
             ;RESTORE
             MOVE.B  D4,(PMLAMO)
-            MOVE.W  D0,(PMVELX)
-            MOVE.W  D1,(PMVELY)
+            
             MOVEM.W (A7)+,D0-D4
             
             RTS
@@ -136,6 +151,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 

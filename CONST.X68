@@ -6,7 +6,7 @@
 
 PMPCOL      EQU     $0000FFFF               ; PAC-MAN CONTOUR COLOR
 PMFCOL      EQU     $0000FFFF               ; PAC-MAN FILL COLOR
-PMSPEED     EQU     4                       ; MAGNITUDE OF THE X AND Y VEL.
+PMSPEED     EQU     2                       ; MAGNITUDE OF THE X AND Y VEL.
 PMRAD       EQU     8                       ; PAC-MAN RADIUS
 
 ; --- GHOST RELATED CONSTANTS ----------------------------------------------------
@@ -74,6 +74,7 @@ MAPMAT      DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
             DC.B    $1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1
             DC.B    $1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
             DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+
 
 
 
