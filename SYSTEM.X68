@@ -162,9 +162,40 @@ KBDUPD
             DBRA.W  D3,.LOOP
             RTS
            
+
+;------------------------------------------------------------------------------            
+COLWALLRIGHT
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
+
+
+            MOVE.W  (PMPOSX),D0
+            MOVE.W  (PMPOSY),D1
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            LEA.L   MAPVAR,A0
+            
+            SUB.W   #2,D0
+            ;SUB.W   #2,D1
+            
+            ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
+            
+            MOVE.B  (A0)+,D2
             
 
 
+;------------------------------------------------------------------------------            
+COLWALLLEFT
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
 
 
 
@@ -175,12 +206,28 @@ KBDUPD
 
 
 
+;------------------------------------------------------------------------------            
+COLWALLDOWN
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
 
 
 
 
 
 
+
+
+;------------------------------------------------------------------------------            
+COLWALLUP
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
 
 *~Font name~Fixedsys~
 *~Font size~9~

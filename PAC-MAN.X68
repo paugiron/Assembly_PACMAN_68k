@@ -81,17 +81,21 @@ PMUPD
             
             ;UPDATE COORDS
             
-.ACTXRIGHT      
+.ACTXRIGHT  
+            JSR     COLWALLRIGHT
             ADD.W   D0,(PMPOSX)
             BRA     .DONE
 .ACTXLEFT
+            JSR     COLWALLLEFT
             SUB.W   D0,(PMPOSX)
             BRA     .DONE
     
 .ACTYDOWN
+            JSR     COLWALLDOWN
             ADD.W   D0,(PMPOSY)
             BRA     .DONE
 .ACTYUP     
+            JSR     COLWALLUP
             SUB.W   D0,(PMPOSY)
             BRA     .DONE
             
@@ -151,6 +155,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
