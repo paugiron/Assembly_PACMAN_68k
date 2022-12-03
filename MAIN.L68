@@ -1,6 +1,6 @@
-000017F6 Starting Address
+00001890 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 03/12/2022 12:23:14
+Created On: 03/12/2022 12:58:57
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; TITLE       : PAC-MAN 68000
@@ -614,7 +614,7 @@ Created On: 03/12/2022 12:23:14
 00001724  5540                     610              SUB.W   #2,D0
 00001726                           611              ;SUB.W   #2,D1
 00001726                           612              
-00001726                           613              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
+00001726                           613              ;BUCLE PER MIRAR POSICIï¿½ ESQUERRE DE PACMAN
 00001726                           614              
 00001726  1418                     615              MOVE.B  (A0)+,D2
 00001728                           616              

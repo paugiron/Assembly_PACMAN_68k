@@ -171,6 +171,7 @@ COLWALLRIGHT
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
+            MOVEM.L D0-D5,-(A7)
 
             MOVE.W  (PMPOSX),D0
             MOVE.W  (PMPOSY),D1
@@ -178,15 +179,24 @@ COLWALLRIGHT
             DIVS.W  #16,D0
             DIVS.W  #16,D1
             
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+            
             LEA.L   MAPVAR,A0
             
-            SUB.W   #2,D0
-            ;SUB.W   #2,D1
+            ADD.W   #1,D0
+            SUB.W   #1,D1
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+            SUB.W   #1,D0
+
+BUCLE            
+            MOVE.B  (A0)+,D5
+            DBRA    D0,BUCLE
             
-            ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
+            MOVEM.L (A7)+,D0-D5
             
-            MOVE.B  (A0)+,D2
-            
+            RTS
 
 
 ;------------------------------------------------------------------------------            
@@ -197,14 +207,33 @@ COLWALLLEFT
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
+            MOVEM.L D0-D5,-(A7)
 
+            MOVE.W  (PMPOSX),D0
+            MOVE.W  (PMPOSY),D1
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+            
+            LEA.L   MAPVAR,A0
+            
+            SUB.W   #1,D0
+            SUB.W   #1,D1
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+            SUB.W   #1,D0
 
+BUCLE2            
+            MOVE.B  (A0)+,D5
+            DBRA    D0,BUCLE2                
 
-
-
-
-
-
+            
+            MOVEM.L (A7)+,D0-D5
+            
+            RTS
 
 ;------------------------------------------------------------------------------            
 COLWALLDOWN
@@ -214,11 +243,31 @@ COLWALLDOWN
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
+            MOVEM.L D0-D5,-(A7)
 
+            MOVE.W  (PMPOSX),D0
+            MOVE.W  (PMPOSY),D1
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+            
+            LEA.L   MAPVAR,A0
+            
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+            SUB.W   #1,D0
 
+BUCLE3            
+            MOVE.B  (A0)+,D5
+            DBRA    D0,BUCLE3
 
-
-
+            
+            MOVEM.L (A7)+,D0-D5
+            
+            RTS
 
 
 ;------------------------------------------------------------------------------            
@@ -229,6 +278,34 @@ COLWALLUP
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
+            MOVEM.L D0-D5,-(A7)
+
+            MOVE.W  (PMPOSX),D0
+            MOVE.W  (PMPOSY),D1
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+            
+            LEA.L   MAPVAR,A0
+            
+            SUB.W   #2,D1
+            CMP     #0,D1
+            BLO     BUCLE4
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+            SUB.W   #1,D0
+
+BUCLE4            
+            MOVE.B  (A0)+,D5
+            DBRA    D0,BUCLE4
+
+            
+            MOVEM.L (A7)+,D0-D5
+            
+            RTS
 *~Font name~Fixedsys~
 *~Font size~9~
 *~Tab type~0~
