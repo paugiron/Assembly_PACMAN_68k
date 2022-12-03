@@ -14,8 +14,8 @@ PMRAD       EQU     8                       ; PAC-MAN RADIUS
 GSTSPEED    EQU     7                       ; MAGNITUDE OF THE NORMAL DISPLACEMENT
 GSTSPEED2   EQU     5                       ; MAGNITUDE OF THE ATACKED DISPLACEMENT
 
-GSTCOL1     EQU     $00FF0000               ; GHOST 1 CONTOUR COLOR RED
-GSTFCOL1    EQU     $00000000               ; GHOST 1 FILL COLOR
+GSTCOL1     EQU     $000000FF               ; GHOST 1 CONTOUR COLOR RED
+GSTFCOL1    EQU     $00FFFFFF               ; GHOST 1 FILL COLOR WHITE
 
 GSTCOL2     EQU     $00FF0080               ; GHOST 2 CONTOUR COLOR PINK
 GSTFCOL2    EQU     $00000000               ; GHOST 1 FILL COLOR
@@ -29,8 +29,7 @@ GSTFCOL4    EQU     $00000000               ; GHOST 4 FILL COLOR
 GSTCOL5     EQU     $00800000               ; CONTOUR COLOR OF ATACKED MODE
 GSTFCOL5    EQU     $00000000               ; FILL COLOR OF ATACKED MODE
 
-GSTHEIGH    EQU     16                      ; GHOST HEIGH
-GSRWIDHT    EQU     16                      ; GHOST WEIDTH
+GSTRAD      EQU     8                       ; GHOST RADIUS
 
             
 ; --- SCOREBOARD RELATED CONSTANTS ---------------------------------------------
@@ -74,6 +73,7 @@ MAPMAT      DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
             DC.B    $1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1
             DC.B    $1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
             DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+
 
 
 
