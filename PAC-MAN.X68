@@ -28,7 +28,7 @@ PMUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             
-            MOVEM.W D0-D4,-(A7)
+            MOVEM.W D0-D5,-(A7)
             
             MOVE.W  #PMSPEED,D0
             
@@ -82,20 +82,36 @@ PMUPD
             ;UPDATE COORDS
             
 .ACTXRIGHT  
-            JSR     COLWALLRIGHT
+            ;JSR     COLWALLRIGHT
+            ;CMP     #1,D5
+            ;BNE     .NOTCOLISION
+            ;MOVE.W  #0,D0
+;.NOTCOLISION
             ADD.W   D0,(PMPOSX)
             BRA     .DONE
 .ACTXLEFT
-            JSR     COLWALLLEFT
+            ;JSR     COLWALLLEFT
+            ;CMP     #1,D5
+            ;BNE     .NOTCOLISION2
+            ;MOVE.W  #0,D0
+;.NOTCOLISION2
             SUB.W   D0,(PMPOSX)
             BRA     .DONE
     
 .ACTYDOWN
-            JSR     COLWALLDOWN
+            ;JSR     COLWALLDOWN
+            ;CMP     #1,D5
+            ;BNE     .NOTCOLISION3
+            ;MOVE.W  #0,D0
+;.NOTCOLISION3
             ADD.W   D0,(PMPOSY)
             BRA     .DONE
 .ACTYUP     
-            JSR     COLWALLUP
+            ;JSR     COLWALLUP
+            ;CMP     #1,D5
+            ;BNE     .NOTCOLISION4
+            ;MOVE.W  #0,D0
+;.NOTCOLISION4
             SUB.W   D0,(PMPOSY)
             BRA     .DONE
             
@@ -113,7 +129,7 @@ PMUPD
             ;RESTORE
             MOVE.B  D4,(PMLAMO)
             
-            MOVEM.W (A7)+,D0-D4
+            MOVEM.W (A7)+,D0-D5
             
             RTS
                         
@@ -155,6 +171,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 

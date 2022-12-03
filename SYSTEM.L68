@@ -1,6 +1,6 @@
-000011C2 Starting Address
+0000188A Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 17/11/2022 9:49:52
+Created On: 03/12/2022 12:30:54
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; SYSTEM
@@ -17,187 +17,378 @@ Created On: 17/11/2022 9:49:52
 00000000  21FC 00000070 0080        13              MOVE.L  #SCRUPD,($80+0*4)          ;INSTALL SUBRUTINE TO TRAP #0
 00000008  21FC 000000A0 0084        14              MOVE.L  #KBDUPD,($80+1*4)          ;INSTALL SUBRUTINE TO TRAP #1
 00000010                            15              
-00000010  21FC 0000008A 0064        16              MOVE.L  #SCRTIM,($60+1*4)          ;INSTALL INTERRUPT #1
-00000018                            17              
-00000018  4EB9 0000002C             18              JSR     SCRINIT
-0000001E  4EB9 00000092             19              JSR     KBDINIT
-00000024                            20              
-00000024  40E7                      21              MOVE.W  SR,-(A7)
-00000026  0257 D8FF                 22              ANDI.W  #$D8FF,(A7)                ;BIT SUPERVISOR TO O AND INTERRPUT MASK 000 (FOR REACTIVATE INTERRUPTIONS)             
-0000002A  4E73                      23              RTE
-0000002C                            24     
-0000002C                            25  ; ------------------------------------------------------------------------------
-0000002C                            26  SCRINIT
-0000002C                            27  ; INIT SCREEN. SET SCREEN RESOLUTION, SET WINDOWED MODE, CLEAR SCREEN, ENABLE BUFFER
-0000002C                            28  ; ENABLE TIMED INTERRUPTION
-0000002C                            29  ; INPUT    : NONE
-0000002C                            30  ; OUTPUT   : NONE
-0000002C                            31  ; MODIFIES : NONE
-0000002C                            32  ; ------------------------------------------------------------------------------
-0000002C                            33  
-0000002C  48E7 C000                 34              MOVEM.L D0-D1,-(A7)                 ;SAFE REGISTERS IN STACK
-00000030                            35  
-00000030                            36              ; SET SCREEN RESOLUTION
-00000030  103C 0021                 37              MOVE.B  #33,D0
-Line 38 ERROR: Invalid syntax
-00000034                            38              MOVE.L  #SCRWIDTH<<16|SCRHEIGH,D1
-00000034  4E4F                      39              TRAP    #15
-00000036                            40              
-00000036                            41              ; SET WINDOWED MODE
-00000036  7201                      42              MOVE.L  #1,D1
-00000038  4E4F                      43              TRAP    #15
-0000003A                            44              
-0000003A                            45              ; ENABLE DOUBLE BUFFER
-0000003A  103C 005C                 46              MOVE.B  #92,D0
-0000003E  123C 0011                 47              MOVE.B  #17,D1
-00000042  4E4F                      48              TRAP    #15
-00000044                            49              
-00000044                            50              ; CLEAR SCREEN
-00000044  103C 000B                 51              MOVE.B  #11,D0
-00000048  323C FF00                 52              MOVE.W  #$FF00,D1
-0000004C  4E4F                      53              TRAP    #15
-0000004E                            54              
-0000004E                            55              ;ENABLE TIMED INTERRPUT
-0000004E  303C 0020                 56              MOVE.W  #32,D0
-00000052  123C 0006                 57              MOVE.B  #6,D1
-00000056  143C 0081                 58              MOVE.B  #$81,D2                   ;INDICATE THAT INTERRUPT 1 IS ACTIVATED PERIODICALLY
-0000005A  7614                      59              MOVE.L  #20,D3                    ;INDICATE THE MILISECONDS FOR THAT PERIOD (20 ms == 50 FPS)
-0000005C  4E4F                      60              TRAP    #15
-0000005E                            61              
-0000005E                            62              ;CLEAR INTERRUPT COUNTER
-Line 63 ERROR: Undefined symbol
-0000005E  4239 004DBD16             63              CLR.B   (SCRINTCT)
-00000064                            64              
-00000064  4CDF 0003                 65              MOVEM.L (A7)+,D0-D1               ;RESTORE REGISTERS FROM STACK
-00000068                            66              
-00000068  4E75                      67              RTS
-0000006A                            68              
-0000006A                            69  ;------------------------------------------------------------------------------            
-Line 70 ERROR: Symbol value differs between first and second pass
-0000006A                            70  SCRUPD
-0000006A                            71  ; UPDATES DOUBLE BUFFER
-0000006A                            72  ; INPUT    : NONE
-0000006A                            73  ; OUTPUT   : NONE
-0000006A                            74  ; MODIFIES : NONE
-0000006A                            75  ; ------------------------------------------------------------------------------
-0000006A                            76  
-0000006A  48A7 C000                 77              MOVEM.W D0-D1,-(A7)
-0000006E                            78              
-0000006E                            79              ;SWITCH BUFFERS
-0000006E  103C 005E                 80              MOVE.B #94,D0
-00000072  4E4F                      81              TRAP #15
-00000074                            82              
-00000074                            83              ;CLEAR HIDDEN BUFFER
-00000074  103C 000B                 84              MOVE.B  #11,D0
-00000078  323C FF00                 85              MOVE.W  #$FF00,D1
-0000007C  4E4F                      86              TRAP    #15
-0000007E                            87              
-0000007E  4C9F 0003                 88              MOVEM.W (A7)+,D0-D1
-00000082                            89              
-00000082  4E73                      90              RTE
-00000084                            91              
-00000084                            92  ;------------------------------------------------------------------------------            
-Line 93 ERROR: Symbol value differs between first and second pass
-00000084                            93  SCRTIM
-00000084                            94  ; TIME INTERRPUT SERVICE ROUTINE FOR SYNC
-00000084                            95  ; INPUT    : NONE
-00000084                            96  ; OUTPUT   : NONE
-00000084                            97  ; MODIFIES : NONE
-00000084                            98  ; ------------------------------------------------------------------------------
-00000084                            99  
-Line 100 ERROR: Undefined symbol
-00000084  5239 005455B8            100              ADDQ.B  #1,(SCRINTCT)
-0000008A  4E73                     101              RTE
-0000008C                           102              
-0000008C                           103  ;------------------------------------------------------------------------------            
-Line 104 ERROR: Symbol value differs between first and second pass
-0000008C                           104  KBDINIT
-0000008C                           105  ; INIT THE KEYBOARD
-0000008C                           106  ; INPUT    : NONE
-0000008C                           107  ; OUTPUT   : NONE
-0000008C                           108  ; MODIFIES : NONE
-0000008C                           109  ; ------------------------------------------------------------------------------
-0000008C                           110  
-Line 111 ERROR: Undefined symbol
-0000008C  4239 004DBD16            111              CLR.B   (KBDVAL)
-Line 112 ERROR: Undefined symbol
-00000092  4239 004DBD16            112              CLR.B   (KBDEDGE)
-00000098                           113  
-00000098  4E75                     114              RTS
-0000009A                           115  
-0000009A                           116  ;------------------------------------------------------------------------------            
-Line 117 ERROR: Symbol value differs between first and second pass
-0000009A                           117  KBDUPD
-0000009A                           118  ; UPDATES KEYBOARD INFO
-0000009A                           119  ; 3 -> DOWN
-0000009A                           120  ; 2 -> RIGHT
-0000009A                           121  ; 1 -> UP
-0000009A                           122  ; 0 -> LEFT
-0000009A                           123  ; ------------------------------------------------------------------------------
-0000009A                           124              
-0000009A  48E7 F800                125              MOVEM.L D0-D4,-(A7)
-0000009E                           126              
-0000009E  303C 0013                127              MOVE.W  #19,D0
-000000A2                           128              ;GET INFO OF THE KEYS
-Line 129 ERROR: Invalid syntax
-000000A2                           129              MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
-000000A2  4E4F                     130              TRAP    #15
-000000A4                           131              
-000000A4                           132              ;CONVERT TO DESIRED FORMAT
-000000A4  4EB9 000000D2            133              JSR .CONVERT
-000000AA                           134  
-000000AA                           135              ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
-Line 136 ERROR: Undefined symbol
-000000AA  1039 004DBD16            136              MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
-000000B0  4600                     137              NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
-000000B2  C002                     138              AND.B   D2,D0
-Line 139 ERROR: Undefined symbol
-000000B4  13C0 005455B8            139              MOVE.B  D0,(KBDEDGE)
-000000BA                           140              
-000000BA                           141         
-000000BA                           142  ;            CMP.B   #0,D0
-000000BA                           143  ;            BEQ     .NOACT          
+00000010                            16              
+00000010  21FC 0000008A 0064        17              MOVE.L  #SCRTIM,($60+1*4)          ;INSTALL INTERRUPT #1
+00000018                            18              
+00000018  4EB9 0000002C             19              JSR     SCRINIT
+0000001E  4EB9 00000092             20              JSR     KBDINIT
+00000024                            21              
+00000024                            22              
+00000024  40E7                      23              MOVE.W  SR,-(A7)
+00000026  0257 D8FF                 24              ANDI.W  #$D8FF,(A7)                ;BIT SUPERVISOR TO O AND INTERRPUT MASK 000 (FOR REACTIVATE INTERRUPTIONS)             
+0000002A  4E73                      25              RTE
+0000002C                            26     
+0000002C                            27  ; ------------------------------------------------------------------------------
+0000002C                            28  SCRINIT
+0000002C                            29  ; INIT SCREEN. SET SCREEN RESOLUTION, SET WINDOWED MODE, CLEAR SCREEN, ENABLE BUFFER
+0000002C                            30  ; ENABLE TIMED INTERRUPTION
+0000002C                            31  ; INPUT    : NONE
+0000002C                            32  ; OUTPUT   : NONE
+0000002C                            33  ; MODIFIES : NONE
+0000002C                            34  ; ------------------------------------------------------------------------------
+0000002C                            35  
+0000002C  48E7 C000                 36              MOVEM.L D0-D1,-(A7)                 ;SAFE REGISTERS IN STACK
+00000030                            37  
+00000030                            38              ; SET SCREEN RESOLUTION
+00000030  103C 0021                 39              MOVE.B  #33,D0
+Line 40 ERROR: Invalid syntax
+00000034                            40              MOVE.L  #SCRWIDTH<<16|SCRHEIGH,D1
+00000034  4E4F                      41              TRAP    #15
+00000036                            42              
+00000036                            43              ; SET WINDOWED MODE
+00000036  7201                      44              MOVE.L  #1,D1
+00000038  4E4F                      45              TRAP    #15
+0000003A                            46              
+0000003A                            47              ; ENABLE DOUBLE BUFFER
+0000003A  103C 005C                 48              MOVE.B  #92,D0
+0000003E  123C 0011                 49              MOVE.B  #17,D1
+00000042  4E4F                      50              TRAP    #15
+00000044                            51              
+00000044                            52              ; CLEAR SCREEN
+00000044  103C 000B                 53              MOVE.B  #11,D0
+00000048  323C FF00                 54              MOVE.W  #$FF00,D1
+0000004C  4E4F                      55              TRAP    #15
+0000004E                            56              
+0000004E                            57              ;ENABLE TIMED INTERRPUT
+0000004E  303C 0020                 58              MOVE.W  #32,D0
+00000052  123C 0006                 59              MOVE.B  #6,D1
+00000056  143C 0081                 60              MOVE.B  #$81,D2                   ;INDICATE THAT INTERRUPT 1 IS ACTIVATED PERIODICALLY
+0000005A  7614                      61              MOVE.L  #20,D3                    ;INDICATE THE MILISECONDS FOR THAT PERIOD (20 ms == 50 FPS)
+0000005C  4E4F                      62              TRAP    #15
+0000005E                            63              
+0000005E                            64              ;CLEAR INTERRUPT COUNTER
+Line 65 ERROR: Undefined symbol
+0000005E  4239 004DBD16             65              CLR.B   (SCRINTCT)
+00000064                            66              
+00000064  4CDF 0003                 67              MOVEM.L (A7)+,D0-D1               ;RESTORE REGISTERS FROM STACK
+00000068                            68              
+00000068  4E75                      69              RTS
+0000006A                            70  
+0000006A                            71  
+0000006A                            72              
+0000006A                            73  ;------------------------------------------------------------------------------            
+Line 74 ERROR: Symbol value differs between first and second pass
+0000006A                            74  SCRUPD
+0000006A                            75  ; UPDATES DOUBLE BUFFER
+0000006A                            76  ; INPUT    : NONE
+0000006A                            77  ; OUTPUT   : NONE
+0000006A                            78  ; MODIFIES : NONE
+0000006A                            79  ; ------------------------------------------------------------------------------
+0000006A                            80  
+0000006A  48A7 C000                 81              MOVEM.W D0-D1,-(A7)
+0000006E                            82              
+0000006E                            83              ;SWITCH BUFFERS
+0000006E  103C 005E                 84              MOVE.B #94,D0
+00000072  4E4F                      85              TRAP #15
+00000074                            86              
+00000074                            87              ;CLEAR HIDDEN BUFFER
+00000074  103C 000B                 88              MOVE.B  #11,D0
+00000078  323C FF00                 89              MOVE.W  #$FF00,D1
+0000007C  4E4F                      90              TRAP    #15
+0000007E                            91              
+0000007E  4C9F 0003                 92              MOVEM.W (A7)+,D0-D1
+00000082                            93              
+00000082  4E73                      94              RTE
+00000084                            95              
+00000084                            96  ;------------------------------------------------------------------------------            
+Line 97 ERROR: Symbol value differs between first and second pass
+00000084                            97  SCRTIM
+00000084                            98  ; TIME INTERRPUT SERVICE ROUTINE FOR SYNC
+00000084                            99  ; INPUT    : NONE
+00000084                           100  ; OUTPUT   : NONE
+00000084                           101  ; MODIFIES : NONE
+00000084                           102  ; ------------------------------------------------------------------------------
+00000084                           103  
+Line 104 ERROR: Undefined symbol
+00000084  5239 005455B8            104              ADDQ.B  #1,(SCRINTCT)
+0000008A  4E73                     105              RTE
+0000008C                           106              
+0000008C                           107  ;------------------------------------------------------------------------------            
+Line 108 ERROR: Symbol value differs between first and second pass
+0000008C                           108  KBDINIT
+0000008C                           109  ; INIT THE KEYBOARD
+0000008C                           110  ; INPUT    : NONE
+0000008C                           111  ; OUTPUT   : NONE
+0000008C                           112  ; MODIFIES : NONE
+0000008C                           113  ; ------------------------------------------------------------------------------
+0000008C                           114  
+Line 115 ERROR: Undefined symbol
+0000008C  4239 004DBD16            115              CLR.B   (KBDVAL)
+Line 116 ERROR: Undefined symbol
+00000092  4239 004DBD16            116              CLR.B   (KBDEDGE)
+00000098                           117  
+00000098  4E75                     118              RTS
+0000009A                           119  
+0000009A                           120  ;------------------------------------------------------------------------------            
+Line 121 ERROR: Symbol value differs between first and second pass
+0000009A                           121  KBDUPD
+0000009A                           122  ; UPDATES KEYBOARD INFO
+0000009A                           123  ; 3 -> DOWN
+0000009A                           124  ; 2 -> RIGHT
+0000009A                           125  ; 1 -> UP
+0000009A                           126  ; 0 -> LEFT
+0000009A                           127  ; ------------------------------------------------------------------------------
+0000009A                           128              
+0000009A  48E7 F800                129              MOVEM.L D0-D4,-(A7)
+0000009E                           130              
+0000009E  303C 0013                131              MOVE.W  #19,D0
+000000A2                           132              ;GET INFO OF THE KEYS
+Line 133 ERROR: Invalid syntax
+000000A2                           133              MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
+000000A2  4E4F                     134              TRAP    #15
+000000A4                           135              
+000000A4                           136              ;CONVERT TO DESIRED FORMAT
+000000A4  4EB9 000000DA            137              JSR .CONVERT
+000000AA                           138  
+000000AA                           139              ;GET KBDEDGE (IF SOME KEY HAVE CHANGED THE VALUE)
+Line 140 ERROR: Undefined symbol
+000000AA  1039 004DBD16            140              MOVE.B  (KBDVAL),D0             ;D0 -> LAST KBDVAL
+000000B0  4600                     141              NOT.B   D0                      ;D2 -> ACTUAL KBDVAL
+000000B2  C002                     142              AND.B   D2,D0
+Line 143 ERROR: Undefined symbol
+000000B4  13C0 005455B8            143              MOVE.B  D0,(KBDEDGE)
 000000BA                           144              
-000000BA                           145              ;STORE NEW KBDVAL
-Line 146 ERROR: Undefined symbol
-000000BA  13C2 005455B8            146              MOVE.B  D2,(KBDVAL)
-Line 147 ERROR: Symbol value differs between first and second pass
-000000C0                           147  .NOACT
-000000C0                           148              
-000000C0  4CDF 001F                149              MOVEM.L (A7)+,D0-D4
-000000C4                           150              
-000000C4  4E73                     151              RTE    
-000000C6                           152              
-Line 153 ERROR: Symbol value differs between first and second pass
-000000C6                           153  .CONVERT 
-000000C6  363C 0003                154              MOVE.W  #3,D3
-000000CA                           155              
-Line 156 ERROR: Symbol value differs between first and second pass
-000000CA                           156  .LOOP       LSL.L   #8,D1
-000000CA  E312                     157              ROXL.B  #1,D2
-000000CC  51CB 0008                158              DBRA.W  D3,.LOOP
-000000D0  4E75                     159              RTS
-000000D2                           160             
-000000D2                           161              
-000000D2                           162  
-000000D2                           163  
-000000D2                           164  
-000000D2                           165  
-000000D2                           166  
-Line 167 WARNING: END directive missing, starting address not set
+000000BA                           145         
+000000BA  B03C 0000                146              CMP.B   #0,D0
+000000BE  6700 0014                147              BEQ     .NOACT          
+000000C2                           148              
+000000C2                           149              ;STORE NEW KBDVAL
+Line 150 ERROR: Undefined symbol
+000000C2  13C2 005455B8            150              MOVE.B  D2,(KBDVAL)
+Line 151 ERROR: Symbol value differs between first and second pass
+000000C8                           151  .NOACT
+000000C8                           152              
+000000C8  4CDF 001F                153              MOVEM.L (A7)+,D0-D4
+000000CC                           154              
+000000CC  4E73                     155              RTE    
+000000CE                           156              
+Line 157 ERROR: Symbol value differs between first and second pass
+000000CE                           157  .CONVERT 
+000000CE  363C 0003                158              MOVE.W  #3,D3
+000000D2                           159              
+Line 160 ERROR: Symbol value differs between first and second pass
+000000D2                           160  .LOOP       LSL.L   #8,D1
+000000D2  E312                     161              ROXL.B  #1,D2
+000000D4  51CB 0008                162              DBRA.W  D3,.LOOP
+000000D8  4E75                     163              RTS
+000000DA                           164             
+000000DA                           165  
+000000DA                           166  ;------------------------------------------------------------------------------            
+Line 167 ERROR: Symbol value differs between first and second pass
+000000DA                           167  COLWALLRIGHT
+000000DA                           168  ; COLLISION PAC-MAN WITH WALL
+000000DA                           169  ; INPUT    : NONE
+000000DA                           170  ; OUTPUT   : NONE
+000000DA                           171  ; MODIFIES : NONE
+000000DA                           172  ; ------------------------------------------------------------------------------
+000000DA                           173  
+000000DA  48E7 FC00                174              MOVEM.L D0-D5,-(A7)
+000000DE                           175  
+Line 176 ERROR: Undefined symbol
+000000DE  3039 004DBD16            176              MOVE.W  (PMPOSX),D0
+Line 177 ERROR: Undefined symbol
+000000E4  3239 004DBD16            177              MOVE.W  (PMPOSY),D1
+000000EA                           178              
+000000EA  81FC 0010                179              DIVS.W  #16,D0
+000000EE  83FC 0010                180              DIVS.W  #16,D1
+000000F2                           181              
+000000F2  5940                     182              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+000000F4  5941                     183              SUB.W   #4,D1
+000000F6                           184              
+Line 185 ERROR: Invalid syntax
+000000F6                           185              LEA.L   (MAPVAR),A0
+000000F6                           186              
+000000F6                           187              ;SUB.W   #2,D0
+000000F6  5541                     188              SUB.W   #2,D1
+000000F8                           189              
+000000F8                           190              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
+000000F8                           191  
+Line 192 ERROR: Symbol value differs between first and second pass
+000000F8                           192  BUCLE_FILA_RIGHT
+000000F8  1A18                     193              MOVE.B  (A0)+,D5
+000000FA  51C9 000A                194              DBRA    D1,BUCLE_FILA_RIGHT
+000000FE                           195  
+Line 196 ERROR: Symbol value differs between first and second pass
+000000FE                           196  BUCLE_COLUMNA_RIGHT
+000000FE  1A18                     197              MOVE.B  (A0)+,D5
+00000100  51C8 000A                198              DBRA    D0,BUCLE_COLUMNA_RIGHT
+00000104                           199              
+00000104  4CDF 003F                200              MOVEM.L (A7)+,D0-D5
+00000108                           201              
+00000108  4E75                     202              RTS
+0000010A                           203  
+0000010A                           204  
+0000010A                           205  ;------------------------------------------------------------------------------            
+Line 206 ERROR: Symbol value differs between first and second pass
+0000010A                           206  COLWALLLEFT
+0000010A                           207  ; COLLISION PAC-MAN WITH WALL
+0000010A                           208  ; INPUT    : NONE
+0000010A                           209  ; OUTPUT   : NONE
+0000010A                           210  ; MODIFIES : NONE
+0000010A                           211  ; ------------------------------------------------------------------------------
+0000010A                           212  
+0000010A  48E7 FC00                213              MOVEM.L D0-D5,-(A7)
+0000010E                           214  
+Line 215 ERROR: Undefined symbol
+0000010E  3039 004DBD16            215              MOVE.W  (PMPOSX),D0
+Line 216 ERROR: Undefined symbol
+00000114  3239 004DBD16            216              MOVE.W  (PMPOSY),D1
+0000011A                           217              
+0000011A  81FC 0010                218              DIVS.W  #16,D0
+0000011E  83FC 0010                219              DIVS.W  #16,D1
+00000122                           220              
+00000122  5940                     221              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+00000124  5941                     222              SUB.W   #4,D1
+00000126                           223              
+Line 224 ERROR: Undefined symbol
+00000126  41F9 004DBD16            224              LEA.L   MAPVAR,A0
+0000012C                           225              
+0000012C  5540                     226              SUB.W   #2,D0
+0000012E  5541                     227              SUB.W   #2,D1
+00000130                           228              
+00000130                           229              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
+00000130                           230  
+Line 231 ERROR: Symbol value differs between first and second pass
+00000130                           231  BUCLE_FILA_LEFT
+00000130  1A18                     232              MOVE.B  (A0)+,D5
+00000132  51C9 000A                233              DBRA    D1,BUCLE_FILA_LEFT
+00000136                           234  
+Line 235 ERROR: Symbol value differs between first and second pass
+00000136                           235  BUCLE_COLUMNA_LEFT
+00000136  1A18                     236              MOVE.B  (A0)+,D5
+00000138  51C8 000A                237              DBRA    D0,BUCLE_COLUMNA_LEFT
+0000013C                           238              
+0000013C  4CDF 003F                239              MOVEM.L (A7)+,D0-D5
+00000140                           240              
+00000140  4E75                     241              RTS
+00000142                           242  
+00000142                           243  ;------------------------------------------------------------------------------            
+Line 244 ERROR: Symbol value differs between first and second pass
+00000142                           244  COLWALLDOWN
+00000142                           245  ; COLLISION PAC-MAN WITH WALL
+00000142                           246  ; INPUT    : NONE
+00000142                           247  ; OUTPUT   : NONE
+00000142                           248  ; MODIFIES : NONE
+00000142                           249  ; ------------------------------------------------------------------------------
+00000142                           250  
+00000142  48E7 FC00                251              MOVEM.L D0-D5,-(A7)
+00000146                           252  
+Line 253 ERROR: Undefined symbol
+00000146  3039 004DBD16            253              MOVE.W  (PMPOSX),D0
+Line 254 ERROR: Undefined symbol
+0000014C  3239 004DBD16            254              MOVE.W  (PMPOSY),D1
+00000152                           255              
+00000152  81FC 0010                256              DIVS.W  #16,D0
+00000156  83FC 0010                257              DIVS.W  #16,D1
+0000015A                           258              
+0000015A  5940                     259              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+0000015C  5941                     260              SUB.W   #4,D1
+0000015E                           261              
+Line 262 ERROR: Undefined symbol
+0000015E  41F9 004DBD16            262              LEA.L   MAPVAR,A0
+00000164                           263              
+00000164  5340                     264              SUB.W   #1,D0
+00000166                           265              ;SUB.W   #2,D1
+00000166                           266              
+00000166                           267              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
+00000166                           268  
+Line 269 ERROR: Symbol value differs between first and second pass
+00000166                           269  BUCLE_FILA_DOWN
+00000166  1A18                     270              MOVE.B  (A0)+,D5
+00000168  51C9 000A                271              DBRA    D1,BUCLE_FILA_DOWN
+0000016C                           272  
+Line 273 ERROR: Symbol value differs between first and second pass
+0000016C                           273  BUCLE_COLUMNA_DOWN
+0000016C  1A18                     274              MOVE.B  (A0)+,D5
+0000016E  51C8 000A                275              DBRA    D0,BUCLE_COLUMNA_DOWN 
+00000172                           276              
+00000172  4CDF 003F                277              MOVEM.L (A7)+,D0-D5
+00000176                           278              
+00000176  4E75                     279              RTS
+00000178                           280  
+00000178                           281  
+00000178                           282  ;------------------------------------------------------------------------------            
+Line 283 ERROR: Symbol value differs between first and second pass
+00000178                           283  COLWALLUP
+00000178                           284  ; COLLISION PAC-MAN WITH WALL
+00000178                           285  ; INPUT    : NONE
+00000178                           286  ; OUTPUT   : NONE
+00000178                           287  ; MODIFIES : NONE
+00000178                           288  ; ------------------------------------------------------------------------------
+00000178                           289  
+00000178  48E7 FC00                290              MOVEM.L D0-D5,-(A7)
+0000017C                           291  
+Line 292 ERROR: Undefined symbol
+0000017C  3039 004DBD16            292              MOVE.W  (PMPOSX),D0
+Line 293 ERROR: Undefined symbol
+00000182  3239 004DBD16            293              MOVE.W  (PMPOSY),D1
+00000188                           294              
+00000188  81FC 0010                295              DIVS.W  #16,D0
+0000018C  83FC 0010                296              DIVS.W  #16,D1
+00000190                           297              
+00000190  5940                     298              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+00000192  5941                     299              SUB.W   #4,D1
+00000194                           300              
+Line 301 ERROR: Undefined symbol
+00000194  41F9 004DBD16            301              LEA.L   MAPVAR,A0
+0000019A                           302              
+0000019A  5340                     303              SUB.W   #1,D0
+0000019C  5741                     304              SUB.W   #3,D1
+0000019E                           305              
+0000019E                           306              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
+0000019E                           307  
+0000019E  B27C 0000                308              CMP     #0,D1
+000001A2  6500 0016                309              BLO     BUCLE_COLUMNA_UP
+000001A6                           310  
+Line 311 ERROR: Symbol value differs between first and second pass
+000001A6                           311  BUCLE_FILA_UP
+000001A6  1A18                     312              MOVE.B  (A0)+,D5
+000001A8  51C9 000A                313              DBRA    D1,BUCLE_FILA_UP
+000001AC                           314  
+Line 315 ERROR: Symbol value differs between first and second pass
+000001AC                           315  BUCLE_COLUMNA_UP
+000001AC  1A18                     316              MOVE.B  (A0)+,D5
+000001AE  51C8 000A                317              DBRA    D0,BUCLE_COLUMNA_UP 
+000001B2                           318              
+000001B2  4CDF 003F                319              MOVEM.L (A7)+,D0-D5
+000001B6                           320              
+000001B6  4E75                     321              RTS
+Line 322 WARNING: END directive missing, starting address not set
 
-16 errors detected
+40 errors detected
 1 warning generated
 
 
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
+BUCLE_COLUMNA_DOWN  17A
+BUCLE_COLUMNA_LEFT  144
+BUCLE_COLUMNA_RIGHT  10C
+BUCLE_COLUMNA_UP    1BA
+BUCLE_FILA_DOWN     174
+BUCLE_FILA_LEFT     13E
+BUCLE_FILA_RIGHT    106
+BUCLE_FILA_UP       1B4
+COLWALLDOWN         150
+COLWALLLEFT         118
+COLWALLRIGHT        E8
+COLWALLUP           186
 KBDINIT             92
 KBDUPD              A0
-KBDUPD:CONVERT      D2
-KBDUPD:LOOP         D6
-KBDUPD:NOACT        CC
+KBDUPD:CONVERT      DA
+KBDUPD:LOOP         DE
+KBDUPD:NOACT        D4
 SCRINIT             2C
 SCRTIM              8A
 SCRUPD              70
