@@ -13,7 +13,9 @@ MAPINIT
             MOVEM.L D0-D6,-(A7)
             MOVEM.L A0-A1,-(A7)
             
-            MOVE.L  #DIBFIG,($80+2*4)          ;INSTALL SUBRUTINE TO TRAP #2
+            MOVE.L  #DIBFIGWALL,($80+2*4)          ;INSTALL SUBRUTINE TO TRAP #2
+           MOVE.L  #DIBFIGPOINT,($80+3*4)          ;INSTALL SUBRUTINE TO TRAP #3
+           MOVE.L  #DIBFIGBPOINT,($80+4*4)          ;INSTALL SUBRUTINE TO TRAP #4
             
             
             LEA.L   MAPMAT,A0
@@ -30,11 +32,18 @@ BUCLE_COLUMNA
 
             MOVE.B  (A0)+,D0
             MOVE.B  D0,(A1)+
+             
             CMP     #0,D0
             BEQ     ZERO
             CMP     #4,D0
             BEQ     ZERO
+            CMP     #2,D0
+            BEQ     ZERO
+            CMP     #3,D0
+            BEQ     ZERO
             TRAP    #2
+            
+            
 
 ZERO
             DBRA    D1,BUCLE_COLUMNA
@@ -68,14 +77,21 @@ BUCLE_FILA2
             ADD.W   #16,D6
 
 BUCLE_COLUMNA2
-            ADD.W   #16,D5
+            ADD.W   #16,D5       
 
             MOVE.B  (A0)+,D0
+
             CMP     #0,D0
             BEQ     ZERO2
             CMP     #4,D0
             BEQ     ZERO2
+            CMP     #2,D0
+            BEQ     ZERO2
+            CMP     #3,D0
+            BEQ     ZERO2
             TRAP    #2
+            
+           
 
 ZERO2
             DBRA    D1,BUCLE_COLUMNA2
@@ -85,10 +101,12 @@ ZERO2
             MOVEM.L (A7)+,A0
             MOVEM.L (A7)+,D0-D6
             
+      
+            
             RTS 
             
 ; -----------------------------------------------------------------------------
-DIBFIG
+DIBFIGWALL
 ; SUBRUTINE DRAW MAP
 ; INPUT    : D5=POSITION X, D6=POSITION Y
 ; OUTPUT   : NONE
@@ -120,6 +138,84 @@ DIBFIG
             MOVEM.L (A7)+,D0-D6
 
             RTE
+            
+; -----------------------------------------------------------------------------
+DIBFIGPOINT
+; SUBRUTINE DRAW MAP
+; INPUT    : D5=POSITION X, D6=POSITION Y
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; -----------------------------------------------------------------------------
+            MOVEM.L D0-D6,-(A7)
+            ; SET CONTOURN COLOR
+            MOVE.B  #80,D0
+            MOVE.L  #$00AA0000,D1
+            TRAP    #15
+            
+            ; SET FILL COLOR
+            MOVE.B  #81,D0
+            MOVE.L  #$00FF0000,D1
+            TRAP    #15
+            
+            ; DEFINE COORDINATES RACTANGLE
+            MOVE.W  D5,D1
+            SUB.W   #2,D1
+            MOVE.W  D6,D2
+            SUB.W   #2,D2
+            
+            MOVE.W  D1,D3
+            ADD.W   #2*2,D3
+            MOVE.W  D2,D4
+            ADD.W   #2*2,D4
+            
+            ; DRAW RECTANGLE
+            MOVE.B  #87,D0
+            TRAP    #15
+            
+            MOVEM.L (A7)+,D0-D6
+            
+            RTE
+
+
+; -----------------------------------------------------------------------------
+DIBFIGBPOINT
+; SUBRUTINE DRAW MAP
+; INPUT    : D5=POSITION X, D6=POSITION Y
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; -----------------------------------------------------------------------------
+            MOVEM.L D0-D6,-(A7)
+            ; SET CONTOURN COLOR
+            MOVE.B  #80,D0
+            MOVE.L  #$00AA0000,D1
+            TRAP    #15
+            
+            ; SET FILL COLOR
+            MOVE.B  #81,D0
+            MOVE.L  #$00FF0000,D1
+            TRAP    #15
+            
+            ; DEFINE COORDINATES RACTANGLE
+            MOVE.W  D5,D1
+            SUB.W   #4,D1
+            MOVE.W  D6,D2
+            SUB.W   #4,D2
+            
+            MOVE.W  D1,D3
+            ADD.W   #42,D3
+            MOVE.W  D2,D4
+            ADD.W   #42,D4
+            
+            ; DRAW RECTANGLE
+            MOVE.B  #87,D0
+            TRAP    #15
+            
+            MOVEM.L (A7)+,D0-D6
+            
+            RTE
+
+
+
 
 
 
