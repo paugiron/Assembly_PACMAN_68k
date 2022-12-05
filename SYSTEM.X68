@@ -171,10 +171,12 @@ COLWALLRIGHT
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
-            MOVEM.L D0-D5,-(A7)
+            MOVEM.L D0-D4,-(A7)
 
             MOVE.W  (PMPOSX),D0
+            SUB.W   #8,D0
             MOVE.W  (PMPOSY),D1
+            ADD.W   #8,D1
             
             DIVS.W  #16,D0
             DIVS.W  #16,D1
@@ -188,13 +190,13 @@ COLWALLRIGHT
             SUB.W   #1,D1
             MULU.W  #32,D1
             ADD.W   D1,D0
-            SUB.W   #1,D0
             
             MOVE.W  D0,A1
+            MOVE.B  D0,POSCON
 
             MOVE.B  MAPVAR(A1),D5
             
-            MOVEM.L (A7)+,D0-D5
+            MOVEM.L (A7)+,D0-D4
             
             RTS
 
@@ -207,10 +209,12 @@ COLWALLLEFT
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
-            MOVEM.L D0-D5,-(A7)
+            MOVEM.L D0-D4,-(A7)
 
             MOVE.W  (PMPOSX),D0
+            ADD.W   #6,D0
             MOVE.W  (PMPOSY),D1
+            ADD.W   #8,D1
             
             DIVS.W  #16,D0
             DIVS.W  #16,D1
@@ -224,15 +228,14 @@ COLWALLLEFT
             SUB.W   #1,D1
             MULU.W  #32,D1
             ADD.W   D1,D0
-            SUB.W   #1,D0
-
 
             MOVE.W  D0,A1
+            MOVE.B  D0,POSCON
 
             MOVE.B  MAPVAR(A1),D5               
 
             
-            MOVEM.L (A7)+,D0-D5
+            MOVEM.L (A7)+,D0-D4
             
             RTS
 
@@ -244,10 +247,12 @@ COLWALLDOWN
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
-            MOVEM.L D0-D5,-(A7)
+            MOVEM.L D0-D4,-(A7)
 
             MOVE.W  (PMPOSX),D0
+            ;ADD.W   #8,D0
             MOVE.W  (PMPOSY),D1
+            ADD.W   #8,D1
             
             DIVS.W  #16,D0
             DIVS.W  #16,D1
@@ -259,14 +264,14 @@ COLWALLDOWN
             
             MULU.W  #32,D1
             ADD.W   D1,D0
-            SUB.W   #1,D0
 
             MOVE.W  D0,A1
+            MOVE.B  D0,POSCON
 
             MOVE.B  MAPVAR(A1),D5 
 
             
-            MOVEM.L (A7)+,D0-D5
+            MOVEM.L (A7)+,D0-D4
             
             RTS
 
@@ -279,10 +284,13 @@ COLWALLUP
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
-            MOVEM.L D0-D5,-(A7)
+            MOVEM.L D0-D4,-(A7)
 
             MOVE.W  (PMPOSX),D0
+            ;SUB.W   #8,D0
             MOVE.W  (PMPOSY),D1
+            ADD.W   #6,D1
+            
             
             DIVS.W  #16,D0
             DIVS.W  #16,D1
@@ -292,22 +300,24 @@ COLWALLUP
             
             LEA.L   MAPVAR,A0
             
-            SUB.W   #2,D1
-            CMP     #0,D1
-            BLO     BUCLE4
+            SUB.W   #1,D1
+            ;CMP     #1,D1
+            ;BLO     BUCLE4
             MULU.W  #32,D1
             ADD.W   D1,D0
-            SUB.W   #1,D0
 
-BUCLE4            
+;BUCLE4            
             MOVE.W  D0,A1
+            MOVE.B  D0,POSCON
 
             MOVE.B  MAPVAR(A1),D5 
 
+            ;MOVE.B  #0,D5
             
-            MOVEM.L (A7)+,D0-D5
+            MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 *~Font name~Fixedsys~
 *~Font size~9~

@@ -32,6 +32,8 @@ BUCLE_COLUMNA
             MOVE.B  D0,(A1)+
             CMP     #0,D0
             BEQ     ZERO
+            CMP     #4,D0
+            BEQ     ZERO
             TRAP    #2
 
 ZERO
@@ -70,6 +72,8 @@ BUCLE_COLUMNA2
 
             MOVE.B  (A0)+,D0
             CMP     #0,D0
+            BEQ     ZERO2
+            CMP     #4,D0
             BEQ     ZERO2
             TRAP    #2
 
@@ -116,6 +120,7 @@ DIBFIG
             MOVEM.L (A7)+,D0-D6
 
             RTE
+
 
 
 

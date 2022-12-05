@@ -1,6 +1,6 @@
-0000188A Starting Address
+00001970 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 03/12/2022 12:30:54
+Created On: 05/12/2022 19:07:23
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; SYSTEM
@@ -192,178 +192,175 @@ Line 167 ERROR: Symbol value differs between first and second pass
 000000DA                           171  ; MODIFIES : NONE
 000000DA                           172  ; ------------------------------------------------------------------------------
 000000DA                           173  
-000000DA  48E7 FC00                174              MOVEM.L D0-D5,-(A7)
+000000DA  48E7 F800                174              MOVEM.L D0-D4,-(A7)
 000000DE                           175  
 Line 176 ERROR: Undefined symbol
 000000DE  3039 004DBD16            176              MOVE.W  (PMPOSX),D0
-Line 177 ERROR: Undefined symbol
-000000E4  3239 004DBD16            177              MOVE.W  (PMPOSY),D1
-000000EA                           178              
-000000EA  81FC 0010                179              DIVS.W  #16,D0
-000000EE  83FC 0010                180              DIVS.W  #16,D1
-000000F2                           181              
-000000F2  5940                     182              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
-000000F4  5941                     183              SUB.W   #4,D1
-000000F6                           184              
-Line 185 ERROR: Invalid syntax
-000000F6                           185              LEA.L   (MAPVAR),A0
-000000F6                           186              
-000000F6                           187              ;SUB.W   #2,D0
-000000F6  5541                     188              SUB.W   #2,D1
-000000F8                           189              
-000000F8                           190              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
-000000F8                           191  
-Line 192 ERROR: Symbol value differs between first and second pass
-000000F8                           192  BUCLE_FILA_RIGHT
-000000F8  1A18                     193              MOVE.B  (A0)+,D5
-000000FA  51C9 000A                194              DBRA    D1,BUCLE_FILA_RIGHT
-000000FE                           195  
-Line 196 ERROR: Symbol value differs between first and second pass
-000000FE                           196  BUCLE_COLUMNA_RIGHT
-000000FE  1A18                     197              MOVE.B  (A0)+,D5
-00000100  51C8 000A                198              DBRA    D0,BUCLE_COLUMNA_RIGHT
-00000104                           199              
-00000104  4CDF 003F                200              MOVEM.L (A7)+,D0-D5
-00000108                           201              
-00000108  4E75                     202              RTS
-0000010A                           203  
-0000010A                           204  
-0000010A                           205  ;------------------------------------------------------------------------------            
-Line 206 ERROR: Symbol value differs between first and second pass
-0000010A                           206  COLWALLLEFT
-0000010A                           207  ; COLLISION PAC-MAN WITH WALL
-0000010A                           208  ; INPUT    : NONE
-0000010A                           209  ; OUTPUT   : NONE
-0000010A                           210  ; MODIFIES : NONE
-0000010A                           211  ; ------------------------------------------------------------------------------
-0000010A                           212  
-0000010A  48E7 FC00                213              MOVEM.L D0-D5,-(A7)
-0000010E                           214  
-Line 215 ERROR: Undefined symbol
-0000010E  3039 004DBD16            215              MOVE.W  (PMPOSX),D0
+000000E4  5140                     177              SUB.W   #8,D0
+Line 178 ERROR: Undefined symbol
+000000E6  3239 004DBD16            178              MOVE.W  (PMPOSY),D1
+000000EC                           179              ;SUB.W   #8,D1
+000000EC                           180              
+000000EC  81FC 0010                181              DIVS.W  #16,D0
+000000F0  83FC 0010                182              DIVS.W  #16,D1
+000000F4                           183              
+000000F4  5940                     184              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+000000F6  5941                     185              SUB.W   #4,D1
+000000F8                           186              
+Line 187 ERROR: Undefined symbol
+000000F8  41F9 004DBD16            187              LEA.L   MAPVAR,A0
+000000FE                           188              
+000000FE  5240                     189              ADD.W   #1,D0
+00000100  5341                     190              SUB.W   #1,D1
+00000102  C2FC 0020                191              MULU.W  #32,D1
+00000106  D041                     192              ADD.W   D1,D0
+00000108                           193              
+00000108  3240                     194              MOVE.W  D0,A1
+Line 195 ERROR: Undefined symbol
+0000010A  13C0 005455B8            195              MOVE.B  D0,POSCON
+00000110                           196  
+Line 197 ERROR: Undefined symbol
+00000110  1A29 BD16                197              MOVE.B  MAPVAR(A1),D5
+00000114                           198              
+00000114  4CDF 001F                199              MOVEM.L (A7)+,D0-D4
+00000118                           200              
+00000118  4E75                     201              RTS
+0000011A                           202  
+0000011A                           203  
+0000011A                           204  ;------------------------------------------------------------------------------            
+Line 205 ERROR: Symbol value differs between first and second pass
+0000011A                           205  COLWALLLEFT
+0000011A                           206  ; COLLISION PAC-MAN WITH WALL
+0000011A                           207  ; INPUT    : NONE
+0000011A                           208  ; OUTPUT   : NONE
+0000011A                           209  ; MODIFIES : NONE
+0000011A                           210  ; ------------------------------------------------------------------------------
+0000011A                           211  
+0000011A  48E7 F800                212              MOVEM.L D0-D4,-(A7)
+0000011E                           213  
+Line 214 ERROR: Undefined symbol
+0000011E  3039 004DBD16            214              MOVE.W  (PMPOSX),D0
+00000124  5C40                     215              ADD.W   #6,D0
 Line 216 ERROR: Undefined symbol
-00000114  3239 004DBD16            216              MOVE.W  (PMPOSY),D1
-0000011A                           217              
-0000011A  81FC 0010                218              DIVS.W  #16,D0
-0000011E  83FC 0010                219              DIVS.W  #16,D1
-00000122                           220              
-00000122  5940                     221              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
-00000124  5941                     222              SUB.W   #4,D1
-00000126                           223              
-Line 224 ERROR: Undefined symbol
-00000126  41F9 004DBD16            224              LEA.L   MAPVAR,A0
-0000012C                           225              
-0000012C  5540                     226              SUB.W   #2,D0
-0000012E  5541                     227              SUB.W   #2,D1
-00000130                           228              
-00000130                           229              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
-00000130                           230  
-Line 231 ERROR: Symbol value differs between first and second pass
-00000130                           231  BUCLE_FILA_LEFT
-00000130  1A18                     232              MOVE.B  (A0)+,D5
-00000132  51C9 000A                233              DBRA    D1,BUCLE_FILA_LEFT
-00000136                           234  
-Line 235 ERROR: Symbol value differs between first and second pass
-00000136                           235  BUCLE_COLUMNA_LEFT
-00000136  1A18                     236              MOVE.B  (A0)+,D5
-00000138  51C8 000A                237              DBRA    D0,BUCLE_COLUMNA_LEFT
-0000013C                           238              
-0000013C  4CDF 003F                239              MOVEM.L (A7)+,D0-D5
-00000140                           240              
-00000140  4E75                     241              RTS
-00000142                           242  
-00000142                           243  ;------------------------------------------------------------------------------            
-Line 244 ERROR: Symbol value differs between first and second pass
-00000142                           244  COLWALLDOWN
-00000142                           245  ; COLLISION PAC-MAN WITH WALL
-00000142                           246  ; INPUT    : NONE
-00000142                           247  ; OUTPUT   : NONE
-00000142                           248  ; MODIFIES : NONE
-00000142                           249  ; ------------------------------------------------------------------------------
-00000142                           250  
-00000142  48E7 FC00                251              MOVEM.L D0-D5,-(A7)
-00000146                           252  
-Line 253 ERROR: Undefined symbol
-00000146  3039 004DBD16            253              MOVE.W  (PMPOSX),D0
+00000126  3239 004DBD16            216              MOVE.W  (PMPOSY),D1
+0000012C                           217              ;ADD.W   #6,D1
+0000012C                           218              
+0000012C  81FC 0010                219              DIVS.W  #16,D0
+00000130  83FC 0010                220              DIVS.W  #16,D1
+00000134                           221              
+00000134  5940                     222              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+00000136  5941                     223              SUB.W   #4,D1
+00000138                           224              
+Line 225 ERROR: Undefined symbol
+00000138  41F9 004DBD16            225              LEA.L   MAPVAR,A0
+0000013E                           226              
+0000013E  5340                     227              SUB.W   #1,D0
+00000140  5341                     228              SUB.W   #1,D1
+00000142  C2FC 0020                229              MULU.W  #32,D1
+00000146  D041                     230              ADD.W   D1,D0
+00000148                           231  
+00000148  3240                     232              MOVE.W  D0,A1
+Line 233 ERROR: Undefined symbol
+0000014A  13C0 005455B8            233              MOVE.B  D0,POSCON
+00000150                           234  
+Line 235 ERROR: Undefined symbol
+00000150  1A29 BD16                235              MOVE.B  MAPVAR(A1),D5               
+00000154                           236  
+00000154                           237              
+00000154  4CDF 001F                238              MOVEM.L (A7)+,D0-D4
+00000158                           239              
+00000158  4E75                     240              RTS
+0000015A                           241  
+0000015A                           242  ;------------------------------------------------------------------------------            
+Line 243 ERROR: Symbol value differs between first and second pass
+0000015A                           243  COLWALLDOWN
+0000015A                           244  ; COLLISION PAC-MAN WITH WALL
+0000015A                           245  ; INPUT    : NONE
+0000015A                           246  ; OUTPUT   : NONE
+0000015A                           247  ; MODIFIES : NONE
+0000015A                           248  ; ------------------------------------------------------------------------------
+0000015A                           249  
+0000015A  48E7 F800                250              MOVEM.L D0-D4,-(A7)
+0000015E                           251  
+Line 252 ERROR: Undefined symbol
+0000015E  3039 004DBD16            252              MOVE.W  (PMPOSX),D0
+00000164                           253              ;ADD.W   #8,D0
 Line 254 ERROR: Undefined symbol
-0000014C  3239 004DBD16            254              MOVE.W  (PMPOSY),D1
-00000152                           255              
-00000152  81FC 0010                256              DIVS.W  #16,D0
-00000156  83FC 0010                257              DIVS.W  #16,D1
-0000015A                           258              
-0000015A  5940                     259              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
-0000015C  5941                     260              SUB.W   #4,D1
-0000015E                           261              
-Line 262 ERROR: Undefined symbol
-0000015E  41F9 004DBD16            262              LEA.L   MAPVAR,A0
-00000164                           263              
-00000164  5340                     264              SUB.W   #1,D0
-00000166                           265              ;SUB.W   #2,D1
-00000166                           266              
-00000166                           267              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
-00000166                           268  
-Line 269 ERROR: Symbol value differs between first and second pass
-00000166                           269  BUCLE_FILA_DOWN
-00000166  1A18                     270              MOVE.B  (A0)+,D5
-00000168  51C9 000A                271              DBRA    D1,BUCLE_FILA_DOWN
-0000016C                           272  
-Line 273 ERROR: Symbol value differs between first and second pass
-0000016C                           273  BUCLE_COLUMNA_DOWN
-0000016C  1A18                     274              MOVE.B  (A0)+,D5
-0000016E  51C8 000A                275              DBRA    D0,BUCLE_COLUMNA_DOWN 
-00000172                           276              
-00000172  4CDF 003F                277              MOVEM.L (A7)+,D0-D5
-00000176                           278              
-00000176  4E75                     279              RTS
-00000178                           280  
-00000178                           281  
-00000178                           282  ;------------------------------------------------------------------------------            
-Line 283 ERROR: Symbol value differs between first and second pass
-00000178                           283  COLWALLUP
-00000178                           284  ; COLLISION PAC-MAN WITH WALL
-00000178                           285  ; INPUT    : NONE
-00000178                           286  ; OUTPUT   : NONE
-00000178                           287  ; MODIFIES : NONE
-00000178                           288  ; ------------------------------------------------------------------------------
-00000178                           289  
-00000178  48E7 FC00                290              MOVEM.L D0-D5,-(A7)
-0000017C                           291  
-Line 292 ERROR: Undefined symbol
-0000017C  3039 004DBD16            292              MOVE.W  (PMPOSX),D0
-Line 293 ERROR: Undefined symbol
-00000182  3239 004DBD16            293              MOVE.W  (PMPOSY),D1
-00000188                           294              
-00000188  81FC 0010                295              DIVS.W  #16,D0
-0000018C  83FC 0010                296              DIVS.W  #16,D1
-00000190                           297              
-00000190  5940                     298              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
-00000192  5941                     299              SUB.W   #4,D1
-00000194                           300              
-Line 301 ERROR: Undefined symbol
-00000194  41F9 004DBD16            301              LEA.L   MAPVAR,A0
-0000019A                           302              
-0000019A  5340                     303              SUB.W   #1,D0
-0000019C  5741                     304              SUB.W   #3,D1
-0000019E                           305              
-0000019E                           306              ;BUCLE PER MIRAR POSICIÓ ESQUERRE DE PACMAN
-0000019E                           307  
-0000019E  B27C 0000                308              CMP     #0,D1
-000001A2  6500 0016                309              BLO     BUCLE_COLUMNA_UP
-000001A6                           310  
-Line 311 ERROR: Symbol value differs between first and second pass
-000001A6                           311  BUCLE_FILA_UP
-000001A6  1A18                     312              MOVE.B  (A0)+,D5
-000001A8  51C9 000A                313              DBRA    D1,BUCLE_FILA_UP
-000001AC                           314  
-Line 315 ERROR: Symbol value differs between first and second pass
-000001AC                           315  BUCLE_COLUMNA_UP
-000001AC  1A18                     316              MOVE.B  (A0)+,D5
-000001AE  51C8 000A                317              DBRA    D0,BUCLE_COLUMNA_UP 
-000001B2                           318              
-000001B2  4CDF 003F                319              MOVEM.L (A7)+,D0-D5
-000001B6                           320              
-000001B6  4E75                     321              RTS
-Line 322 WARNING: END directive missing, starting address not set
+00000164  3239 004DBD16            254              MOVE.W  (PMPOSY),D1
+0000016A  5041                     255              ADD.W   #8,D1
+0000016C                           256              
+0000016C  81FC 0010                257              DIVS.W  #16,D0
+00000170  83FC 0010                258              DIVS.W  #16,D1
+00000174                           259              
+00000174  5940                     260              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+00000176  5941                     261              SUB.W   #4,D1
+00000178                           262              
+Line 263 ERROR: Undefined symbol
+00000178  41F9 004DBD16            263              LEA.L   MAPVAR,A0
+0000017E                           264              
+0000017E  C2FC 0020                265              MULU.W  #32,D1
+00000182  D041                     266              ADD.W   D1,D0
+00000184                           267  
+00000184  3240                     268              MOVE.W  D0,A1
+Line 269 ERROR: Undefined symbol
+00000186  13C0 005455B8            269              MOVE.B  D0,POSCON
+0000018C                           270  
+Line 271 ERROR: Undefined symbol
+0000018C  1A29 BD16                271              MOVE.B  MAPVAR(A1),D5 
+00000190                           272  
+00000190                           273              
+00000190  4CDF 001F                274              MOVEM.L (A7)+,D0-D4
+00000194                           275              
+00000194  4E75                     276              RTS
+00000196                           277  
+00000196                           278  
+00000196                           279  ;------------------------------------------------------------------------------            
+Line 280 ERROR: Symbol value differs between first and second pass
+00000196                           280  COLWALLUP
+00000196                           281  ; COLLISION PAC-MAN WITH WALL
+00000196                           282  ; INPUT    : NONE
+00000196                           283  ; OUTPUT   : NONE
+00000196                           284  ; MODIFIES : NONE
+00000196                           285  ; ------------------------------------------------------------------------------
+00000196                           286  
+00000196  48E7 F800                287              MOVEM.L D0-D4,-(A7)
+0000019A                           288  
+Line 289 ERROR: Undefined symbol
+0000019A  3039 004DBD16            289              MOVE.W  (PMPOSX),D0
+Line 290 ERROR: Undefined symbol
+000001A0  3239 004DBD16            290              MOVE.W  (PMPOSY),D1
+000001A6                           291              ;SUB.W   #8,D1
+000001A6                           292              
+000001A6                           293              
+000001A6  81FC 0010                294              DIVS.W  #16,D0
+000001AA  83FC 0010                295              DIVS.W  #16,D1
+000001AE                           296              
+000001AE  5940                     297              SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+000001B0  5941                     298              SUB.W   #4,D1
+000001B2                           299              
+Line 300 ERROR: Undefined symbol
+000001B2  41F9 004DBD16            300              LEA.L   MAPVAR,A0
+000001B8                           301              
+000001B8  5541                     302              SUB.W   #2,D1
+000001BA                           303              ;CMP     #1,D1
+000001BA                           304              ;BLO     BUCLE4
+000001BA  C2FC 0020                305              MULU.W  #32,D1
+000001BE  D041                     306              ADD.W   D1,D0
+000001C0                           307  
+000001C0                           308  ;BUCLE4            
+000001C0  3240                     309              MOVE.W  D0,A1
+Line 310 ERROR: Undefined symbol
+000001C2  13C0 005455B8            310              MOVE.B  D0,POSCON
+000001C8                           311  
+Line 312 ERROR: Undefined symbol
+000001C8  1A29 BD16                312              MOVE.B  MAPVAR(A1),D5 
+000001CC                           313  
+000001CC                           314              
+000001CC  4CDF 001F                315              MOVEM.L (A7)+,D0-D4
+000001D0                           316              
+000001D0  4E75                     317              RTS
+000001D2                           318  
+Line 319 WARNING: END directive missing, starting address not set
 
 40 errors detected
 1 warning generated
@@ -372,18 +369,10 @@ Line 322 WARNING: END directive missing, starting address not set
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
-BUCLE_COLUMNA_DOWN  17A
-BUCLE_COLUMNA_LEFT  144
-BUCLE_COLUMNA_RIGHT  10C
-BUCLE_COLUMNA_UP    1BA
-BUCLE_FILA_DOWN     174
-BUCLE_FILA_LEFT     13E
-BUCLE_FILA_RIGHT    106
-BUCLE_FILA_UP       1B4
-COLWALLDOWN         150
-COLWALLLEFT         118
+COLWALLDOWN         168
+COLWALLLEFT         128
 COLWALLRIGHT        E8
-COLWALLUP           186
+COLWALLUP           1A4
 KBDINIT             92
 KBDUPD              A0
 KBDUPD:CONVERT      DA

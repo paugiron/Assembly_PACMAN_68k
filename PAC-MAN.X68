@@ -13,7 +13,9 @@ PMINIT
             MOVE.W  #SCRWIDTH/2,(PMPOSX)
             MOVE.W  #SCRHEIGH/2,(PMPOSY)
             ADDQ.W  #8,(PMPOSX)
+            ADD.W   #16,(PMPOSX)
             ADDQ.W  #8,(PMPOSY)
+            SUB.W   #16,(PMPOSY)
             MOVE.W  #PMSPEED,(PMVELX)
             MOVE.W  #PMSPEED,(PMVELY)
             CLR.B   (PMLAMO)
@@ -28,7 +30,7 @@ PMUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             
-            MOVEM.W D0-D5,-(A7)
+            MOVEM.W D0-D6,-(A7)
             
             MOVE.W  #PMSPEED,D0
             
@@ -50,6 +52,8 @@ PMUPD
             BNE     .NOTMULT
             CMP     #$0000,D3
             BNE     .NOTMULT
+            
+            ;BRA     .ACTYUP
 
             ;CHECK THE DIRECTION
             BTST.B  #0,(KBDVAL)             ;CHECK LEFT
@@ -87,6 +91,10 @@ PMUPD
             BNE     .NOTCOLISION
             MOVE.W  #0,D0
 .NOTCOLISION
+            CMP     #4,D5
+            BNE     .NOTTP
+            SUB.W   #30*16,(PMPOSX)
+.NOTTP
             ADD.W   D0,(PMPOSX)
             BRA     .DONE
 .ACTXLEFT
@@ -95,6 +103,10 @@ PMUPD
             BNE     .NOTCOLISION2
             MOVE.W  #0,D0
 .NOTCOLISION2
+            CMP     #4,D5
+            BNE     .NOTTP2
+            ADD.W   #30*16,(PMPOSX)
+.NOTTP2
             SUB.W   D0,(PMPOSX)
             BRA     .DONE
     
@@ -129,7 +141,7 @@ PMUPD
             ;RESTORE
             MOVE.B  D4,(PMLAMO)
             
-            MOVEM.W (A7)+,D0-D5
+            MOVEM.W (A7)+,D0-D6
             
             RTS
                         
@@ -171,6 +183,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
