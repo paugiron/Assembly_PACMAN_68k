@@ -189,10 +189,10 @@ COLWALLRIGHT
             MULU.W  #32,D1
             ADD.W   D1,D0
             SUB.W   #1,D0
+            
+            MOVE.W  D0,A1
 
-BUCLE            
-            MOVE.B  (A0)+,D5
-            DBRA    D0,BUCLE
+            MOVE.B  MAPVAR(A1),D5
             
             MOVEM.L (A7)+,D0-D5
             
@@ -226,9 +226,10 @@ COLWALLLEFT
             ADD.W   D1,D0
             SUB.W   #1,D0
 
-BUCLE2            
-            MOVE.B  (A0)+,D5
-            DBRA    D0,BUCLE2                
+
+            MOVE.W  D0,A1
+
+            MOVE.B  MAPVAR(A1),D5               
 
             
             MOVEM.L (A7)+,D0-D5
@@ -260,9 +261,9 @@ COLWALLDOWN
             ADD.W   D1,D0
             SUB.W   #1,D0
 
-BUCLE3            
-            MOVE.B  (A0)+,D5
-            DBRA    D0,BUCLE3
+            MOVE.W  D0,A1
+
+            MOVE.B  MAPVAR(A1),D5 
 
             
             MOVEM.L (A7)+,D0-D5
@@ -299,13 +300,15 @@ COLWALLUP
             SUB.W   #1,D0
 
 BUCLE4            
-            MOVE.B  (A0)+,D5
-            DBRA    D0,BUCLE4
+            MOVE.W  D0,A1
+
+            MOVE.B  MAPVAR(A1),D5 
 
             
             MOVEM.L (A7)+,D0-D5
             
             RTS
+
 *~Font name~Fixedsys~
 *~Font size~9~
 *~Tab type~0~

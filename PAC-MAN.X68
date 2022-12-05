@@ -82,36 +82,36 @@ PMUPD
             ;UPDATE COORDS
             
 .ACTXRIGHT  
-            ;JSR     COLWALLRIGHT
-            ;CMP     #1,D5
-            ;BNE     .NOTCOLISION
-            ;MOVE.W  #0,D0
-;.NOTCOLISION
+            JSR     COLWALLRIGHT
+            CMP     #1,D5
+            BNE     .NOTCOLISION
+            MOVE.W  #0,D0
+.NOTCOLISION
             ADD.W   D0,(PMPOSX)
             BRA     .DONE
 .ACTXLEFT
-            ;JSR     COLWALLLEFT
-            ;CMP     #1,D5
-            ;BNE     .NOTCOLISION2
-            ;MOVE.W  #0,D0
-;.NOTCOLISION2
+            JSR     COLWALLLEFT
+            CMP     #1,D5
+            BNE     .NOTCOLISION2
+            MOVE.W  #0,D0
+.NOTCOLISION2
             SUB.W   D0,(PMPOSX)
             BRA     .DONE
     
 .ACTYDOWN
-            ;JSR     COLWALLDOWN
-            ;CMP     #1,D5
-            ;BNE     .NOTCOLISION3
-            ;MOVE.W  #0,D0
-;.NOTCOLISION3
+            JSR     COLWALLDOWN
+            CMP     #1,D5
+            BNE     .NOTCOLISION3
+            MOVE.W  #0,D0
+.NOTCOLISION3
             ADD.W   D0,(PMPOSY)
             BRA     .DONE
 .ACTYUP     
-            ;JSR     COLWALLUP
-            ;CMP     #1,D5
-            ;BNE     .NOTCOLISION4
-            ;MOVE.W  #0,D0
-;.NOTCOLISION4
+            JSR     COLWALLUP
+            CMP     #1,D5
+            BNE     .NOTCOLISION4
+            MOVE.W  #0,D0
+.NOTCOLISION4
             SUB.W   D0,(PMPOSY)
             BRA     .DONE
             
@@ -171,6 +171,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 

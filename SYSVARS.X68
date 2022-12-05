@@ -16,6 +16,11 @@ SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
 
 MAPVAR      DS.B    1024
 
+            DS.B    0
+
+POSCON      DS.W    1
+
+
 
 
 
