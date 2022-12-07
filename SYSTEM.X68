@@ -78,7 +78,7 @@ SCRUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
-            MOVEM.W D0-D1,-(A7)
+            MOVEM.L D0-D1,-(A7)
             
             ;SWITCH BUFFERS
             MOVE.B #94,D0
@@ -89,7 +89,7 @@ SCRUPD
             MOVE.W  #$FF00,D1
             TRAP    #15
             
-            MOVEM.W (A7)+,D0-D1
+            MOVEM.L (A7)+,D0-D1
             
             RTE
             
@@ -317,6 +317,7 @@ COLWALLUP
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 *~Font name~Fixedsys~

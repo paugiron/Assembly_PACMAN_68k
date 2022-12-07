@@ -30,7 +30,7 @@ PMUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             
-            MOVEM.W D0-D6,-(A7)
+            MOVEM.L D0-D6,-(A7)
             
             MOVE.W  #PMSPEED,D0
             
@@ -141,7 +141,7 @@ PMUPD
             ;RESTORE
             MOVE.B  D4,(PMLAMO)
             
-            MOVEM.W (A7)+,D0-D6
+            MOVEM.L (A7)+,D0-D6
             
             RTS
                         
@@ -183,6 +183,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 

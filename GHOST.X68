@@ -25,7 +25,7 @@ GSTUPD
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
-            MOVEM.W D0-D4,-(A7)
+            MOVEM.L D0-D4,-(A7)
             
             MOVE.W  #GSTSPEED,D0
             
@@ -48,7 +48,7 @@ GSTUPD
             
 .GSTNOTMULT
 
-            MOVEM.W (A7)+,D0-D4
+            MOVEM.L (A7)+,D0-D4
             
             RTS
             
@@ -90,6 +90,7 @@ GSTPLOT
             
 
             RTS
+
 
 
 *~Font name~Fixedsys~
