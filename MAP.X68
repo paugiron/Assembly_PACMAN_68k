@@ -10,13 +10,12 @@ MAPINIT
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------            
             
-            MOVEM.L D0-D6,-(A7)
-            MOVEM.L A0-A1,-(A7)
-            
             MOVE.L  #DIBFIGWALL,($80+2*4)          ;INSTALL SUBRUTINE TO TRAP #2
             MOVE.L  #DIBFIGPOINT,($80+3*4)          ;INSTALL SUBRUTINE TO TRAP #3
             MOVE.L  #DIBFIGBPOINT,($80+4*4)          ;INSTALL SUBRUTINE TO TRAP #4
             
+            MOVEM.L D0-D6,-(A7)
+            MOVEM.L A0-A1,-(A7)
             
             LEA.L   MAPMAT,A0
             LEA.L   MAPVAR,A1
@@ -224,6 +223,7 @@ DIBFIGBPOINT
             MOVEM.L (A7)+,D0-D6
             
             RTE
+
 
 
 

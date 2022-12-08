@@ -10,6 +10,7 @@ PMVELX      DS.W    1                       ; PM X VELOCITY
 PMVELY      DS.W    1                       ; PM Y VELOCITY
 PMEAT       DS.B    1                       ; PM BOOLEAN EAT GST
 PMLAMO      DS.B    1                       ; PM SAVE LAST MOVEMENT X O Y
+            DS.B    0
 
 ; --- GHOST RELATED VARIABLES --------------------------------------------------
 
@@ -25,6 +26,7 @@ GSTLAMO     DS.B    1                       ; GST LAST MOVEMENT (X OR Y)
 
 SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
 SCOBNS      DS.W    1                       ; NUMBER OF BONUS
+
 
 
 
