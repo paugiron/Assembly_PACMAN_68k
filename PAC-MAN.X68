@@ -13,9 +13,7 @@ PMINIT
             MOVE.W  #SCRWIDTH/2,(PMPOSX)
             MOVE.W  #SCRHEIGH/2,(PMPOSY)
             ADDQ.W  #8,(PMPOSX)
-            ADD.W   #16,(PMPOSX)
             ADDQ.W  #8,(PMPOSY)
-            SUB.W   #16,(PMPOSY)
             MOVE.W  #PMSPEED,(PMVELX)
             MOVE.W  #PMSPEED,(PMVELY)
             CLR.B   (PMLAMO)
@@ -183,6 +181,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
