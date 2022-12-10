@@ -83,7 +83,7 @@ BUCLE_COLUMNA2
 
             MOVE.B  (A0)+,D0
 
-           CMP     #0,D0
+            CMP     #0,D0
             BEQ     ZERO2
             CMP     #4,D0
             BEQ     ZERO2
@@ -223,6 +223,7 @@ DIBFIGBPOINT
             MOVEM.L (A7)+,D0-D6
             
             RTE
+
 
 
 
