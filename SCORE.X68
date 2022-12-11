@@ -9,7 +9,7 @@ SCOINIT
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
-            CLR.W   (SCOBNS)
+            CLR.W   (SCOPOINTS)
             MOVE.W  #3,(SCOLIFE)
             RTS
             
@@ -36,7 +36,7 @@ SCOPLOT
             ; PRINT FIRST LINE
             LEA     .TXT1,A1            ;PUT FIRST STRING IN A1
             CLR.L   D1
-            MOVE.W  (SCOBNS),D1
+            MOVE.W  (SCOPOINTS),D1
             MOVE.B  #17,D0
             TRAP    #15
 
@@ -61,6 +61,7 @@ SCOPLOT
 
 
             RTS
+
 
 *~Font name~Fixedsys~
 *~Font size~9~

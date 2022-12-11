@@ -25,7 +25,8 @@ GSTLAMO     DS.B    1                       ; GST LAST MOVEMENT (X OR Y)
 ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
 
 SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
-SCOBNS      DS.W    1                       ; NUMBER OF BONUS
+SCOPOINTS   DS.W    1                       ; NUMBER OF POINTS
+
 
 
 

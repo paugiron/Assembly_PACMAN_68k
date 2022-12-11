@@ -137,6 +137,7 @@ PMUPD
             BRA     .ACTYDOWN
 .DONE
             ;RESTORE
+            JSR     GETPOINTS
             MOVE.B  D4,(PMLAMO)
             
             MOVEM.L (A7)+,D0-D6
@@ -181,6 +182,7 @@ PMPLOT
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 

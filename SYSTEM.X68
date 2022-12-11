@@ -319,6 +319,55 @@ COLWALLUP
             RTS
 
 
+;------------------------------------------------------------------------------            
+GETPOINTS
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
+
+            MOVEM.L D0-D4,-(A7)
+
+            MOVE.W  (PMPOSX),D0
+            ;SUB.W   #8,D0
+            MOVE.W  (PMPOSY),D1
+            ADD.W   #16,D1
+            
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+                        
+            SUB.W   #1,D1
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+
+            MOVE.W  D0,A1
+            MOVE.B  MAPVAR(A1),D5
+            
+            CMP     #0,D5
+            BEQ     .DONE
+            CMP     #2,D5
+            BEQ     .POINT
+            CMP     #3,D5
+            BEQ     .BPOINT
+            BNE     .DONE
+.BPOINT
+            MOVE.B  #0,MAPVAR(A1)
+            ADD.W   #50,(SCOPOINTS)
+            BNE     .DONE
+.POINT
+            MOVE.B  #0,MAPVAR(A1)
+            ADD.W   #10,(SCOPOINTS)
+            BNE     .DONE            
+.DONE                        
+            MOVEM.L (A7)+,D0-D4
+            
+            RTS
+
 
 
 *~Font name~Fixedsys~
