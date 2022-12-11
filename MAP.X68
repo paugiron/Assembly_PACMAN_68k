@@ -10,9 +10,9 @@ MAPINIT
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------            
             
-            MOVE.L  #DIBFIGWALL,($80+2*4)          ;INSTALL SUBRUTINE TO TRAP #2
-            MOVE.L  #DIBFIGPOINT,($80+3*4)          ;INSTALL SUBRUTINE TO TRAP #3
-            MOVE.L  #DIBFIGBPOINT,($80+4*4)          ;INSTALL SUBRUTINE TO TRAP #4
+            ;MOVE.L  #DIBFIGWALL,($80+2*4)          ;INSTALL SUBRUTINE TO TRAP #2
+            ;MOVE.L  #DIBFIGPOINT,($80+3*4)          ;INSTALL SUBRUTINE TO TRAP #3
+            ;MOVE.L  #DIBFIGBPOINT,($80+4*4)          ;INSTALL SUBRUTINE TO TRAP #4
             
             MOVEM.L D0-D6,-(A7)
             MOVEM.L A0-A1,-(A7)
@@ -38,15 +38,15 @@ BUCLE_COLUMNA
             BEQ     ZERO
             CMP     #1,D0
             BNE     NOTWALL
-            TRAP    #2
+            JSR     DIBFIGWALL
 NOTWALL
             CMP     #2,D0
             BNE     NOTPOINT
-            TRAP    #3
+            JSR     DIBFIGPOINT
 NOTPOINT
             CMP     #3,D0
             BNE     ZERO
-            TRAP    #4
+            JSR     DIBFIGBPOINT
          
 ZERO
             DBRA    D1,BUCLE_COLUMNA  
@@ -89,15 +89,15 @@ BUCLE_COLUMNA2
             BEQ     ZERO2
             CMP     #1,D0
             BNE     NOTWALL2
-            TRAP    #2
+            JSR     DIBFIGWALL
 NOTWALL2
             CMP     #2,D0
             BNE     NOTPOINT2
-            TRAP    #3
+            JSR     DIBFIGPOINT
 NOTPOINT2
             CMP     #3,D0
             BNE     ZERO2
-            TRAP    #4
+            JSR     DIBFIGBPOINT
 
    
 ZERO2
@@ -143,7 +143,7 @@ DIBFIGWALL
             
             MOVEM.L (A7)+,D0-D6
 
-            RTE
+            RTS
             
 ; -----------------------------------------------------------------------------
 DIBFIGPOINT
@@ -182,7 +182,7 @@ DIBFIGPOINT
             
             MOVEM.L (A7)+,D0-D6
             
-            RTE
+            RTS
 
 
 ; -----------------------------------------------------------------------------
@@ -222,7 +222,8 @@ DIBFIGBPOINT
             
             MOVEM.L (A7)+,D0-D6
             
-            RTE
+            RTS
+
 
 
 
