@@ -174,14 +174,22 @@ PMPLOT
             ADD.W   #PMRAD*2,D3
             MOVE.W  D2,D4
             ADD.W   #PMRAD*2,D4
-              
+            
             ;DRAW PAC-MAN
             MOVE.W  #88,D0
             TRAP    #15
             
+            ;DRAW MOVEMENT
+            ;MOVE.W  #84,D0
+            
+            
+            
+            ;TRAP    #15
+            
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 

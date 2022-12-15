@@ -1,6 +1,6 @@
 00001AE0 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 11/12/2022 20:20:37
+Created On: 15/12/2022 9:44:11
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; TITLE       : PAC-MAN 68000
@@ -1147,98 +1147,97 @@ Created On: 11/12/2022 20:20:37
 00001AFA                          1143  ; UPDATE GAME LOGIC
 00001AFA                          1144  
 00001AFA  4EB8 14E8               1145              JSR     PMUPD
-00001AFE                          1146              ;JSR     GSTUPD
-00001AFE                          1147              ;JSR     MAPINIT
-00001AFE                          1148  
-00001AFE                          1149  ; --- SYNC ---------------------------------------------------------------------
-00001AFE                          1150              ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
-00001AFE                          1151              ;THE BUCLE
-00001AFE                          1152              
-00001AFE  4A39 00001B26           1153  .WAITINIT   TST.B   (SCRINTCT)
-00001B04  67F8                    1154              BEQ     .WAITINIT
-00001B06  4239 00001B26           1155              CLR.B   (SCRINTCT)
-00001B0C                          1156  
-00001B0C                          1157  ; --- PLOT ---------------------------------------------------------------------
-00001B0C                          1158              
-00001B0C  4EB8 19BC               1159              JSR     MAPPLOT
-00001B10  4EB8 1686               1160              JSR     SCOPLOT
-00001B14  4EB8 1632               1161              JSR     PMPLOT
-00001B18  4EB8 1470               1162              JSR     GSTPLOT
+00001AFE                          1146             ;JSR     GSTUPD
+00001AFE                          1147  
+00001AFE                          1148  ; --- SYNC ---------------------------------------------------------------------
+00001AFE                          1149              ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
+00001AFE                          1150              ;THE BUCLE
+00001AFE                          1151              
+00001AFE  4A39 00001B26           1152  .WAITINIT   TST.B   (SCRINTCT)
+00001B04  67F8                    1153              BEQ     .WAITINIT
+00001B06  4239 00001B26           1154              CLR.B   (SCRINTCT)
+00001B0C                          1155  
+00001B0C                          1156  ; --- PLOT ---------------------------------------------------------------------
+00001B0C                          1157              
+00001B0C  4EB8 19BC               1158              JSR     MAPPLOT
+00001B10  4EB8 1686               1159              JSR     SCOPLOT
+00001B14  4EB8 1632               1160              JSR     PMPLOT
+00001B18  4EB8 1470               1161              JSR     GSTPLOT
+00001B1C                          1162              
 00001B1C                          1163              
 00001B1C                          1164              
-00001B1C                          1165              
-00001B1C  4E40                    1166              TRAP    #0                      ;CHANGE BUFFER
-00001B1E                          1167  
-00001B1E  60D8                    1168              BRA     .LOOP
-00001B20                          1169  
-00001B20  FFFF FFFF               1170              SIMHALT  
-00001B24                          1171             
-00001B24                          1172              INCLUDE "SYSVARS.X68"
-00001B24                          1173  ; ==============================================================================
-00001B24                          1174  ; SYSTEM VARIABLES
-00001B24                          1175  ; ==============================================================================
-00001B24                          1176   
-00001B24                          1177  ; --- KEYBOARD RELATED VARIABLES -----------------------------------------------
-00001B24                          1178  
-00001B24                          1179  KBDVAL      DS.B    1                       ; KEY STATE
-00001B25                          1180  KBDEDGE     DS.B    1                       ; KEY EDGE
-00001B26                          1181  
-00001B26                          1182  ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
-00001B26                          1183  
-00001B26                          1184  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
-00001B27                          1185              DS.B    0           
-00001B27                          1186              
-00001B27                          1187  ; --- MAP RELATED VARIABLE -----------------------------------------------------
-00001B27                          1188  
-00001B27                          1189  MAPVAR      DS.B    1024
-00001F27                          1190  
-00001F27                          1191              DS.B    0
-00001F27                          1192  
-00001F28                          1193  POSCON      DS.W    1
+00001B1C  4E40                    1165              TRAP    #0                      ;CHANGE BUFFER
+00001B1E                          1166  
+00001B1E  60D8                    1167              BRA     .LOOP
+00001B20                          1168  
+00001B20  FFFF FFFF               1169              SIMHALT  
+00001B24                          1170             
+00001B24                          1171              INCLUDE "SYSVARS.X68"
+00001B24                          1172  ; ==============================================================================
+00001B24                          1173  ; SYSTEM VARIABLES
+00001B24                          1174  ; ==============================================================================
+00001B24                          1175   
+00001B24                          1176  ; --- KEYBOARD RELATED VARIABLES -----------------------------------------------
+00001B24                          1177  
+00001B24                          1178  KBDVAL      DS.B    1                       ; KEY STATE
+00001B25                          1179  KBDEDGE     DS.B    1                       ; KEY EDGE
+00001B26                          1180  
+00001B26                          1181  ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
+00001B26                          1182  
+00001B26                          1183  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
+00001B27                          1184              DS.B    0           
+00001B27                          1185              
+00001B27                          1186  ; --- MAP RELATED VARIABLE -----------------------------------------------------
+00001B27                          1187  
+00001B27                          1188  MAPVAR      DS.B    1024
+00001F27                          1189  
+00001F27                          1190              DS.B    0
+00001F27                          1191  
+00001F28                          1192  POSCON      DS.W    1
+00001F2A                          1193  
 00001F2A                          1194  
 00001F2A                          1195  
 00001F2A                          1196  
 00001F2A                          1197  
-00001F2A                          1198  
-00001F2A                          1199  -------------------- end include --------------------
-00001F2A                          1200              INCLUDE "VARS.X68"
-00001F2A                          1201  ; ==============================================================================
-00001F2A                          1202  ; GAME VARIABLES
-00001F2A                          1203  ; ==============================================================================
-00001F2A                          1204  
-00001F2A                          1205  ; --- PAC-MAN RELATED VARIABLES ------------------------------------------------
-00001F2A                          1206  
-00001F2A                          1207  PMPOSX      DS.W    1                       ; PM X COORDINATE
-00001F2C                          1208  PMPOSY      DS.W    1                       ; PM Y COORDINATE
-00001F2E                          1209  PMVELX      DS.W    1                       ; PM X VELOCITY
-00001F30                          1210  PMVELY      DS.W    1                       ; PM Y VELOCITY
-00001F32                          1211  PMEAT       DS.B    1                       ; PM BOOLEAN EAT GST
-00001F33                          1212  PMLAMO      DS.B    1                       ; PM SAVE LAST MOVEMENT X O Y
-00001F34                          1213              DS.B    0
-00001F34                          1214  
-00001F34                          1215  ; --- GHOST RELATED VARIABLES --------------------------------------------------
-00001F34                          1216  
-00001F34                          1217  GSTPOSX     DS.W    1                       ; GST X COORDINATE
-00001F36                          1218  GSTPOSY     DS.W    1                       ; GST Y COORDINATE
-00001F38                          1219  GSTVELX     DS.W    1                       ; GST X VELOCITY
-00001F3A                          1220  GSTVELY     DS.W    1                       ; GST Y VELOCITY
-00001F3C                          1221  GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
-00001F3D                          1222  GSTLAMO     DS.B    1                       ; GST LAST MOVEMENT (X OR Y)
-00001F3E                          1223              DS.B    0
-00001F3E                          1224  
-00001F3E                          1225  ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
-00001F3E                          1226  
-00001F3E                          1227  SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
-00001F40                          1228  SCOPOINTS   DS.W    1                       ; NUMBER OF POINTS
+00001F2A                          1198  -------------------- end include --------------------
+00001F2A                          1199              INCLUDE "VARS.X68"
+00001F2A                          1200  ; ==============================================================================
+00001F2A                          1201  ; GAME VARIABLES
+00001F2A                          1202  ; ==============================================================================
+00001F2A                          1203  
+00001F2A                          1204  ; --- PAC-MAN RELATED VARIABLES ------------------------------------------------
+00001F2A                          1205  
+00001F2A                          1206  PMPOSX      DS.W    1                       ; PM X COORDINATE
+00001F2C                          1207  PMPOSY      DS.W    1                       ; PM Y COORDINATE
+00001F2E                          1208  PMVELX      DS.W    1                       ; PM X VELOCITY
+00001F30                          1209  PMVELY      DS.W    1                       ; PM Y VELOCITY
+00001F32                          1210  PMEAT       DS.B    1                       ; PM BOOLEAN EAT GST
+00001F33                          1211  PMLAMO      DS.B    1                       ; PM SAVE LAST MOVEMENT X O Y
+00001F34                          1212              DS.B    0
+00001F34                          1213  
+00001F34                          1214  ; --- GHOST RELATED VARIABLES --------------------------------------------------
+00001F34                          1215  
+00001F34                          1216  GSTPOSX     DS.W    1                       ; GST X COORDINATE
+00001F36                          1217  GSTPOSY     DS.W    1                       ; GST Y COORDINATE
+00001F38                          1218  GSTVELX     DS.W    1                       ; GST X VELOCITY
+00001F3A                          1219  GSTVELY     DS.W    1                       ; GST Y VELOCITY
+00001F3C                          1220  GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
+00001F3D                          1221  GSTLAMO     DS.B    1                       ; GST LAST MOVEMENT (X OR Y)
+00001F3E                          1222              DS.B    0
+00001F3E                          1223  
+00001F3E                          1224  ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
+00001F3E                          1225  
+00001F3E                          1226  SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
+00001F40                          1227  SCOPOINTS   DS.W    1                       ; NUMBER OF POINTS
+00001F42                          1228  
 00001F42                          1229  
 00001F42                          1230  
 00001F42                          1231  
 00001F42                          1232  
 00001F42                          1233  
-00001F42                          1234  
-00001F42                          1235  -------------------- end include --------------------
-00001F42                          1236              
-00001F42                          1237              END    START        
+00001F42                          1234  -------------------- end include --------------------
+00001F42                          1235              
+00001F42                          1236              END    START        
 
 No errors detected
 No warnings generated

@@ -39,8 +39,7 @@ START:
 ; UPDATE GAME LOGIC
 
             JSR     PMUPD
-            ;JSR     GSTUPD
-            ;JSR     MAPINIT
+           ;JSR     GSTUPD
 
 ; --- SYNC ---------------------------------------------------------------------
             ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
@@ -69,6 +68,7 @@ START:
             INCLUDE "VARS.X68"
             
             END    START        
+
 
 
 
