@@ -4,7 +4,7 @@
             
 ; ------------------------------------------------------------------------------
 GSTINIT
-; INITIALIZE PADDLE.
+; INITIALIZE GHOST.
 ; INPUT    : NONE 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
@@ -18,7 +18,7 @@ GSTINIT
             
 ; ------------------------------------------------------------------------------
 GSTUPD
-; UPDATES THE PADDLE.
+; UPDATES THE GHOST.
 ; INPUT    : NONE 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
@@ -52,7 +52,7 @@ GSTUPD
             
 ; ------------------------------------------------------------------------------
 GSTPLOT
-; PLOT THE PADDLE.
+; PLOT THE GHOST.
 ; INPUT    : NONE 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
@@ -103,6 +103,7 @@ GSTPLOT
             
 
             RTS
+
 
 
 

@@ -164,6 +164,55 @@ PMPLOT
             MOVE.L  #PMFCOL,D1
             TRAP    #15
             
+            ;DRAW QUIET
+            JSR     .FULLDRAW
+            
+            ;CHECK KBDVAL
+            BTST.B  #0,(KBDVAL)             ;LEFT
+            BEQ     .DLEFT
+            BTST.B  #1,(KBDVAL)             :UP
+            BEQ     .DUP
+            BTST.B  #2,(KBDVAL)             ;RIGHT
+            BEQ     .DRIGHT
+            BTST.B  #3,(KBDVAL)             ;DOWN
+            BEQ     .DDOWN
+            
+            ;DRAW MOVEMENT
+.DLEFT
+            JSR     .LEFTDRAW
+            BRA     .DRAW_MOUTH1
+.DUP
+            JSR     .UPDRAW
+            BRA     .DRAW_MOUTH2
+
+.DRIGHT
+            JSR     .RIGHTDRAW
+            BRA     .DRAW_MOUTH3
+
+.DDOWN
+            JSR     .DOWNDRAW
+            BRA     .DRAW_MOUTH4
+            
+.DRAW_MOUTH1            
+            JSR     .SET_MOUTHLEFT
+            BRA     .DDONE
+.DRAW_MOUTH2            
+            JSR     .SET_MOUTHUP
+            BRA     .DDONE
+.DRAW_MOUTH3            
+            JSR     .SET_MOUTHRIGHT
+            BRA     .DDONE
+.DRAW_MOUTH4            
+            JSR     .SET_MOUTHDOWN
+.DDONE
+            MOVEM.L (A7)+,D0-D4
+            
+            RTS
+
+
+;INTERNAL SUBRUTINES FOR PACMAN PLOT-------------------------------------------------------------
+
+.FULLDRAW
             ;SET COORDS
             MOVE.W  (PMPOSX),D1
             SUB.W   #PMRAD,D1
@@ -179,9 +228,12 @@ PMPLOT
             MOVE.W  #88,D0
             TRAP    #15
             
-            ;DRAW MOVEMENT
+            RTS
+.LEFTDRAW
+            
+            
             MOVE.W  #84,D0
-            MOVE.W  (PMPOSX),D1             ;FINAL COORD OF THE FIRST LINE
+            MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
             SUB.W   #PMRAD,D1
             MOVE.W  (PMPOSY),D2
             SUB.W   #PMRAD,D2
@@ -191,7 +243,7 @@ PMPLOT
             
             TRAP    #15
            
-            MOVE.W  #85,D0                       ;DRAW SECOND LINE
+            MOVE.W  #85,D0                        ;DRAW SECOND LINE
             
             MOVE.W  D3,D1
             MOVE.W  D4,D2
@@ -200,20 +252,142 @@ PMPLOT
             
             TRAP    #15
             
-            MOVE.W  #81,D0                  ;SET BLACK
+            
+            RTS
+            
+.RIGHTDRAW
+            
+            
+            MOVE.W  #84,D0
+            MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+            ADD.W   #PMRAD,D1
+            MOVE.W  (PMPOSY),D2
+            ADD.W   #PMRAD,D2
+            
+            MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
+            MOVE.W  (PMPOSY),D4
+            
+            TRAP    #15
+           
+            MOVE.W  #85,D0                        ;DRAW SECOND LINE
+            
+            MOVE.W  D3,D1
+            MOVE.W  D4,D2
+            ADD.W   #PMRAD,D2
+            ADD.W   #PMRAD,D1
+            
+            TRAP    #15
+            
+            
+            RTS
+.UPDRAW
+            
+            
+            MOVE.W  #84,D0
+            MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+            SUB.W   #PMRAD,D1
+            MOVE.W  (PMPOSY),D2
+            SUB.W   #PMRAD,D2
+            
+            MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
+            MOVE.W  (PMPOSY),D4
+            
+            TRAP    #15
+           
+            MOVE.W  #85,D0                        ;DRAW SECOND LINE
+            
+            MOVE.W  D3,D1
+            MOVE.W  D4,D2
+            SUB.W   #PMRAD,D2
+            ADD.W   #PMRAD,D1
+            
+            TRAP    #15
+            
+            
+            RTS
+            
+.DOWNDRAW
+            
+            
+            MOVE.W  #84,D0
+            MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+            SUB.W   #PMRAD,D1
+            MOVE.W  (PMPOSY),D2
+            SUB.W   #PMRAD,D2
+            
+            MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
+            MOVE.W  (PMPOSY),D4
+            
+            TRAP    #15
+           
+            MOVE.W  #85,D0                        ;DRAW SECOND LINE
+            
+            MOVE.W  D3,D1
+            MOVE.W  D4,D2
+            ADD.W   #PMRAD,D2
+            ADD.W   #PMRAD,D1
+            
+            TRAP    #15
+            
+            
+            RTS
+
+            
+.SET_MOUTHLEFT
+            
+            MOVE.W  #81,D0                         ;SET BLACK
             MOVE.L  #$0000,D1
             TRAP    #15
             
-            MOVE.W  #89,D0
+            MOVE.W  #89,D0                         ;FILL
             MOVE.W  (PMPOSX),D1
             SUBQ.W   #2,D1
             MOVE.W  (PMPOSY),D2
             TRAP    #15
+
+            RTS
             
-            MOVEM.L (A7)+,D0-D4
+.SET_MOUTHRIGHT
             
+            MOVE.W  #81,D0                         ;SET BLACK
+            MOVE.L  #$0000,D1
+            TRAP    #15
+            
+            MOVE.W  #89,D0                         ;FILL
+            MOVE.W  (PMPOSX),D1
+            ADDQ.W   #2,D1
+            MOVE.W  (PMPOSY),D2
+            TRAP    #15
+
             RTS
 
+.SET_MOUTHUP
+            
+            MOVE.W  #81,D0                         ;SET BLACK
+            MOVE.L  #$0000,D1
+            TRAP    #15
+            
+            MOVE.W  #89,D0                         ;FILL
+            MOVE.W  (PMPOSX),D1
+            MOVE.W  (PMPOSY),D2
+            SUBQ.W   #2,D2
+            TRAP    #15
+
+            RTS
+
+.SET_MOUTHDOWN
+            
+            MOVE.W  #81,D0                         ;SET BLACK
+            MOVE.L  #$0000,D1
+            TRAP    #15
+            
+            MOVE.W  #89,D0                         ;FILL
+            MOVE.W  (PMPOSX),D1
+            MOVE.W  (PMPOSY),D2
+            ADDQ.W   #2,D2
+            TRAP    #15
+
+            RTS
 
 
 
