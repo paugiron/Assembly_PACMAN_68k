@@ -156,7 +156,7 @@ PMPLOT
 
             ;SET PEN COLOR
             MOVE.W  #80,D0
-            MOVE.L  #PMPCOL,D1
+            MOVE.L  #$0000,D1
             TRAP    #15
             
             ;SET FILL COLOR
@@ -180,15 +180,40 @@ PMPLOT
             TRAP    #15
             
             ;DRAW MOVEMENT
-            ;MOVE.W  #84,D0
+            MOVE.W  #84,D0
+            MOVE.W  (PMPOSX),D1             ;FINAL COORD OF THE FIRST LINE
+            SUB.W   #PMRAD,D1
+            MOVE.W  (PMPOSY),D2
+            SUB.W   #PMRAD,D2
             
+            MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
+            MOVE.W  (PMPOSY),D4
             
+            TRAP    #15
+           
+            MOVE.W  #85,D0                       ;DRAW SECOND LINE
             
-            ;TRAP    #15
+            MOVE.W  D3,D1
+            MOVE.W  D4,D2
+            ADD.W   #PMRAD,D2
+            SUB.W   #PMRAD,D1
+            
+            TRAP    #15
+            
+            MOVE.W  #81,D0                  ;SET BLACK
+            MOVE.L  #$0000,D1
+            TRAP    #15
+            
+            MOVE.W  #89,D0
+            MOVE.W  (PMPOSX),D1
+            SUBQ.W   #2,D1
+            MOVE.W  (PMPOSY),D2
+            TRAP    #15
             
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
