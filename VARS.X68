@@ -32,6 +32,7 @@ SCOPOINTS   DS.W    1                       ; NUMBER OF POINTS
 
 
 
+
 *~Font name~Fixedsys~
 *~Font size~9~
 *~Tab type~0~

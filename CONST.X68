@@ -16,21 +16,29 @@ GSTSPEED2   EQU     5                       ; MAGNITUDE OF THE ATACKED DISPLACEM
 
 GSTCOL1     EQU     $000000FF               ; GHOST 1 CONTOUR COLOR RED
 GSTFCOL1    EQU     $00FFFFFF               ; GHOST 1 FILL COLOR WHITE
+GSTINX1     EQU     2                       ; GHOST 1 INITIAL X
+GSTINY1     EQU     2                       ; GHOST 1 INITIAL Y
 
 GSTCOL2     EQU     $00FF0080               ; GHOST 2 CONTOUR COLOR PINK
 GSTFCOL2    EQU     $00000000               ; GHOST 1 FILL COLOR
+GSTINX2     EQU     2                       ; GHOST 2 INITIAL X
+GSTINY2     EQU     31                      ; GHOST 2 INITIAL Y
 
 GSTCOL3     EQU     $00FFFF00               ; GHOST 3 CONTOUR COLOR CYAN
 GSTFCOL3    EQU     $00000000               ; GHOST 3 FILL COLOR
+GSTINX3     EQU     31                      ; GHOST 3 INITIAL X
+GSTINY3     EQU     2                       ; GHOST 3 INITIAL Y
 
 GSTCOL4     EQU     $000080FF               ; GHOST 4 CONTOUR COLOR ORANGE
-GSTFCOL4    EQU     $00000000               ; GHOST 4 FILL COLOR 
+GSTFCOL4    EQU     $00000000               ; GHOST 4 FILL COLOR
+GSTINX4     EQU     31                      ; GHOST 4 INITIAL X
+GSTINY4     EQU     31                      ; GHOST 4 INITIAL Y 
 
 GSTCOL5     EQU     $00800000               ; CONTOUR COLOR OF ATACKED MODE
 GSTFCOL5    EQU     $00000000               ; FILL COLOR OF ATACKED MODE
 
 GSTRAD      EQU     8                       ; GHOST RADIUS
-
+GSTRNG      EQU     16                      ; GHOST DETECTING RANGE
             
 ; --- SCOREBOARD RELATED CONSTANTS ---------------------------------------------
 ;MODIFICATE
@@ -73,6 +81,7 @@ MAPMAT      DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
             DC.B    $1,3,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,3,1
             DC.B    $1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1
             DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+
 
 
 

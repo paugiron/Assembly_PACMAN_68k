@@ -9,10 +9,8 @@ GSTINIT
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
-            MOVE.W  #SCRWIDTH/2,(GSTPOSX)
-            MOVE.W  #SCRHEIGH/2+48,(GSTPOSY)
-            ADDQ.W  #8,(GSTPOSX)
-            ADDQ.W  #8,(GSTPOSY)
+            MOVE.W  #GSTINX1*16+64-8,(GSTPOSX)
+            MOVE.W  #GSTINY1*16+64-8,(GSTPOSY)
             MOVE.W  #GSTSPEED,(GSTVELX)
             MOVE.W  #GSTSPEED,(GSTVELY)
             CLR.B   (GSTLAMO)
@@ -86,10 +84,26 @@ GSTPLOT
             MOVE.W  #88,D0
             TRAP    #15
             
+            ;SET RANGE COORDS
+            MOVE.W  (GSTPOSX),D1
+            SUB.W   #GSTRNG*16,D1
+            MOVE.W  (GSTPOSY),D2
+            SUB.W   #GSTRNG*16,D2
+            
+            MOVE.W  D1,D3
+            ADD.W   #GSTRNG*16*2,D3
+            MOVE.W  D2,D4
+            ADD.W   #GSTRNG*16*2,D4
+            
+            ;DRAW GHOST RANGE
+            MOVE.W  #91,D0
+            TRAP    #15
+            
             MOVEM.L (A7)+,D0-D4
             
 
             RTS
+
 
 
 
