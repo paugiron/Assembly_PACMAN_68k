@@ -27,6 +27,16 @@ GSTLAMO     DS.B    1                       ; GST LAST MOVEMENT (X OR Y)
 SCOLIFE     DS.W    1                       ; NUMBER OF LIFES
 SCOPOINTS   DS.W    1                       ; NUMBER OF POINTS
 
+; --- INTRO STATE RELATED VARIABLES --------------------------------------------
+
+ISCTIMER    DS.W    1                       ; INTRO TIMER
+
+; --- STATE RELATED VARIABLES --------------------------------------------------
+
+STACUR      DS.W    1                       ; CURRENT STATE
+STANEXT     DS.W    1                       ; NEXT STATE
+
+
 
 
 

@@ -10,7 +10,8 @@ KBDEDGE     DS.B    1                       ; KEY EDGE
 ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
 
 SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
-            DS.B    0           
+SCRCYCCT    DS.B    1                       ; CYCLE COUNTER
+            DS.W    0        
             
 ; --- MAP RELATED VARIABLE -----------------------------------------------------
 
@@ -19,6 +20,7 @@ MAPVAR      DS.B    1024
             DS.B    0
 
 POSCON      DS.W    1
+
 
 
 

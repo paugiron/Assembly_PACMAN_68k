@@ -14,6 +14,14 @@
             INCLUDE "SYSCONST.X68"
             INCLUDE "SYSTEM.X68"
             INCLUDE "MAP.X68"
+            INCLUDE "LIB/UTLCONST.X68"
+            INCLUDE "LIB/UTLCODE.X68"
+            INCLUDE "INTRO.X68"
+            INCLUDE "INSTRUCTIONS.X68"
+            INCLUDE "WIN.X68"
+            INCLUDE "GOVER.X68"
+            INCLUDE "STATES.X68"
+            INCLUDE "GAME.X68"
             
     
 START:
@@ -22,11 +30,8 @@ START:
 
             ORI.W   #$0700,SR               ;DISABLE INTERRUPTIONS
 
-            JSR     SYSINIT
-            JSR     PMINIT
-            JSR     MAPINIT
-            JSR     GSTINIT
-            JSR     SCOINIT
+            
+            JSR     GAMINIT
 
 .LOOP
 
@@ -38,8 +43,10 @@ START:
 
 ; UPDATE GAME LOGIC
 
-            JSR     PMUPD
+           ;JSR     PMUPD
            ;JSR     GSTUPD
+           ;JSR      ISCUPD
+           JSR      GAMUPD
 
 ; --- SYNC ---------------------------------------------------------------------
             ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
@@ -51,11 +58,9 @@ START:
 
 ; --- PLOT ---------------------------------------------------------------------
             
-            JSR     MAPPLOT
-            JSR     SCOPLOT
-            JSR     PMPLOT
-            JSR     GSTPLOT
             
+            ;JSR     ISCPLOT
+            JSR     GAMPLOT
             
             
             TRAP    #0                      ;CHANGE BUFFER
@@ -66,8 +71,10 @@ START:
            
             INCLUDE "SYSVARS.X68"
             INCLUDE "VARS.X68"
+            INCLUDE "LIB/UTLVARS.X68"
             
             END    START        
+
 
 
 
