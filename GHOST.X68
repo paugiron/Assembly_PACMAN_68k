@@ -24,26 +24,7 @@ GSTUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             MOVEM.L D0-D4,-(A7)
-            
-            MOVE.W  #GSTSPEED,D0
-            
-            MOVE.W  (GSTPOSX),D2
-            MOVE.W  (GSTPOSY),D3
-            ADDQ.W  #8,D2
-            ADDQ.W  #8,D3
-            
-            MOVE.B  (GSTLAMO),D4
-            
-            ;MASK OF THE LAST NIBBLE
-            AND.W   #$000F,D2
-            AND.W   #$000F,D3
-            
-            ;CHECK IF COORDS ARE MULTIPLES OF 16
-            CMP     #$0000,D2
-            BNE     .GSTNOTMULT
-            CMP     #$0000,D3
-            BNE     .GSTNOTMULT
-            
+                        
 .GSTNOTMULT
 
             MOVEM.L (A7)+,D0-D4
@@ -96,13 +77,14 @@ GSTPLOT
             ADD.W   #GSTRNG*16*2,D4
             
             ;DRAW GHOST RANGE
-            MOVE.W  #91,D0
+            MOVE.W  #90,D0
             TRAP    #15
             
             MOVEM.L (A7)+,D0-D4
             
 
             RTS
+
 
 
 *~Font name~Fixedsys~

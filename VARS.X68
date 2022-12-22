@@ -20,6 +20,8 @@ GSTVELX     DS.W    1                       ; GST X VELOCITY
 GSTVELY     DS.W    1                       ; GST Y VELOCITY
 GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
 GSTLAMO     DS.B    1                       ; GST LAST MOVEMENT (X OR Y)
+GSTINRNG    DS.B    1                       ; GST IS IN RANGE
+GSTTARG     DS.B    1                       ; GST TARGET (0-PACMAN, 1-RANDOM)
             DS.B    0
 
 ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
@@ -35,6 +37,7 @@ ISCTIMER    DS.W    1                       ; INTRO TIMER
 
 STACUR      DS.W    1                       ; CURRENT STATE
 STANEXT     DS.W    1                       ; NEXT STATE
+
 
 
 
