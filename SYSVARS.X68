@@ -5,7 +5,9 @@
 ; --- KEYBOARD RELATED VARIABLES -----------------------------------------------
 
 KBDVAL      DS.B    1                       ; KEY STATE
+KBDLAST     DS.B    1                       ; LAST KEY PRESSED
 KBDEDGE     DS.B    1                       ; KEY EDGE
+            DS.B    0 
 
 ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
 

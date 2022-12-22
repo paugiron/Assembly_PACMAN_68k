@@ -1,6 +1,6 @@
-00001CC0 Starting Address
+00002168 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 15/12/2022 23:34:09
+Created On: 22/12/2022 10:33:39
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; PAC-MAN MANAGEMENT
@@ -16,8 +16,8 @@ Created On: 15/12/2022 23:34:09
 00000000                            12  
 Line 13 ERROR: Comma expected
 00000000                            13              MOVE.W  #SCRWIDTH/2,(PMPOSX)
-Line 14 ERROR: Comma expected
-00000000                            14              MOVE.W  #SCRHEIGH/2,(PMPOSY)
+Line 14 ERROR: Symbol value differs between first and second pass
+00000000                            14  x
 Line 15 ERROR: Undefined symbol
 00000000  5079 005455B8             15              ADDQ.W  #8,(PMPOSX)
 Line 16 ERROR: Undefined symbol
@@ -63,46 +63,46 @@ Line 42 ERROR: Undefined symbol
 0000004A                            47              
 0000004A                            48              ;CHECK IF COORDS ARE MULTIPLES OF 16
 0000004A  B47C 0000                 49              CMP     #$0000,D2
-0000004E  6600 0106                 50              BNE     .NOTMULT
+0000004E  6600 00FE                 50              BNE     .NOTMULT
 00000052  B67C 0000                 51              CMP     #$0000,D3
-00000056  6600 00FE                 52              BNE     .NOTMULT
+00000056  6600 00F6                 52              BNE     .NOTMULT
 0000005A                            53              
 0000005A                            54              ;BRA     .ACTYUP
 0000005A                            55  
 0000005A                            56              ;CHECK THE DIRECTION
 Line 57 ERROR: Undefined symbol
 0000005A  0839 0000 005455C0        57              BTST.B  #0,(KBDVAL)             ;CHECK LEFT
-00000062  6700 001C                 58              BEQ     .NOTLEFT
+00000062  6700 0014                 58              BEQ     .NOTLEFT
 00000066  4204                      59              CLR.B   D4
 00000068  183C 0000                 60              MOVE.B  #0,D4
-0000006C  6000 0084                 61              BRA     .ACTXLEFT
+0000006C  6000 007C                 61              BRA     .ACTXLEFT
 Line 62 ERROR: Symbol value differs between first and second pass
 00000070                            62  .NOTLEFT            
 Line 63 ERROR: Undefined symbol
 00000070  0839 0002 005455C0        63              BTST.B   #2,(KBDVAL)             ;CHECK RIGHT
-00000078  6700 001C                 64              BEQ     .NOTRIGHT
+00000078  6700 0014                 64              BEQ     .NOTRIGHT
 0000007C  4204                      65              CLR.B   D4
 0000007E  183C 0001                 66              MOVE.B   #1,D4
-00000082  6000 0042                 67              BRA     .ACTXRIGHT
+00000082  6000 003A                 67              BRA     .ACTXRIGHT
 Line 68 ERROR: Symbol value differs between first and second pass
 00000086                            68  .NOTRIGHT            
 Line 69 ERROR: Undefined symbol
 00000086  0839 0001 005455C0        69              BTST.B   #1,(KBDVAL)             ;CHECK UP
-0000008E  6700 001C                 70              BEQ     .NOTUP
+0000008E  6700 0014                 70              BEQ     .NOTUP
 00000092  4204                      71              CLR.B   D4
 00000094  183C 0002                 72              MOVE.B  #2,D4
-00000098  6000 00A0                 73              BRA     .ACTYUP
+00000098  6000 0098                 73              BRA     .ACTYUP
 Line 74 ERROR: Symbol value differs between first and second pass
 0000009C                            74  .NOTUP            
 Line 75 ERROR: Undefined symbol
 0000009C  0839 0003 005455C0        75              BTST.B   #3,(KBDVAL)             ;CHECK DOWN
-000000A4  6700 001C                 76              BEQ     .NOTDOWN
+000000A4  6700 0014                 76              BEQ     .NOTDOWN
 000000A8  4204                      77              CLR.B   D4
 000000AA  183C 0003                 78              MOVE.B   #3,D4
-000000AE  6000 006E                 79              BRA     .ACTYDOWN
+000000AE  6000 0066                 79              BRA     .ACTYDOWN
 Line 80 ERROR: Symbol value differs between first and second pass
 000000B2                            80  .NOTDOWN
-000000B2  6000 00B8                 81              BRA     .DONE
+000000B2  6000 00B0                 81              BRA     .DONE
 000000B6                            82              
 000000B6                            83              
 000000B6                            84              ;UPDATE COORDS
@@ -112,74 +112,74 @@ Line 86 ERROR: Symbol value differs between first and second pass
 Line 87 ERROR: Undefined symbol
 000000B6  4EB9 004DBD16             87              JSR     COLWALLRIGHT
 000000BC  BA7C 0001                 88              CMP     #1,D5
-000000C0  6600 0016                 89              BNE     .NOTCOLISION
+000000C0  6600 000E                 89              BNE     .NOTCOLISION
 000000C4  303C 0000                 90              MOVE.W  #0,D0
 Line 91 ERROR: Symbol value differs between first and second pass
 000000C8                            91  .NOTCOLISION
 000000C8  BA7C 0004                 92              CMP     #4,D5
-000000CC  6600 001A                 93              BNE     .NOTTP
+000000CC  6600 0012                 93              BNE     .NOTTP
 Line 94 ERROR: Undefined symbol
 000000D0  0479 01E0 005455B8        94              SUB.W   #30*16,(PMPOSX)
 Line 95 ERROR: Symbol value differs between first and second pass
 000000D8                            95  .NOTTP
 Line 96 ERROR: Undefined symbol
 000000D8  D179 005455B8             96              ADD.W   D0,(PMPOSX)
-000000DE  6000 008C                 97              BRA     .DONE
+000000DE  6000 0084                 97              BRA     .DONE
 Line 98 ERROR: Symbol value differs between first and second pass
 000000E2                            98  .ACTXLEFT
 Line 99 ERROR: Undefined symbol
 000000E2  4EB9 004DBD16             99              JSR     COLWALLLEFT
 000000E8  BA7C 0001                100              CMP     #1,D5
-000000EC  6600 0016                101              BNE     .NOTCOLISION2
+000000EC  6600 000E                101              BNE     .NOTCOLISION2
 000000F0  303C 0000                102              MOVE.W  #0,D0
 Line 103 ERROR: Symbol value differs between first and second pass
 000000F4                           103  .NOTCOLISION2
 000000F4  BA7C 0004                104              CMP     #4,D5
-000000F8  6600 001A                105              BNE     .NOTTP2
+000000F8  6600 0012                105              BNE     .NOTTP2
 Line 106 ERROR: Undefined symbol
 000000FC  0679 01E0 005455B8       106              ADD.W   #30*16,(PMPOSX)
 Line 107 ERROR: Symbol value differs between first and second pass
 00000104                           107  .NOTTP2
 Line 108 ERROR: Undefined symbol
 00000104  9179 005455B8            108              SUB.W   D0,(PMPOSX)
-0000010A  6000 0060                109              BRA     .DONE
+0000010A  6000 0058                109              BRA     .DONE
 0000010E                           110      
 Line 111 ERROR: Symbol value differs between first and second pass
 0000010E                           111  .ACTYDOWN
 Line 112 ERROR: Undefined symbol
 0000010E  4EB9 004DBD16            112              JSR     COLWALLDOWN
 00000114  BA7C 0001                113              CMP     #1,D5
-00000118  6600 0016                114              BNE     .NOTCOLISION3
+00000118  6600 000E                114              BNE     .NOTCOLISION3
 0000011C  303C 0000                115              MOVE.W  #0,D0
 Line 116 ERROR: Symbol value differs between first and second pass
 00000120                           116  .NOTCOLISION3
 Line 117 ERROR: Undefined symbol
 00000120  D179 005455B8            117              ADD.W   D0,(PMPOSY)
-00000126  6000 0044                118              BRA     .DONE
+00000126  6000 003C                118              BRA     .DONE
 Line 119 ERROR: Symbol value differs between first and second pass
 0000012A                           119  .ACTYUP     
 Line 120 ERROR: Undefined symbol
 0000012A  4EB9 004DBD16            120              JSR     COLWALLUP
 00000130  BA7C 0001                121              CMP     #1,D5
-00000134  6600 0016                122              BNE     .NOTCOLISION4
+00000134  6600 000E                122              BNE     .NOTCOLISION4
 00000138  303C 0000                123              MOVE.W  #0,D0
 Line 124 ERROR: Symbol value differs between first and second pass
 0000013C                           124  .NOTCOLISION4
 Line 125 ERROR: Undefined symbol
 0000013C  9179 005455B8            125              SUB.W   D0,(PMPOSY)
-00000142  6000 0028                126              BRA     .DONE
+00000142  6000 0020                126              BRA     .DONE
 00000146                           127              
 00000146                           128              
 00000146                           129              ;IF NOT MULT DO
 Line 130 ERROR: Symbol value differs between first and second pass
 00000146                           130  .NOTMULT     
 00000146  B83C 0000                131              CMP.B     #0,D4
-0000014A  67A6                     132              BEQ     .ACTXLEFT
+0000014A  679E                     132              BEQ     .ACTXLEFT
 0000014C  B83C 0001                133              CMP.B     #1,D4
-00000150  6700 FF74                134              BEQ     .ACTXRIGHT
+00000150  6700 FF6C                134              BEQ     .ACTXRIGHT
 00000154  B83C 0002                135              CMP.B     #2,D4
-00000158  67E0                     136              BEQ     .ACTYUP
-0000015A  60C2                     137              BRA     .ACTYDOWN
+00000158  67D8                     136              BEQ     .ACTYUP
+0000015A  60BA                     137              BRA     .ACTYDOWN
 Line 138 ERROR: Symbol value differs between first and second pass
 0000015C                           138  .DONE
 0000015C                           139              ;RESTORE
@@ -215,327 +215,324 @@ Line 164 ERROR: Undefined symbol
 00000184  4E4F                     165              TRAP    #15
 00000186                           166              
 00000186                           167              ;DRAW QUIET
-00000186  4EB9 00000224            168              JSR     .FULLDRAW
+00000186  4EB9 000001F6            168              JSR     .FULLDRAW
 0000018C                           169              
 0000018C                           170              ;CHECK KBDVAL
-0000018C                           171              
-Line 172 ERROR: Undefined symbol
-0000018C  0839 0000 005455BC       172              BTST.B  #0,(KBDVAL)             ;LEFT
-00000194  6700 003C                173              BEQ     .DLEFT
-Line 174 ERROR: Undefined symbol
-00000198  0839 0001 005455BC       174              BTST.B  #1,(KBDVAL)             :UP
-000001A0  6700 003A                175              BEQ     .DUP
-Line 176 ERROR: Undefined symbol
-000001A4  0839 0002 005455BC       176              BTST.B  #2,(KBDVAL)             ;RIGHT
-000001AC  6700 0038                177              BEQ     .DRIGHT
-Line 178 ERROR: Undefined symbol
-000001B0  0839 0003 005455BC       178              BTST.B  #3,(KBDVAL)             ;DOWN
-000001B8  6700 0036                179              BEQ     .DDOWN
-000001BC                           180            
-000001BC                           181              ;DRAW QUIET
-000001BC  4EB9 00000224            182              JSR     .FULLDRAW
-000001C2                           183              
-000001C2                           184              ;DRAW MOVEMENT
-Line 185 ERROR: Symbol value differs between first and second pass
-000001C2                           185  .DLEFT
-000001C2  4EB9 0000024C            186              JSR     .LEFTDRAW
-000001C8  6000 0030                187              BRA     .DRAW_MOUTH1
+Line 171 ERROR: Invalid addressing mode
+0000018C                           171              CMP.B  $1,(KBDVAL)             ;LEFT
+0000018C  6700 0016                172              BEQ     .DLEFT
+Line 173 ERROR: Invalid addressing mode
+00000190                           173              CMP.B  $2,(KBDVAL)             ;UP
+00000190  6700 001C                174              BEQ     .DUP
+Line 175 ERROR: Invalid addressing mode
+00000194                           175              CMP.B  $4,(KBDVAL)             ;RIGHT
+00000194  6700 0022                176              BEQ     .DRIGHT
+Line 177 ERROR: Invalid addressing mode
+00000198                           177              CMP.B  $8,(KBDVAL)             ;DOWN
+00000198  6700 0028                178              BEQ     .DDOWN
+0000019C                           179              
+0000019C                           180              ;DRAW MOVEMENT
+Line 181 ERROR: Symbol value differs between first and second pass
+0000019C                           181  .DLEFT
+0000019C  4EB9 0000021E            182              JSR     .LEFTDRAW
+000001A2  6000 0028                183              BRA     .DRAW_MOUTH1
+Line 184 ERROR: Symbol value differs between first and second pass
+000001A6                           184  .DUP
+000001A6  4EB9 00000292            185              JSR     .UPDRAW
+000001AC  6000 0028                186              BRA     .DRAW_MOUTH2
+000001B0                           187  
 Line 188 ERROR: Symbol value differs between first and second pass
-000001CC                           188  .DUP
-000001CC  4EB9 000002C0            189              JSR     .UPDRAW
-000001D2  6000 0030                190              BRA     .DRAW_MOUTH2
-000001D6                           191  
+000001B0                           188  .DRIGHT
+000001B0  4EB9 00000258            189              JSR     .RIGHTDRAW
+000001B6  6000 0028                190              BRA     .DRAW_MOUTH3
+000001BA                           191  
 Line 192 ERROR: Symbol value differs between first and second pass
-000001D6                           192  .DRIGHT
-000001D6  4EB9 00000286            193              JSR     .RIGHTDRAW
-000001DC  6000 0030                194              BRA     .DRAW_MOUTH3
-000001E0                           195  
+000001BA                           192  .DDOWN
+000001BA  4EB9 000002CC            193              JSR     .DOWNDRAW
+000001C0  6000 0028                194              BRA     .DRAW_MOUTH4
+000001C4                           195              
 Line 196 ERROR: Symbol value differs between first and second pass
-000001E0                           196  .DDOWN
-000001E0  4EB9 000002FA            197              JSR     .DOWNDRAW
-000001E6  6000 0030                198              BRA     .DRAW_MOUTH4
-000001EA                           199              
-Line 200 ERROR: Symbol value differs between first and second pass
-000001EA                           200  .DRAW_MOUTH1            
-000001EA  4EB9 00000334            201              JSR     .SET_MOUTHLEFT
-000001F0  6000 002C                202              BRA     .DDONE
-Line 203 ERROR: Symbol value differs between first and second pass
-000001F4                           203  .DRAW_MOUTH2            
-000001F4  4EB9 00000370            204              JSR     .SET_MOUTHUP
-000001FA  6000 0022                205              BRA     .DDONE
-Line 206 ERROR: Symbol value differs between first and second pass
-000001FE                           206  .DRAW_MOUTH3            
-000001FE  4EB9 00000352            207              JSR     .SET_MOUTHRIGHT
-00000204  6000 0018                208              BRA     .DDONE
-Line 209 ERROR: Symbol value differs between first and second pass
-00000208                           209  .DRAW_MOUTH4            
-00000208  4EB9 0000038E            210              JSR     .SET_MOUTHDOWN
-Line 211 ERROR: Symbol value differs between first and second pass
-0000020E                           211  .DDONE
-0000020E  4CDF 001F                212              MOVEM.L (A7)+,D0-D4
-00000212                           213              
-00000212  4E75                     214              RTS
-00000214                           215  
-00000214                           216  
-00000214                           217  ;INTERNAL SUBRUTINES FOR PACMAN PLOT-------------------------------------------------------------
-00000214                           218  
-Line 219 ERROR: Symbol value differs between first and second pass
-00000214                           219  .FULLDRAW
-00000214                           220              ;SET COORDS
-Line 221 ERROR: Undefined symbol
-00000214  3239 004DBD16            221              MOVE.W  (PMPOSX),D1
-Line 222 ERROR: Undefined symbol
-0000021A  0441 BD16                222              SUB.W   #PMRAD,D1
-Line 223 ERROR: Undefined symbol
-0000021E  3439 004DBD16            223              MOVE.W  (PMPOSY),D2
-Line 224 ERROR: Undefined symbol
-00000224  0442 BD16                224              SUB.W   #PMRAD,D2
-00000228                           225              
-00000228  3601                     226              MOVE.W  D1,D3
-Line 227 ERROR: Invalid syntax
-0000022A                           227              ADD.W   #PMRAD*2,D3
-0000022A  3802                     228              MOVE.W  D2,D4
-Line 229 ERROR: Invalid syntax
-0000022C                           229              ADD.W   #PMRAD*2,D4
-0000022C                           230              
-0000022C                           231              ;DRAW PAC-MAN
-0000022C  303C 0058                232              MOVE.W  #88,D0
-00000230  4E4F                     233              TRAP    #15
-00000232                           234              
-00000232  4E75                     235              RTS
-Line 236 ERROR: Symbol value differs between first and second pass
-00000234                           236  .LEFTDRAW
-00000234                           237              
-00000234                           238              
-00000234  303C 0054                239              MOVE.W  #84,D0
-Line 240 ERROR: Undefined symbol
-00000238  3239 004DBD16            240              MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+000001C4                           196  .DRAW_MOUTH1            
+000001C4  4EB9 00000306            197              JSR     .SET_MOUTHLEFT
+000001CA  6000 0024                198              BRA     .DDONE
+Line 199 ERROR: Symbol value differs between first and second pass
+000001CE                           199  .DRAW_MOUTH2            
+000001CE  4EB9 00000342            200              JSR     .SET_MOUTHUP
+000001D4  6000 001A                201              BRA     .DDONE
+Line 202 ERROR: Symbol value differs between first and second pass
+000001D8                           202  .DRAW_MOUTH3            
+000001D8  4EB9 00000324            203              JSR     .SET_MOUTHRIGHT
+000001DE  6000 0010                204              BRA     .DDONE
+Line 205 ERROR: Symbol value differs between first and second pass
+000001E2                           205  .DRAW_MOUTH4            
+000001E2  4EB9 00000360            206              JSR     .SET_MOUTHDOWN
+Line 207 ERROR: Symbol value differs between first and second pass
+000001E8                           207  .DDONE
+000001E8  4CDF 001F                208              MOVEM.L (A7)+,D0-D4
+000001EC                           209              
+000001EC  4E75                     210              RTS
+000001EE                           211  
+000001EE                           212  
+000001EE                           213  ;INTERNAL SUBRUTINES FOR PACMAN PLOT-------------------------------------------------------------
+000001EE                           214  
+Line 215 ERROR: Symbol value differs between first and second pass
+000001EE                           215  .FULLDRAW
+000001EE                           216              ;SET COORDS
+Line 217 ERROR: Undefined symbol
+000001EE  3239 004DBD16            217              MOVE.W  (PMPOSX),D1
+Line 218 ERROR: Undefined symbol
+000001F4  0441 BD16                218              SUB.W   #PMRAD,D1
+Line 219 ERROR: Undefined symbol
+000001F8  3439 004DBD16            219              MOVE.W  (PMPOSY),D2
+Line 220 ERROR: Undefined symbol
+000001FE  0442 BD16                220              SUB.W   #PMRAD,D2
+00000202                           221              
+00000202  3601                     222              MOVE.W  D1,D3
+Line 223 ERROR: Invalid syntax
+00000204                           223              ADD.W   #PMRAD*2,D3
+00000204  3802                     224              MOVE.W  D2,D4
+Line 225 ERROR: Invalid syntax
+00000206                           225              ADD.W   #PMRAD*2,D4
+00000206                           226              
+00000206                           227              ;DRAW PAC-MAN
+00000206  303C 0058                228              MOVE.W  #88,D0
+0000020A  4E4F                     229              TRAP    #15
+0000020C                           230              
+0000020C  4E75                     231              RTS
+Line 232 ERROR: Symbol value differs between first and second pass
+0000020E                           232  .LEFTDRAW
+0000020E                           233              
+0000020E                           234              
+0000020E  303C 0054                235              MOVE.W  #84,D0
+Line 236 ERROR: Undefined symbol
+00000212  3239 004DBD16            236              MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+Line 237 ERROR: Undefined symbol
+00000218  0441 BD16                237              SUB.W   #PMRAD,D1
+Line 238 ERROR: Undefined symbol
+0000021C  3439 004DBD16            238              MOVE.W  (PMPOSY),D2
+Line 239 ERROR: Undefined symbol
+00000222  0442 BD16                239              SUB.W   #PMRAD,D2
+00000226                           240              
 Line 241 ERROR: Undefined symbol
-0000023E  0441 BD16                241              SUB.W   #PMRAD,D1
+00000226  3639 004DBD16            241              MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
 Line 242 ERROR: Undefined symbol
-00000242  3439 004DBD16            242              MOVE.W  (PMPOSY),D2
-Line 243 ERROR: Undefined symbol
-00000248  0442 BD16                243              SUB.W   #PMRAD,D2
-0000024C                           244              
-Line 245 ERROR: Undefined symbol
-0000024C  3639 004DBD16            245              MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
-Line 246 ERROR: Undefined symbol
-00000252  3839 004DBD16            246              MOVE.W  (PMPOSY),D4
-00000258                           247              
-00000258  4E4F                     248              TRAP    #15
-0000025A                           249             
-0000025A  303C 0055                250              MOVE.W  #85,D0                        ;DRAW SECOND LINE
-0000025E                           251              
-0000025E  3203                     252              MOVE.W  D3,D1
-00000260  3404                     253              MOVE.W  D4,D2
-Line 254 ERROR: Undefined symbol
-00000262  0642 BD16                254              ADD.W   #PMRAD,D2
-Line 255 ERROR: Undefined symbol
-00000266  0441 BD16                255              SUB.W   #PMRAD,D1
-0000026A                           256              
-0000026A  4E4F                     257              TRAP    #15
-0000026C                           258              
-0000026C                           259              
-0000026C  4E75                     260              RTS
-0000026E                           261              
-Line 262 ERROR: Symbol value differs between first and second pass
-0000026E                           262  .RIGHTDRAW
-0000026E                           263              
-0000026E                           264              
-0000026E  303C 0054                265              MOVE.W  #84,D0
-Line 266 ERROR: Undefined symbol
-00000272  3239 004DBD16            266              MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+0000022C  3839 004DBD16            242              MOVE.W  (PMPOSY),D4
+00000232                           243              
+00000232  4E4F                     244              TRAP    #15
+00000234                           245             
+00000234  303C 0055                246              MOVE.W  #85,D0                        ;DRAW SECOND LINE
+00000238                           247              
+00000238  3203                     248              MOVE.W  D3,D1
+0000023A  3404                     249              MOVE.W  D4,D2
+Line 250 ERROR: Undefined symbol
+0000023C  0642 BD16                250              ADD.W   #PMRAD,D2
+Line 251 ERROR: Undefined symbol
+00000240  0441 BD16                251              SUB.W   #PMRAD,D1
+00000244                           252              
+00000244  4E4F                     253              TRAP    #15
+00000246                           254              
+00000246                           255              
+00000246  4E75                     256              RTS
+00000248                           257              
+Line 258 ERROR: Symbol value differs between first and second pass
+00000248                           258  .RIGHTDRAW
+00000248                           259              
+00000248                           260              
+00000248  303C 0054                261              MOVE.W  #84,D0
+Line 262 ERROR: Undefined symbol
+0000024C  3239 004DBD16            262              MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+Line 263 ERROR: Undefined symbol
+00000252  0641 BD16                263              ADD.W   #PMRAD,D1
+Line 264 ERROR: Undefined symbol
+00000256  3439 004DBD16            264              MOVE.W  (PMPOSY),D2
+Line 265 ERROR: Undefined symbol
+0000025C  0642 BD16                265              ADD.W   #PMRAD,D2
+00000260                           266              
 Line 267 ERROR: Undefined symbol
-00000278  0641 BD16                267              ADD.W   #PMRAD,D1
+00000260  3639 004DBD16            267              MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
 Line 268 ERROR: Undefined symbol
-0000027C  3439 004DBD16            268              MOVE.W  (PMPOSY),D2
-Line 269 ERROR: Undefined symbol
-00000282  0642 BD16                269              ADD.W   #PMRAD,D2
-00000286                           270              
-Line 271 ERROR: Undefined symbol
-00000286  3639 004DBD16            271              MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
-Line 272 ERROR: Undefined symbol
-0000028C  3839 004DBD16            272              MOVE.W  (PMPOSY),D4
-00000292                           273              
-00000292  4E4F                     274              TRAP    #15
-00000294                           275             
-00000294  303C 0055                276              MOVE.W  #85,D0                        ;DRAW SECOND LINE
-00000298                           277              
-00000298  3203                     278              MOVE.W  D3,D1
-0000029A  3404                     279              MOVE.W  D4,D2
-Line 280 ERROR: Undefined symbol
-0000029C  0642 BD16                280              ADD.W   #PMRAD,D2
-Line 281 ERROR: Undefined symbol
-000002A0  0641 BD16                281              ADD.W   #PMRAD,D1
-000002A4                           282              
-000002A4  4E4F                     283              TRAP    #15
-000002A6                           284              
-000002A6                           285              
-000002A6  4E75                     286              RTS
-Line 287 ERROR: Symbol value differs between first and second pass
-000002A8                           287  .UPDRAW
-000002A8                           288              
-000002A8                           289              
-000002A8  303C 0054                290              MOVE.W  #84,D0
-Line 291 ERROR: Undefined symbol
-000002AC  3239 004DBD16            291              MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+00000266  3839 004DBD16            268              MOVE.W  (PMPOSY),D4
+0000026C                           269              
+0000026C  4E4F                     270              TRAP    #15
+0000026E                           271             
+0000026E  303C 0055                272              MOVE.W  #85,D0                        ;DRAW SECOND LINE
+00000272                           273              
+00000272  3203                     274              MOVE.W  D3,D1
+00000274  3404                     275              MOVE.W  D4,D2
+Line 276 ERROR: Undefined symbol
+00000276  0642 BD16                276              ADD.W   #PMRAD,D2
+Line 277 ERROR: Undefined symbol
+0000027A  0641 BD16                277              ADD.W   #PMRAD,D1
+0000027E                           278              
+0000027E  4E4F                     279              TRAP    #15
+00000280                           280              
+00000280                           281              
+00000280  4E75                     282              RTS
+Line 283 ERROR: Symbol value differs between first and second pass
+00000282                           283  .UPDRAW
+00000282                           284              
+00000282                           285              
+00000282  303C 0054                286              MOVE.W  #84,D0
+Line 287 ERROR: Undefined symbol
+00000286  3239 004DBD16            287              MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+Line 288 ERROR: Undefined symbol
+0000028C  0441 BD16                288              SUB.W   #PMRAD,D1
+Line 289 ERROR: Undefined symbol
+00000290  3439 004DBD16            289              MOVE.W  (PMPOSY),D2
+Line 290 ERROR: Undefined symbol
+00000296  0442 BD16                290              SUB.W   #PMRAD,D2
+0000029A                           291              
 Line 292 ERROR: Undefined symbol
-000002B2  0441 BD16                292              SUB.W   #PMRAD,D1
+0000029A  3639 004DBD16            292              MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
 Line 293 ERROR: Undefined symbol
-000002B6  3439 004DBD16            293              MOVE.W  (PMPOSY),D2
-Line 294 ERROR: Undefined symbol
-000002BC  0442 BD16                294              SUB.W   #PMRAD,D2
-000002C0                           295              
-Line 296 ERROR: Undefined symbol
-000002C0  3639 004DBD16            296              MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
-Line 297 ERROR: Undefined symbol
-000002C6  3839 004DBD16            297              MOVE.W  (PMPOSY),D4
-000002CC                           298              
-000002CC  4E4F                     299              TRAP    #15
-000002CE                           300             
-000002CE  303C 0055                301              MOVE.W  #85,D0                        ;DRAW SECOND LINE
-000002D2                           302              
-000002D2  3203                     303              MOVE.W  D3,D1
-000002D4  3404                     304              MOVE.W  D4,D2
-Line 305 ERROR: Undefined symbol
-000002D6  0442 BD16                305              SUB.W   #PMRAD,D2
-Line 306 ERROR: Undefined symbol
-000002DA  0641 BD16                306              ADD.W   #PMRAD,D1
-000002DE                           307              
-000002DE  4E4F                     308              TRAP    #15
-000002E0                           309              
-000002E0                           310              
-000002E0  4E75                     311              RTS
-000002E2                           312              
-Line 313 ERROR: Symbol value differs between first and second pass
-000002E2                           313  .DOWNDRAW
-000002E2                           314              
-000002E2                           315              
-000002E2  303C 0054                316              MOVE.W  #84,D0
-Line 317 ERROR: Undefined symbol
-000002E6  3239 004DBD16            317              MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+000002A0  3839 004DBD16            293              MOVE.W  (PMPOSY),D4
+000002A6                           294              
+000002A6  4E4F                     295              TRAP    #15
+000002A8                           296             
+000002A8  303C 0055                297              MOVE.W  #85,D0                        ;DRAW SECOND LINE
+000002AC                           298              
+000002AC  3203                     299              MOVE.W  D3,D1
+000002AE  3404                     300              MOVE.W  D4,D2
+Line 301 ERROR: Undefined symbol
+000002B0  0442 BD16                301              SUB.W   #PMRAD,D2
+Line 302 ERROR: Undefined symbol
+000002B4  0641 BD16                302              ADD.W   #PMRAD,D1
+000002B8                           303              
+000002B8  4E4F                     304              TRAP    #15
+000002BA                           305              
+000002BA                           306              
+000002BA  4E75                     307              RTS
+000002BC                           308              
+Line 309 ERROR: Symbol value differs between first and second pass
+000002BC                           309  .DOWNDRAW
+000002BC                           310              
+000002BC                           311              
+000002BC  303C 0054                312              MOVE.W  #84,D0
+Line 313 ERROR: Undefined symbol
+000002C0  3239 004DBD16            313              MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
+Line 314 ERROR: Undefined symbol
+000002C6  0441 BD16                314              SUB.W   #PMRAD,D1
+Line 315 ERROR: Undefined symbol
+000002CA  3439 004DBD16            315              MOVE.W  (PMPOSY),D2
+Line 316 ERROR: Undefined symbol
+000002D0  0442 BD16                316              SUB.W   #PMRAD,D2
+000002D4                           317              
 Line 318 ERROR: Undefined symbol
-000002EC  0441 BD16                318              SUB.W   #PMRAD,D1
+000002D4  3639 004DBD16            318              MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
 Line 319 ERROR: Undefined symbol
-000002F0  3439 004DBD16            319              MOVE.W  (PMPOSY),D2
-Line 320 ERROR: Undefined symbol
-000002F6  0442 BD16                320              SUB.W   #PMRAD,D2
-000002FA                           321              
-Line 322 ERROR: Undefined symbol
-000002FA  3639 004DBD16            322              MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
-Line 323 ERROR: Undefined symbol
-00000300  3839 004DBD16            323              MOVE.W  (PMPOSY),D4
-00000306                           324              
-00000306  4E4F                     325              TRAP    #15
-00000308                           326             
-00000308  303C 0055                327              MOVE.W  #85,D0                        ;DRAW SECOND LINE
-0000030C                           328              
-0000030C  3203                     329              MOVE.W  D3,D1
-0000030E  3404                     330              MOVE.W  D4,D2
-Line 331 ERROR: Undefined symbol
-00000310  0642 BD16                331              ADD.W   #PMRAD,D2
-Line 332 ERROR: Undefined symbol
-00000314  0641 BD16                332              ADD.W   #PMRAD,D1
-00000318                           333              
-00000318  4E4F                     334              TRAP    #15
-0000031A                           335              
-0000031A                           336              
-0000031A  4E75                     337              RTS
-0000031C                           338  
-0000031C                           339              
-Line 340 ERROR: Symbol value differs between first and second pass
-0000031C                           340  .SET_MOUTHLEFT
-0000031C                           341              
-0000031C  303C 0051                342              MOVE.W  #81,D0                         ;SET BLACK
-00000320  7200                     343              MOVE.L  #$0000,D1
-00000322  4E4F                     344              TRAP    #15
-00000324                           345              
-00000324  303C 0059                346              MOVE.W  #89,D0                         ;FILL
-Line 347 ERROR: Undefined symbol
-00000328  3239 004DBD16            347              MOVE.W  (PMPOSX),D1
-0000032E  5541                     348              SUBQ.W   #2,D1
-Line 349 ERROR: Undefined symbol
-00000330  3439 004DBD16            349              MOVE.W  (PMPOSY),D2
-00000336  4E4F                     350              TRAP    #15
-00000338                           351  
-00000338  4E75                     352              RTS
-0000033A                           353              
-Line 354 ERROR: Symbol value differs between first and second pass
-0000033A                           354  .SET_MOUTHRIGHT
-0000033A                           355              
-0000033A  303C 0051                356              MOVE.W  #81,D0                         ;SET BLACK
-0000033E  7200                     357              MOVE.L  #$0000,D1
-00000340  4E4F                     358              TRAP    #15
-00000342                           359              
-00000342  303C 0059                360              MOVE.W  #89,D0                         ;FILL
-Line 361 ERROR: Undefined symbol
-00000346  3239 004DBD16            361              MOVE.W  (PMPOSX),D1
-0000034C  5441                     362              ADDQ.W   #2,D1
-Line 363 ERROR: Undefined symbol
-0000034E  3439 004DBD16            363              MOVE.W  (PMPOSY),D2
-00000354  4E4F                     364              TRAP    #15
-00000356                           365  
-00000356  4E75                     366              RTS
-00000358                           367  
-Line 368 ERROR: Symbol value differs between first and second pass
-00000358                           368  .SET_MOUTHUP
-00000358                           369              
-00000358  303C 0051                370              MOVE.W  #81,D0                         ;SET BLACK
-0000035C  7200                     371              MOVE.L  #$0000,D1
-0000035E  4E4F                     372              TRAP    #15
-00000360                           373              
-00000360  303C 0059                374              MOVE.W  #89,D0                         ;FILL
-Line 375 ERROR: Undefined symbol
-00000364  3239 004DBD16            375              MOVE.W  (PMPOSX),D1
-Line 376 ERROR: Undefined symbol
-0000036A  3439 004DBD16            376              MOVE.W  (PMPOSY),D2
-00000370  5542                     377              SUBQ.W   #2,D2
-00000372  4E4F                     378              TRAP    #15
-00000374                           379  
-00000374  4E75                     380              RTS
-00000376                           381  
-Line 382 ERROR: Symbol value differs between first and second pass
-00000376                           382  .SET_MOUTHDOWN
-00000376                           383              
-00000376  303C 0051                384              MOVE.W  #81,D0                         ;SET BLACK
-0000037A  7200                     385              MOVE.L  #$0000,D1
-0000037C  4E4F                     386              TRAP    #15
-0000037E                           387              
-0000037E  303C 0059                388              MOVE.W  #89,D0                         ;FILL
-Line 389 ERROR: Undefined symbol
-00000382  3239 004DBD16            389              MOVE.W  (PMPOSX),D1
-Line 390 ERROR: Undefined symbol
-00000388  3439 004DBD16            390              MOVE.W  (PMPOSY),D2
-0000038E  5442                     391              ADDQ.W   #2,D2
-00000390  4E4F                     392              TRAP    #15
-00000392                           393  
-00000392  4E75                     394              RTS
-00000394                           395  
-00000394                           396  
-00000394                           397  
-00000394                           398  
-00000394                           399  
-00000394                           400  
-00000394                           401  
-00000394                           402  
-00000394                           403  
-00000394                           404  
-00000394                           405  
-00000394                           406  
-00000394                           407  
-00000394                           408  
-00000394                           409  
-00000394                           410  
-00000394                           411  
-00000394                           412  
-00000394                           413  
-00000394                           414  
-00000394                           415  
-00000394                           416  
-00000394                           417  
-00000394                           418  
-00000394                           419  
-Line 420 WARNING: END directive missing, starting address not set
+000002DA  3839 004DBD16            319              MOVE.W  (PMPOSY),D4
+000002E0                           320              
+000002E0  4E4F                     321              TRAP    #15
+000002E2                           322             
+000002E2  303C 0055                323              MOVE.W  #85,D0                        ;DRAW SECOND LINE
+000002E6                           324              
+000002E6  3203                     325              MOVE.W  D3,D1
+000002E8  3404                     326              MOVE.W  D4,D2
+Line 327 ERROR: Undefined symbol
+000002EA  0642 BD16                327              ADD.W   #PMRAD,D2
+Line 328 ERROR: Undefined symbol
+000002EE  0641 BD16                328              ADD.W   #PMRAD,D1
+000002F2                           329              
+000002F2  4E4F                     330              TRAP    #15
+000002F4                           331              
+000002F4                           332              
+000002F4  4E75                     333              RTS
+000002F6                           334  
+000002F6                           335              
+Line 336 ERROR: Symbol value differs between first and second pass
+000002F6                           336  .SET_MOUTHLEFT
+000002F6                           337              
+000002F6  303C 0051                338              MOVE.W  #81,D0                         ;SET BLACK
+000002FA  7200                     339              MOVE.L  #$0000,D1
+000002FC  4E4F                     340              TRAP    #15
+000002FE                           341              
+000002FE  303C 0059                342              MOVE.W  #89,D0                         ;FILL
+Line 343 ERROR: Undefined symbol
+00000302  3239 004DBD16            343              MOVE.W  (PMPOSX),D1
+00000308  5541                     344              SUBQ.W   #2,D1
+Line 345 ERROR: Undefined symbol
+0000030A  3439 004DBD16            345              MOVE.W  (PMPOSY),D2
+00000310  4E4F                     346              TRAP    #15
+00000312                           347  
+00000312  4E75                     348              RTS
+00000314                           349              
+Line 350 ERROR: Symbol value differs between first and second pass
+00000314                           350  .SET_MOUTHRIGHT
+00000314                           351              
+00000314  303C 0051                352              MOVE.W  #81,D0                         ;SET BLACK
+00000318  7200                     353              MOVE.L  #$0000,D1
+0000031A  4E4F                     354              TRAP    #15
+0000031C                           355              
+0000031C  303C 0059                356              MOVE.W  #89,D0                         ;FILL
+Line 357 ERROR: Undefined symbol
+00000320  3239 004DBD16            357              MOVE.W  (PMPOSX),D1
+00000326  5441                     358              ADDQ.W   #2,D1
+Line 359 ERROR: Undefined symbol
+00000328  3439 004DBD16            359              MOVE.W  (PMPOSY),D2
+0000032E  4E4F                     360              TRAP    #15
+00000330                           361  
+00000330  4E75                     362              RTS
+00000332                           363  
+Line 364 ERROR: Symbol value differs between first and second pass
+00000332                           364  .SET_MOUTHUP
+00000332                           365              
+00000332  303C 0051                366              MOVE.W  #81,D0                         ;SET BLACK
+00000336  7200                     367              MOVE.L  #$0000,D1
+00000338  4E4F                     368              TRAP    #15
+0000033A                           369              
+0000033A  303C 0059                370              MOVE.W  #89,D0                         ;FILL
+Line 371 ERROR: Undefined symbol
+0000033E  3239 004DBD16            371              MOVE.W  (PMPOSX),D1
+Line 372 ERROR: Undefined symbol
+00000344  3439 004DBD16            372              MOVE.W  (PMPOSY),D2
+0000034A  5542                     373              SUBQ.W   #2,D2
+0000034C  4E4F                     374              TRAP    #15
+0000034E                           375  
+0000034E  4E75                     376              RTS
+00000350                           377  
+Line 378 ERROR: Symbol value differs between first and second pass
+00000350                           378  .SET_MOUTHDOWN
+00000350                           379              
+00000350  303C 0051                380              MOVE.W  #81,D0                         ;SET BLACK
+00000354  7200                     381              MOVE.L  #$0000,D1
+00000356  4E4F                     382              TRAP    #15
+00000358                           383              
+00000358  303C 0059                384              MOVE.W  #89,D0                         ;FILL
+Line 385 ERROR: Undefined symbol
+0000035C  3239 004DBD16            385              MOVE.W  (PMPOSX),D1
+Line 386 ERROR: Undefined symbol
+00000362  3439 004DBD16            386              MOVE.W  (PMPOSY),D2
+00000368  5442                     387              ADDQ.W   #2,D2
+0000036A  4E4F                     388              TRAP    #15
+0000036C                           389  
+0000036C  4E75                     390              RTS
+0000036E                           391  
+0000036E                           392  
+0000036E                           393  
+0000036E                           394  
+0000036E                           395  
+0000036E                           396  
+0000036E                           397  
+0000036E                           398  
+0000036E                           399  
+0000036E                           400  
+0000036E                           401  
+0000036E                           402  
+0000036E                           403  
+0000036E                           404  
+0000036E                           405  
+0000036E                           406  
+0000036E                           407  
+0000036E                           408  
+0000036E                           409  
+0000036E                           410  
+0000036E                           411  
+0000036E                           412  
+0000036E                           413  
+0000036E                           414  
+0000036E                           415  
+0000036E                           416  
+Line 417 WARNING: END directive missing, starting address not set
 
 114 errors detected
 1 warning generated
@@ -545,39 +542,40 @@ SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
 PMINIT              0
-PMPLOT              17E
-PMPLOT:DDONE        21E
-PMPLOT:DDOWN        1F0
-PMPLOT:DLEFT        1D2
-PMPLOT:DOWNDRAW     2FA
-PMPLOT:DRAW_MOUTH1  1FA
-PMPLOT:DRAW_MOUTH2  204
-PMPLOT:DRAW_MOUTH3  20E
-PMPLOT:DRAW_MOUTH4  218
-PMPLOT:DRIGHT       1E6
-PMPLOT:DUP          1DC
-PMPLOT:FULLDRAW     224
-PMPLOT:LEFTDRAW     24C
-PMPLOT:RIGHTDRAW    286
-PMPLOT:SET_MOUTHDOWN  38E
-PMPLOT:SET_MOUTHLEFT  334
-PMPLOT:SET_MOUTHRIGHT  352
-PMPLOT:SET_MOUTHUP  370
-PMPLOT:UPDRAW       2C0
-PMUPD               34
-PMUPD:ACTXLEFT      F2
-PMUPD:ACTXRIGHT     C6
-PMUPD:ACTYDOWN      11E
-PMUPD:ACTYUP        13A
-PMUPD:DONE          16C
-PMUPD:NOTCOLISION   D8
-PMUPD:NOTCOLISION2  104
-PMUPD:NOTCOLISION3  130
-PMUPD:NOTCOLISION4  14C
-PMUPD:NOTDOWN       C2
-PMUPD:NOTLEFT       80
-PMUPD:NOTMULT       156
-PMUPD:NOTRIGHT      96
-PMUPD:NOTTP         E8
-PMUPD:NOTTP2        114
-PMUPD:NOTUP         AC
+PMPLOT              176
+PMPLOT:DDONE        1F0
+PMPLOT:DDOWN        1C2
+PMPLOT:DLEFT        1A4
+PMPLOT:DOWNDRAW     2CC
+PMPLOT:DRAW_MOUTH1  1CC
+PMPLOT:DRAW_MOUTH2  1D6
+PMPLOT:DRAW_MOUTH3  1E0
+PMPLOT:DRAW_MOUTH4  1EA
+PMPLOT:DRIGHT       1B8
+PMPLOT:DUP          1AE
+PMPLOT:FULLDRAW     1F6
+PMPLOT:LEFTDRAW     21E
+PMPLOT:RIGHTDRAW    258
+PMPLOT:SET_MOUTHDOWN  360
+PMPLOT:SET_MOUTHLEFT  306
+PMPLOT:SET_MOUTHRIGHT  324
+PMPLOT:SET_MOUTHUP  342
+PMPLOT:UPDRAW       292
+PMUPD               2C
+PMUPD:ACTXLEFT      EA
+PMUPD:ACTXRIGHT     BE
+PMUPD:ACTYDOWN      116
+PMUPD:ACTYUP        132
+PMUPD:DONE          164
+PMUPD:NOTCOLISION   D0
+PMUPD:NOTCOLISION2  FC
+PMUPD:NOTCOLISION3  128
+PMUPD:NOTCOLISION4  144
+PMUPD:NOTDOWN       BA
+PMUPD:NOTLEFT       78
+PMUPD:NOTMULT       14E
+PMUPD:NOTRIGHT      8E
+PMUPD:NOTTP         E0
+PMUPD:NOTTP2        10C
+PMUPD:NOTUP         A4
+X                   8
