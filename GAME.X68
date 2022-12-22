@@ -9,7 +9,6 @@ GAMINIT
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
-            JSR     SYSINIT
             JSR     PMINIT
             JSR     MAPINIT
             JSR     GSTINIT
@@ -22,6 +21,8 @@ GAMUPD
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
+            
+            ;JSR     GSTUPD
             BRA     PMUPD
             
 ; ------------------------------------------------------------------------------
@@ -35,6 +36,7 @@ GAMPLOT
             JSR     SCOPLOT
             JSR     PMPLOT
             BRA     GSTPLOT
+
 
 *~Font name~Fixedsys~
 *~Font size~9~

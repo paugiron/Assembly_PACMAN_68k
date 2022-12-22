@@ -38,8 +38,8 @@ STAUPD
             JSR     (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
-.INITBL     DC.L    ISCINIT
-.UPDTBL     DC.L    ISCUPD
+.INITBL     DC.L    ISCINIT,GAMINIT
+.UPDTBL     DC.L    ISCUPD,GAMUPD
 
 ; -----------------------------------------------------------------------------
 STAPLOT
@@ -57,7 +57,7 @@ STAPLOT
             JSR     (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
-.PLTTBL     DC.L    ISCPLOT
+.PLTTBL     DC.L    ISCPLOT,GAMPLOT
 
 ; -----------------------------------------------------------------------------
 STAEMPTY
@@ -68,6 +68,7 @@ STAEMPTY
 ; NOTE     - JUST A PLACEHOLDER. NOTHING TO DO.
 ; -----------------------------------------------------------------------------
             RTS
+
 
 
 

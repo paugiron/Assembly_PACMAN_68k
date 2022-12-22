@@ -25,7 +25,7 @@ GSTUPD
 ; ------------------------------------------------------------------------------
             MOVEM.L D0-D4,-(A7)
             
-            MOVE.W  (PMPOSX)/16*(PMPOSX)/16+(PMPOSY)/16*(PMPOSY)/16-#GSTRNG*#GSTRNG,D0
+            ;MOVE.W  (PMPOSX)/16*(PMPOSX)/16+(PMPOSY)/16*(PMPOSY)/16-#GSTRNG*#GSTRNG,D0
             BNE     .GSTINRNG
 .GSTNOTINRNG
             MOVE.B  #1,(GSTINRNG)
@@ -92,6 +92,7 @@ GSTPLOT
             
 
             RTS
+
 
 
 
