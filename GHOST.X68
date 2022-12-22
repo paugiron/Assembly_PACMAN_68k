@@ -25,8 +25,15 @@ GSTUPD
 ; ------------------------------------------------------------------------------
             MOVEM.L D0-D4,-(A7)
             
-                        
-.GSTNOTMULT
+            MOVE.W  (PMPOSX)/16*(PMPOSX)/16+(PMPOSY)/16*(PMPOSY)/16-#GSTRNG*#GSTRNG,D0
+            BNE     .GSTINRNG
+.GSTNOTINRNG
+            MOVE.B  #1,(GSTINRNG)
+            BRA     .CHECKCRITIC
+.GSTINRNG
+            MOVE.B  #0,(GSTINRNG)
+.CHECKCRITIC
+            
 
             MOVEM.L (A7)+,D0-D4
             
