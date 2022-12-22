@@ -24,6 +24,7 @@ GSTUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             MOVEM.L D0-D4,-(A7)
+            
                         
 .GSTNOTMULT
 
@@ -77,13 +78,14 @@ GSTPLOT
             ADD.W   #GSTRNG*16*2,D4
             
             ;DRAW GHOST RANGE
-            MOVE.W  #90,D0
+            MOVE.W  #91,D0
             TRAP    #15
             
             MOVEM.L (A7)+,D0-D4
             
 
             RTS
+
 
 
 
