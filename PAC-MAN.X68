@@ -166,28 +166,30 @@ PMPLOT
             
             ;DRAW QUIET
             JSR     .FULLDRAW
-            
+            MOVE.B  (KBDVAL),D5
+            AND.B   #$0F,D5
+
             ;CHECK KBDVAL
-            BTST.B  #0,(KBDVAL)             ;LEFT
+            CMP.B  #$1,D5             ;LEFT
             BEQ     .DLEFT
-            BTST.B  #1,(KBDVAL)             :UP
+            CMP.B  #$2,D5             ;UP
             BEQ     .DUP
-            BTST.B  #2,(KBDVAL)             ;RIGHT
+            CMP.B  #$4,D5             ;RIGHT
             BEQ     .DRIGHT
-            BTST.B  #3,(KBDVAL)             ;DOWN
+            CMP.B  #$8,D5             ;DOWN
             BEQ     .DDOWN
             
             ;DRAW MOVEMENT
-.DLEFT
-            JSR     .LEFTDRAW
-            BRA     .DRAW_MOUTH1
+.DRIGHT
+            JSR     .RIGHTDRAW
+            BRA     .DRAW_MOUTH3
 .DUP
             JSR     .UPDRAW
             BRA     .DRAW_MOUTH2
 
-.DRIGHT
-            JSR     .RIGHTDRAW
-            BRA     .DRAW_MOUTH3
+.DLEFT
+            JSR     .LEFTDRAW
+            BRA     .DRAW_MOUTH1
 
 .DDOWN
             JSR     .DOWNDRAW
@@ -273,7 +275,7 @@ PMPLOT
             
             MOVE.W  D3,D1
             MOVE.W  D4,D2
-            ADD.W   #PMRAD,D2
+            SUB.W   #PMRAD,D2
             ADD.W   #PMRAD,D1
             
             TRAP    #15
@@ -313,7 +315,7 @@ PMPLOT
             MOVE.W  (PMPOSX),D1                   ;FINAL COORD OF THE FIRST LINE
             SUB.W   #PMRAD,D1
             MOVE.W  (PMPOSY),D2
-            SUB.W   #PMRAD,D2
+            ADD.W   #PMRAD,D2
             
             MOVE.W  (PMPOSX),D3                   ;ORIGINAL COORD FIRST LINE
             MOVE.W  (PMPOSY),D4
