@@ -30,8 +30,13 @@ START:
 
             ORI.W   #$0700,SR               ;DISABLE INTERRUPTIONS
 
-            
-            JSR     GAMINIT
+            JSR     SYSINIT
+            JSR     PMINIT
+            JSR     MAPINIT
+            JSR     GSTINIT
+            JSR     SCOINIT
+            JSR     ISCINIT
+            ;JSR     GAMINIT
 
 .LOOP
 
@@ -43,10 +48,10 @@ START:
 
 ; UPDATE GAME LOGIC
 
-           ;JSR     PMUPD
+           JSR     PMUPD
            ;JSR     GSTUPD
            ;JSR      ISCUPD
-           JSR      GAMUPD
+           ;JSR      GAMUPD
 
 ; --- SYNC ---------------------------------------------------------------------
             ;WHILE THERES NO INTERRUPTS IN THE COUNTER THE PROGRAM WILL BE IN
@@ -58,9 +63,12 @@ START:
 
 ; --- PLOT ---------------------------------------------------------------------
             
-            
+            JSR     MAPPLOT
+            JSR     SCOPLOT
+            JSR     PMPLOT
+            JSR     GSTPLOT
             ;JSR     ISCPLOT
-            JSR     GAMPLOT
+            ;JSR     GAMPLOT
             
             
             TRAP    #0                      ;CHANGE BUFFER
