@@ -1,0 +1,55 @@
+0000229A Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 23/12/2022 18:07:09
+
+00000000                             1  ; ==============================================================================
+00000000                             2  ; SYSTEM VARIABLES
+00000000                             3  ; ==============================================================================
+00000000                             4   
+00000000                             5  ; --- KEYBOARD RELATED VARIABLES -----------------------------------------------
+00000000                             6  
+00000000                             7  KBDVAL      DS.B    1                       ; KEY STATE
+00000001                             8  KBDEDGE     DS.B    1                       ; KEY EDGE
+00000002                             9              DS.W    0 
+00000002                            10  
+00000002                            11  ; --- TIMED INTERRUPT RELATED VARIABLES ----------------------------------------
+00000002                            12  
+00000002                            13  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER
+00000003                            14  SCRCYCCT    DS.B    1                       ; CYCLE COUNTER
+00000004                            15              DS.W    0        
+00000004                            16              
+00000004                            17  ; --- MAP RELATED VARIABLE -----------------------------------------------------
+00000004                            18  
+00000004                            19  MAPVAR      DS.B    1024
+00000404                            20  
+00000404                            21              DS.B    0
+00000404                            22  
+00000404                            23  POSCON      DS.W    1
+00000406                            24  
+00000406                            25  ; --- TITLE RELATED VARIABLE -----------------------------------------------------
+00000406                            26  
+00000406                            27  BUFFER      DS.B    2700
+00000E92                            28              DS.B    0
+00000E92                            29              
+00000E92                            30  
+00000E92                            31  
+00000E92                            32  
+00000E92                            33  
+00000E92                            34  
+00000E92                            35  
+Line 36 WARNING: END directive missing, starting address not set
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BUFFER              406
+KBDEDGE             1
+KBDVAL              0
+MAPVAR              4
+POSCON              404
+SCRCYCCT            3
+SCRINTCT            2

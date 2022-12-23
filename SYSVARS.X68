@@ -22,6 +22,12 @@ MAPVAR      DS.B    1024
 
 POSCON      DS.W    1
 
+; --- TITLE RELATED VARIABLE -----------------------------------------------------
+
+BUFFER      DS.B    2700
+            DS.B    0
+            
+
 
 
 

@@ -87,6 +87,7 @@ PMUPD
             JSR     COLWALLRIGHT
             CMP     #1,D5
             BNE     .NOTCOLISION
+            MOVE.B  #0,(KBDVAL)
             MOVE.W  #0,D0
 .NOTCOLISION
             CMP     #4,D5
@@ -99,6 +100,7 @@ PMUPD
             JSR     COLWALLLEFT
             CMP     #1,D5
             BNE     .NOTCOLISION2
+            MOVE.B  #0,(KBDVAL)
             MOVE.W  #0,D0
 .NOTCOLISION2
             CMP     #4,D5
@@ -112,6 +114,7 @@ PMUPD
             JSR     COLWALLDOWN
             CMP     #1,D5
             BNE     .NOTCOLISION3
+            MOVE.B  #0,(KBDVAL)
             MOVE.W  #0,D0
 .NOTCOLISION3
             ADD.W   D0,(PMPOSY)
@@ -120,6 +123,7 @@ PMUPD
             JSR     COLWALLUP
             CMP     #1,D5
             BNE     .NOTCOLISION4
+            MOVE.B  #0,(KBDVAL)
             MOVE.W  #0,D0
 .NOTCOLISION4
             SUB.W   D0,(PMPOSY)
@@ -152,7 +156,7 @@ PMPLOT
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
 
-            MOVEM.L D0-D4,-(A7)
+            MOVEM.L D0-D5,-(A7)
 
             ;SET PEN COLOR
             MOVE.W  #80,D0
@@ -164,12 +168,21 @@ PMPLOT
             MOVE.L  #PMFCOL,D1
             TRAP    #15
             
+            BTST.B  #3,(SCRCYCCT)
+            BEQ     .MOUTHOPEN
+            
             ;DRAW QUIET
             JSR     .FULLDRAW
+            BRA     .DDONE
+            
+.MOUTHOPEN     
+            JSR     .FULLDRAW       
             MOVE.B  (KBDVAL),D5
             AND.B   #$0F,D5
-
+ 
             ;CHECK KBDVAL
+            CMP.B   #$0,D5
+            BEQ     .NOTMOVE
             CMP.B  #$1,D5             ;LEFT
             BEQ     .DLEFT
             CMP.B  #$2,D5             ;UP
@@ -180,6 +193,8 @@ PMPLOT
             BEQ     .DDOWN
             
             ;DRAW MOVEMENT
+.NOTMOVE    JSR     .FULLDRAW
+            BRA     .DDONE
 .DRIGHT
             JSR     .RIGHTDRAW
             BRA     .DRAW_MOUTH3
@@ -207,7 +222,7 @@ PMPLOT
 .DRAW_MOUTH4            
             JSR     .SET_MOUTHDOWN
 .DDONE
-            MOVEM.L (A7)+,D0-D4
+            MOVEM.L (A7)+,D0-D5
             
             RTS
 
@@ -390,6 +405,7 @@ PMPLOT
             TRAP    #15
 
             RTS
+
 
 
 

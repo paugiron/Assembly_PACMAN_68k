@@ -1,0 +1,204 @@
+0000229A Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 23/12/2022 18:18:20
+
+00000000                             1  ; ==============================================================================
+00000000                             2  ; INTRO SCREEN
+00000000                             3  ; ==============================================================================
+00000000                             4  
+00000000                             5  ; ------------------------------------------------------------------------------
+00000000                             6  ISCINIT
+00000000                             7  ; INTRO SCREEN INIT
+00000000                             8  ; INPUT    : NONE
+00000000                             9  ; OUTPUT   : NONE
+00000000                            10  ; MODIFIES : NONE
+00000000                            11  ; ------------------------------------------------------------------------------
+Line 12 ERROR: Undefined symbol
+00000000  4279 004DBD16             12              CLR.W   (ISCTIMER)
+00000006  4EB9 00000082             13              JSR     OPENFILE
+0000000C  4E75                      14              RTS
+0000000E                            15  
+0000000E                            16  ; ------------------------------------------------------------------------------
+0000000E                            17  ISCUPD
+0000000E                            18  ; INTRO SCREEN UPDATE
+0000000E                            19  ; INPUT    : NONE
+0000000E                            20  ; OUTPUT   : NONE
+0000000E                            21  ; MODIFIES : NONE
+0000000E                            22  ; ------------------------------------------------------------------------------
+Line 23 ERROR: Undefined symbol
+0000000E  0839 0004 005455B8        23              BTST.B  #4,(KBDVAL)
+00000016  6700 000A                 24              BEQ     .CONT
+Line 25 ERROR: Undefined symbol
+0000001A  33FC 0001 005455B8        25              MOVE.W  #1,(STANEXT)
+00000022                            26  .CONT       ;ADDQ.W  #1,(ISCTIMER)
+00000022                            27  ;            CMP.W   #500,(ISCTIMER)
+00000022                            28  ;            BLT     .DONE
+00000022                            29  ;            MOVE.W  #1,(STANEXT)
+00000022  4E75                      30  .DONE       RTS
+00000024                            31  
+00000024                            32  ; ------------------------------------------------------------------------------
+00000024                            33  ISCPLOT
+00000024                            34  ; INTRO SCREEN PLOT
+00000024                            35  ; INPUT    : NONE
+00000024                            36  ; OUTPUT   : NONE
+00000024                            37  ; MODIFIES : NONE
+00000024                            38  ; ------------------------------------------------------------------------------
+00000024  48E7 C080                 39              MOVEM.L D0-D1/A0,-(A7)
+00000028                            40              
+00000028  4281                      41              CLR.L   D1
+0000002A  103C 0051                 42              MOVE.B  #81,D0
+0000002E  4E4F                      43              TRAP    #15
+00000030                            44              
+00000030  4EB9 000000B4             45              JSR     IMGPLOT
+00000036                            46              
+Line 47 ERROR: Undefined symbol
+00000036  0839 0004 005455B8        47              BTST.B  #4,(SCRCYCCT)
+0000003E  6700 0012                 48              BEQ     .DONE
+00000042                            49              
+00000042  41F9 00000066             50              LEA     .TXT2,A0
+00000048  103C 0019                 51              MOVE.B  #25,D0
+Line 52 ERROR: Undefined symbol
+0000004C  4EB9 004DBD16             52              JSR     UTLPRINT
+00000052                            53              
+00000052  4CDF 0103                 54  .DONE       MOVEM.L (A7)+,D0-D1/A0
+00000056                            55  
+00000056  4E75                      56              RTS
+00000058= 50 41 43 2D 4D 41 ...     57  .TXT1       DC.B    'PAC-MAN 68000',0
+00000066= 50 52 45 53 53 20 ...     58  .TXT2       DC.B    'PRESS SPACE BUTTON TO START',0
+00000082                            59              DS.W    0
+00000082                            60              
+00000082                            61  ;------------------------------------------------------------------------
+00000082                            62              
+00000082                            63  OPENFILE                    
+00000082                            64              ;OPEN FILE
+Line 65 ERROR: Undefined symbol
+00000082  43F9 004DBD16             65              LEA     FILENAME,A1
+00000088  303C 0033                 66              MOVE    #51,D0
+0000008C  4E4F                      67              TRAP    #15
+0000008E                            68              
+0000008E                            69              ;READ FILE
+Line 70 ERROR: Undefined symbol
+0000008E  243C 004DBD16             70              MOVE.L  #FILESIZE,D2
+Line 71 ERROR: Undefined symbol
+00000094  43F9 004DBD16             71              LEA     BUFFER,A1
+0000009A  303C 0035                 72              MOVE    #53,D0
+0000009E  4E4F                      73              TRAP    #15
+000000A0                            74              
+000000A0  363C 0A8C                 75              MOVE    #2700,D3
+000000A4                            76              
+000000A4                            77  .convert_loop 
+000000A4  4A03                      78              TST.B   D3
+000000A6  6700 000A                 79              BEQ     .END
+000000AA  0419 0030                 80              SUB.B   #$30,(A1)+
+000000AE  5303                      81              SUB.B   #1,D3
+000000B0  60F2                      82              BRA     .convert_loop           
+000000B2                            83  .END        
+000000B2                            84  
+000000B2                            85           
+000000B2                            86             
+000000B2                            87              
+000000B2  4E75                      88              RTS
+000000B4                            89  ; ------------------------------------------------------------------------------
+000000B4                            90  IMGPLOT
+000000B4                            91  ; TITLE IMAGE PLOT
+000000B4                            92  ; INPUT    : NONE
+000000B4                            93  ; OUTPUT   : NONE
+000000B4                            94  ; MODIFIES : NONE
+000000B4                            95  ; ------------------------------------------------------------------------------
+000000B4  48E7 FE00                 96              MOVEM.L D0-D6,-(A7)
+000000B8  48E7 00C0                 97              MOVEM.L A0-A1,-(A7)
+000000BC                            98              
+000000BC                            99              ;PLOT
+000000BC                           100   
+Line 101 ERROR: Undefined symbol
+000000BC  41F9 004DBD16            101              LEA.L   BUFFER,A0
+000000C2  3C3C 00DC                102              MOVE.W  #220,D6
+000000C6  343C 001C                103              MOVE.W  #28,D2
+000000CA                           104  BUCLE_FILA3
+000000CA  3A3C 0064                105              MOVE.W  #100,D5
+000000CE  323C 0065                106              MOVE.W  #101,D1
+000000D2  5846                     107              ADD.W   #4,D6
+000000D4                           108  
+000000D4                           109  BUCLE_COLUMNA3
+000000D4  5845                     110              ADD.W   #4,D5
+000000D6                           111  
+000000D6  1018                     112              MOVE.B  (A0)+,D0
+000000D8                           113               
+000000D8  B07C 0001                114              CMP     #1,D0
+000000DC  6700 000C                115              BEQ     ZERO3
+000000E0  B07C 0000                116              CMP     #0,D0
+000000E4  4EB9 000000FC            117              JSR     DRAW
+000000EA                           118  ZERO3
+000000EA  51C9 FFE8                119              DBRA    D1,BUCLE_COLUMNA3
+000000EE  51CA FFDA                120              DBRA    D2,BUCLE_FILA3
+000000F2                           121              
+000000F2  4CDF 0300                122              MOVEM.L (A7)+,A0-A1
+000000F6  4CDF 007F                123              MOVEM.L (A7)+,D0-D6
+000000FA                           124          
+000000FA                           125  
+000000FA  4E75                     126              RTS
+000000FC                           127  
+000000FC                           128  
+000000FC                           129  ; -----------------------------------------------------------------------------
+000000FC                           130  DRAW
+000000FC                           131  ; SUBRUTINE DRAW 
+000000FC                           132  ; INPUT    : D5=POSITION X, D6=POSITION Y
+000000FC                           133  ; OUTPUT   : NONE
+000000FC                           134  ; MODIFIES : NONE
+000000FC                           135  ; -----------------------------------------------------------------------------
+000000FC  48E7 FE00                136              MOVEM.L D0-D6,-(A7)
+00000100                           137              ; SET CONTOURN COLOR
+00000100  103C 0050                138              MOVE.B  #80,D0
+00000104  223C 00AA0000            139              MOVE.L  #$00AA0000,D1
+0000010A  4E4F                     140              TRAP    #15
+0000010C                           141              
+0000010C                           142              ; SET FILL COLOR
+0000010C  103C 0051                143              MOVE.B  #81,D0
+00000110  223C 00FF0000            144              MOVE.L  #$00FF0000,D1
+00000116  4E4F                     145              TRAP    #15
+00000118                           146              
+00000118                           147              ; DEFINE COORDINATES RECTANGLE
+00000118  3205                     148              MOVE.W  D5,D1
+0000011A  3406                     149              MOVE.W  D6,D2
+0000011C  5845                     150              ADD.W   #4,D5
+0000011E  5846                     151              ADD.W   #4,D6
+00000120  3605                     152              MOVE.W  D5,D3
+00000122  3806                     153              MOVE.W  D6,D4
+00000124                           154              
+00000124                           155              ; DRAW RECTANGLE
+00000124  103C 0057                156              MOVE.B  #87,D0
+00000128  4E4F                     157              TRAP    #15
+0000012A                           158              
+0000012A  4CDF 007F                159              MOVEM.L (A7)+,D0-D6
+0000012E                           160  
+0000012E  4E75                     161              RTS
+00000130                           162  
+00000130                           163  
+00000130                           164  
+00000130                           165  
+00000130                           166  
+Line 167 WARNING: END directive missing, starting address not set
+
+9 errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BUCLE_COLUMNA3      D4
+BUCLE_FILA3         CA
+DRAW                FC
+IMGPLOT             B4
+ISCINIT             0
+ISCPLOT             24
+ISCPLOT:DONE        52
+ISCPLOT:TXT1        58
+ISCPLOT:TXT2        66
+ISCUPD              E
+ISCUPD:CONT         22
+ISCUPD:DONE         22
+OPENFILE            82
+OPENFILE:CONVERT_LOOP  A4
+OPENFILE:END        B2
+ZERO3               EA
