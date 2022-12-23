@@ -19,7 +19,7 @@ ISCUPD
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
-            BTST.B  #1,(KBDVAL)
+            BTST.B  #4,(KBDVAL)
             BEQ     .CONT
             MOVE.W  #1,(STANEXT)
 .CONT       ;ADDQ.W  #1,(ISCTIMER)
@@ -56,8 +56,9 @@ ISCPLOT
 
             RTS
 .TXT1       DC.B    'PAC-MAN 68000',0
-.TXT2       DC.B    'PRESS (flecha arriba) TO START',0
+.TXT2       DC.B    'PRESS SPACE BUTTON TO START',0
             DS.W    0
+
 
 
 

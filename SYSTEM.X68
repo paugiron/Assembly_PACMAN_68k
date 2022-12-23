@@ -128,8 +128,15 @@ KBDUPD
             
             MOVEM.L D0-D4,-(A7)
             
-            MOVE.W  #19,D0
-            ;GET INFO OF THE KEYS
+            ; READ FIRST PART
+            MOVE.B  #19,D0
+            MOVE.L  #KBDPAUSE<<24|KBDFIRE3<<16|KBDFIRE2<<8|KBDFIRE1,D1
+            TRAP    #15
+
+            ; CONVERT TO DESIRED FORMAT
+            JSR     .CONVERT
+
+            ; READ SECOND PART
             MOVE.L  #KBDDOWN<<24|KBDRIGHT<<16|KBDUP<<8|KBDLEFT,D1
             TRAP    #15
             
@@ -367,6 +374,7 @@ GETPOINTS
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 
