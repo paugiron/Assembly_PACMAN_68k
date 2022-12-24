@@ -372,7 +372,7 @@ GSTCOLWALLLEFT
 
             MOVEM.L D0-D4,-(A7)
 
-            MOVE.W  (GSTPMPOSX),D0
+            MOVE.W  (GSTPOSX),D0
             ADD.W   #6,D0
             MOVE.W  (GSTPOSY),D1
             ADD.W   #8,D1
@@ -519,6 +519,7 @@ GETPOINTS
             MOVEM.L (A7)+,D0-D4
             
             RTS
+
 
 
 

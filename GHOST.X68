@@ -13,7 +13,7 @@ GSTINIT
             MOVE.W  #GSTINY1*16+64-8,(GSTPOSY)
             MOVE.W  #GSTSPEED,(GSTVELX)
             MOVE.W  #GSTSPEED,(GSTVELY)
-            CLR.B   (GSTLAMO)
+            MOVE.B  #1,(GSTLAMO)
             RTS
             
 ; ------------------------------------------------------------------------------
@@ -29,11 +29,77 @@ GSTUPD
             BNE     .GSTINRNG
 .GSTNOTINRNG
             MOVE.B  #1,(GSTINRNG)
-            BRA     .CHECKCRITIC
+            BRA     .GSTMOVE
 .GSTINRNG
             MOVE.B  #0,(GSTINRNG)
-.CHECKCRITIC
+.GSTMOVE
+            MOVE.B  (GSTLAMO),D4
+            ;MASK OF THE LAST NIBBLE        
+            AND.W   #$000F,D2               ; COORDENADA X
+            AND.W   #$000F,D3               ; COORDENADA Y
             
+            ;CHECK IF COORDS ARE MULTIPLES OF 16
+            CMP     #$0000,D2
+            BNE     .GSTNOTMULT
+            CMP     #$0000,D3
+            BNE     .GSTNOTMULT
+.GSTMULT
+
+.GSTNOTMULT            
+            CMP     #1,D4
+            BEQ     .GSTRIGHTMOVE
+            CMP     #2,D4
+            BEQ     .GSTLEFTMOVE
+            CMP     #3,D4
+            BEQ     .GSTDOWNMOVE
+            BRA     .GSTUPMOVE
+
+            ;UPDATE COORDS
+            
+.GSTRIGHTMOVE
+            JSR     GSTCOLWALLRIGHT
+            CMP     #1,D5
+            BNE     .GSTNOTCOLISION
+            MOVE.W  #0,D0
+.GSTNOTCOLISION
+            CMP     #4,D5
+            BNE     .GSTNOTTP
+            SUB.W   #30*16,(GSTPOSX)
+.GSTNOTTP
+            ADD.W   D0,(GSTPOSX)
+            BRA     .GSTDONE
+.GSTLEFTMOVE
+            JSR     GSTCOLWALLLEFT
+            CMP     #1,D5
+            BNE     .GSTNOTCOLISION2
+            MOVE.W  #0,D0
+.GSTNOTCOLISION2
+            CMP     #4,D5
+            BNE     .GSTNOTTP2
+            ADD.W   #30*16,(GSTPOSX)
+.GSTNOTTP2
+            SUB.W   D0,(GSTPOSX)
+            BRA     .GSTDONE
+    
+.GSTDOWNMOVE
+            JSR     GSTCOLWALLDOWN
+            CMP     #1,D5
+            BNE     .GSTNOTCOLISION3
+            MOVE.W  #0,D0
+.GSTNOTCOLISION3
+            ADD.W   D0,(GSTPOSY)
+            BRA     .GSTDONE
+.GSTUPMOVE    
+            JSR     GSTCOLWALLUP
+            CMP     #1,D5
+            BNE     .GSTNOTCOLISION4
+            MOVE.W  #0,D0
+.GSTNOTCOLISION4
+            SUB.W   D0,(GSTPOSY)
+            BRA     .GSTDONE
+
+.GSTDONE
+            MOVE.B  D4,(GSTLAMO)
 
             MOVEM.L (A7)+,D0-D4
             
