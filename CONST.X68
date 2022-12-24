@@ -11,7 +11,7 @@ PMRAD       EQU     8                       ; PAC-MAN RADIUS
 
 ; --- GHOST RELATED CONSTANTS ----------------------------------------------------
 
-GSTSPEED    EQU     7                       ; MAGNITUDE OF THE NORMAL DISPLACEMENT
+GSTSPEED    EQU     3                       ; MAGNITUDE OF THE NORMAL DISPLACEMENT
 GSTSPEED2   EQU     5                       ; MAGNITUDE OF THE ATACKED DISPLACEMENT
 
 GSTCOL1     EQU     $000000FF               ; GHOST 1 CONTOUR COLOR RED

@@ -23,17 +23,23 @@ GSTUPD
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
-            MOVEM.L D0-D4,-(A7)
+            MOVEM.L D0-D5,-(A7)
             
-            ;MOVE.W  (PMPOSX)/16*(PMPOSX)/16+(PMPOSY)/16*(PMPOSY)/16-#GSTRNG*#GSTRNG,D0
+            MOVE.W  (PMPOSX)/16*(PMPOSX)/16+(PMPOSY)/16*(PMPOSY)/16,D0
+            MOVE.W  #GSTRNG,D1
+            MULU.W  #GSTRNG,D1
+            SUB.W   D0,D1
             BNE     .GSTINRNG
 .GSTNOTINRNG
+            CLR     D0
+            CLR     D1
             MOVE.B  #1,(GSTINRNG)
             BRA     .GSTMOVE
 .GSTINRNG
             MOVE.B  #0,(GSTINRNG)
 .GSTMOVE
             MOVE.B  (GSTLAMO),D4
+
             ;MASK OF THE LAST NIBBLE        
             AND.W   #$000F,D2               ; COORDENADA X
             AND.W   #$000F,D3               ; COORDENADA Y
@@ -42,9 +48,54 @@ GSTUPD
             CMP     #$0000,D2
             BNE     .GSTNOTMULT
             CMP     #$0000,D3
-            BNE     .GSTNOTMULT
+            ;BNE     .GSTNOTMULT
 .GSTMULT
-
+.GSTMULTRIGHT
+            JSR     GSTCOLWALLRIGHT
+            CMP     #1,D5
+            BEQ     .GSTMULTLEFT
+            ADD.B   #8,(GSTPOSMV)
+.GSTMULTLEFT
+            JSR     GSTCOLWALLLEFT
+            CMP     #1,D5
+            BEQ     .GSTMULTDOWN
+            ADD.B   #4,(GSTPOSMV)
+.GSTMULTDOWN
+            JSR     GSTCOLWALLDOWN
+            CMP     #1,D5
+            BEQ     .GSTMULTUP
+            ADD.B   #2,(GSTPOSMV)
+.GSTMULTUP
+            JSR     GSTCOLWALLUP
+            CMP     #1,D5
+            BEQ     .GSTDECISSION
+            ADD.B   #1,(GSTPOSMV)
+.GSTDECISSION
+            MOVE.B  (GSTPOSMV),D0
+            BTST.B  #5,D0
+            BEQ     .GSTDECRIGHT
+            BTST.B  #6,D0
+            BEQ     .GSTDECLEFT
+            BTST.B  #7,D0
+            BEQ     .GSTDECDOWN
+            
+            
+.GSTDECRIGHT
+            MOVE.B  (GSTPOSMV),D0
+            BTST.B  #6,D0
+            BEQ     .GSTDECLEFT
+.GSTDECLEFT
+            MOVE.B  (GSTPOSMV),D0
+            BTST.B  #6,D0
+            BEQ     .GSTDECDOWN
+.GSTDECDOWN
+            MOVE.B  (GSTPOSMV),D0
+            BTST.B  #6,D0
+            BEQ     .GSTDECUP
+.GSTDECUP
+            MOVE.B  (GSTPOSMV),D0
+            BTST.B  #6,D0
+            BEQ     .GSTDONE
 .GSTNOTMULT            
             CMP     #1,D4
             BEQ     .GSTRIGHTMOVE
@@ -101,7 +152,7 @@ GSTUPD
 .GSTDONE
             MOVE.B  D4,(GSTLAMO)
 
-            MOVEM.L (A7)+,D0-D4
+            MOVEM.L (A7)+,D0-D5
             
             RTS
             
@@ -158,6 +209,7 @@ GSTPLOT
             
 
             RTS
+
 
 
 
