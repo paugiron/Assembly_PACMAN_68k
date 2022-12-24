@@ -325,7 +325,152 @@ COLWALLUP
             
             RTS
 
+;------------------------------------------------------------------------------            
+GSTCOLWALLRIGHT
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
 
+            MOVEM.L D0-D4,-(A7)
+
+            MOVE.W  (GSTPOSX),D0
+            SUB.W   #8,D0
+            MOVE.W  (GSTPOSY),D1
+            ADD.W   #8,D1
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+            
+            LEA.L   MAPVAR,A0
+            
+            ADD.W   #1,D0
+            SUB.W   #1,D1
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+            
+            MOVE.W  D0,A1
+
+            MOVE.B  MAPVAR(A1),D5
+            
+            MOVEM.L (A7)+,D0-D4
+            
+            RTS
+
+
+;------------------------------------------------------------------------------            
+GSTCOLWALLLEFT
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
+
+            MOVEM.L D0-D4,-(A7)
+
+            MOVE.W  (GSTPMPOSX),D0
+            ADD.W   #6,D0
+            MOVE.W  (GSTPOSY),D1
+            ADD.W   #8,D1
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+            
+            LEA.L   MAPVAR,A0
+            
+            SUB.W   #1,D0
+            SUB.W   #1,D1
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+
+            MOVE.W  D0,A1
+            MOVE.B  MAPVAR(A1),D5               
+
+            
+            MOVEM.L (A7)+,D0-D4
+            
+            RTS
+
+;------------------------------------------------------------------------------            
+GSTCOLWALLDOWN
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
+
+            MOVEM.L D0-D4,-(A7)
+
+            MOVE.W  (GSTPOSX),D0
+            ;ADD.W   #8,D0
+            MOVE.W  (GSTPOSY),D1
+            ADD.W   #8,D1
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+            
+            LEA.L   MAPVAR,A0
+            
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+
+            MOVE.W  D0,A1
+            MOVE.B  MAPVAR(A1),D5 
+
+            
+            MOVEM.L (A7)+,D0-D4
+            
+            RTS
+
+
+;------------------------------------------------------------------------------            
+GSTCOLWALLUP
+; COLLISION PAC-MAN WITH WALL
+; INPUT    : NONE
+; OUTPUT   : NONE
+; MODIFIES : NONE
+; ------------------------------------------------------------------------------
+
+            MOVEM.L D0-D4,-(A7)
+
+            MOVE.W  (GSTPOSX),D0
+            ;SUB.W   #8,D0
+            MOVE.W  (GSTPOSY),D1
+            ADD.W   #6,D1
+            
+            
+            DIVS.W  #16,D0
+            DIVS.W  #16,D1
+            
+            SUB.W   #4,D0                   ;LI RESTAM 4 PERQUE LA MATRIU ESTA A UNA DISTANCIA DE 64 PIXELS DE LA PANTALLA
+            SUB.W   #4,D1
+            
+            LEA.L   MAPVAR,A0
+            
+            SUB.W   #1,D1
+
+            MULU.W  #32,D1
+            ADD.W   D1,D0
+
+            MOVE.W  D0,A1
+
+            MOVE.B  MAPVAR(A1),D5 
+
+            ;MOVE.B  #0,D5
+            
+            MOVEM.L (A7)+,D0-D4
+            
+            RTS
 ;------------------------------------------------------------------------------            
 GETPOINTS
 ; COLLISION PAC-MAN WITH WALL
