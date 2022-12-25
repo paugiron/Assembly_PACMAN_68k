@@ -22,7 +22,7 @@ GAMUPD
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             
-            ;JSR     GSTUPD
+            JSR     GSTUPD
             BRA     PMUPD
             
 ; ------------------------------------------------------------------------------
@@ -36,6 +36,7 @@ GAMPLOT
             JSR     SCOPLOT
             JSR     PMPLOT
             BRA     GSTPLOT
+
 
 
 *~Font name~Fixedsys~

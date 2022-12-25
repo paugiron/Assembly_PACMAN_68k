@@ -11,7 +11,7 @@ PMRAD       EQU     8                       ; PAC-MAN RADIUS
 
 ; --- GHOST RELATED CONSTANTS ----------------------------------------------------
 
-GSTSPEED    EQU     3                       ; MAGNITUDE OF THE NORMAL DISPLACEMENT
+GSTSPEED    EQU     2                       ; MAGNITUDE OF THE NORMAL DISPLACEMENT
 GSTSPEED2   EQU     5                       ; MAGNITUDE OF THE ATACKED DISPLACEMENT
 
 GSTCOL1     EQU     $000000FF               ; GHOST 1 CONTOUR COLOR RED
@@ -39,6 +39,7 @@ GSTFCOL5    EQU     $00000000               ; FILL COLOR OF ATACKED MODE
 
 GSTRAD      EQU     8                       ; GHOST RADIUS
 GSTRNG      EQU     16                      ; GHOST DETECTING RANGE
+GSTDECVEC   DC.W    1,2,3,4                 ; GHOST MOVEMENT DECISSIONS
             
 ; --- SCOREBOARD RELATED CONSTANTS ---------------------------------------------
 ;MODIFICATE
@@ -85,6 +86,7 @@ MAPMAT      DC.B    $1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 ; --- STATE RELATED CONSTANTS --------------------------------------------------
 
 STANONE     EQU     -1                      ; NON-EXISTENT STATE NUMBER
+
 
 
 
