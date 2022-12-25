@@ -38,9 +38,9 @@ STAUPD
             JSR     (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
-.INITBL     ;DC.L    ISCINIT
+.INITBL     DC.L    ISCINIT
             DC.L    GAMINIT
-.UPDTBL     ;DC.L    ISCUPD
+.UPDTBL     DC.L    ISCUPD
             DC.L    GAMUPD
 
 ; -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ STAPLOT
             JSR     (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
-.PLTTBL     ;DC.L    ISCPLOT
+.PLTTBL     DC.L    ISCPLOT
             DC.L    GAMPLOT
 
 ; -----------------------------------------------------------------------------
