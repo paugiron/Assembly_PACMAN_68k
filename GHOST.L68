@@ -1,6 +1,6 @@
-0000245A Starting Address
+00002662 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 24/12/2022 18:36:05
+Created On: 26/12/2022 16:03:28
 
 00000000                             1  ; ==============================================================================
 00000000                             2  ; GHOST MANAGEMENT
@@ -22,229 +22,444 @@ Line 14 ERROR: Undefined symbol
 Line 15 ERROR: Undefined symbol
 00000008  33FC BD16 005455B8        15              MOVE.W  #GSTSPEED,(GSTVELY)
 Line 16 ERROR: Undefined symbol
-00000010  13FC 0001 005455B8        16              MOVE.B  #1,(GSTLAMO)
-00000018  4E75                      17              RTS
-0000001A                            18              
-0000001A                            19  ; ------------------------------------------------------------------------------
-Line 20 ERROR: Symbol value differs between first and second pass
-0000001A                            20  GSTUPD
-0000001A                            21  ; UPDATES THE GHOST.
-0000001A                            22  ; INPUT    : NONE 
-0000001A                            23  ; OUTPUT   : NONE
-0000001A                            24  ; MODIFIES : NONE
-0000001A                            25  ; ------------------------------------------------------------------------------
-0000001A  48E7 FC00                 26              MOVEM.L D0-D5,-(A7)
-0000001E                            27              
-Line 28 ERROR: Comma expected
-0000001E                            28              MOVE.W  (PMPOSX)/16*(PMPOSX)/16+(PMPOSY)/16*(PMPOSY)/16-#GSTRNG*#GSTRNG,D0
-0000001E  6600 001E                 29              BNE     .GSTINRNG
-Line 30 ERROR: Symbol value differs between first and second pass
-00000022                            30  .GSTNOTINRNG
+00000010  13FC 0002 005455B8        16              MOVE.B  #2,(GSTLAMO)
+Line 17 ERROR: Undefined symbol
+00000018  13FC 0000 005455B8        17              MOVE.B  #0,(GSTCHDIR)
+00000020  4E75                      18              RTS
+00000022                            19              
+00000022                            20  ; ------------------------------------------------------------------------------
+Line 21 ERROR: Symbol value differs between first and second pass
+00000022                            21  GSTUPD
+00000022                            22  ; UPDATES THE GHOST.
+00000022                            23  ; INPUT    : NONE 
+00000022                            24  ; OUTPUT   : NONE
+00000022                            25  ; MODIFIES : NONE
+00000022                            26  ; ------------------------------------------------------------------------------
+00000022  48E7 FC00                 27              MOVEM.L D0-D5,-(A7)
+00000026                            28              
+00000026                            29              ;MOVE.W  (PMPOSX)/16*(PMPOSX)/16+(PMPOSY)/16*(PMPOSY)/16,D0
+Line 30 ERROR: Undefined symbol
+00000026  323C BD16                 30              MOVE.W  #GSTRNG,D1
 Line 31 ERROR: Undefined symbol
-00000022  13FC 0001 005455B8        31              MOVE.B  #1,(GSTINRNG)
-0000002A  6000 001A                 32              BRA     .GSTMOVE
-Line 33 ERROR: Symbol value differs between first and second pass
-0000002E                            33  .GSTINRNG
-Line 34 ERROR: Undefined symbol
-0000002E  13FC 0000 005455B8        34              MOVE.B  #0,(GSTINRNG)
+0000002A  C2FC BD16                 31              MULU.W  #GSTRNG,D1
+0000002E  9240                      32              SUB.W   D0,D1
+Line 33 ERROR: Undefined symbol
+00000030  303C BD16                 33              MOVE.W  #GSTSPEED,D0
+00000034  6600 0026                 34              BNE     .GSTINRNG
 Line 35 ERROR: Symbol value differs between first and second pass
-00000036                            35  .GSTMOVE
-Line 36 ERROR: Undefined symbol
-00000036  1839 004DBD16             36              MOVE.B  (GSTLAMO),D4
-0000003C                            37              ;MASK OF THE LAST NIBBLE        
-0000003C  C47C 000F                 38              AND.W   #$000F,D2               ; COORDENADA X
-00000040  C67C 000F                 39              AND.W   #$000F,D3               ; COORDENADA Y
-00000044                            40              
-00000044                            41              ;CHECK IF COORDS ARE MULTIPLES OF 16
-00000044  B47C 0000                 42              CMP     #$0000,D2
-00000048  6600 001C                 43              BNE     .GSTNOTMULT
-0000004C  B67C 0000                 44              CMP     #$0000,D3
-00000050                            45              ;BNE     .GSTNOTMULT
-Line 46 ERROR: Symbol value differs between first and second pass
-00000050                            46  .GSTMULT
-Line 47 ERROR: Undefined symbol
-00000050  4EB9 004DBD16             47              JSR     GSTCOLWALLRIGHT
-Line 48 ERROR: Symbol value differs between first and second pass
-00000056                            48  .GSTNOTMULT            
-00000056  B87C 0001                 49              CMP     #1,D4
-0000005A  6700 0026                 50              BEQ     .GSTRIGHTMOVE
-0000005E  B87C 0002                 51              CMP     #2,D4
-00000062  6700 004A                 52              BEQ     .GSTLEFTMOVE
-00000066  B87C 0003                 53              CMP     #3,D4
-0000006A  6700 006E                 54              BEQ     .GSTDOWNMOVE
-0000006E  6000 0086                 55              BRA     .GSTUPMOVE
-00000072                            56  
-00000072                            57              ;UPDATE COORDS
-00000072                            58              
-Line 59 ERROR: Symbol value differs between first and second pass
-00000072                            59  .GSTRIGHTMOVE
-Line 60 ERROR: Undefined symbol
-00000072  4EB9 004DBD16             60              JSR     GSTCOLWALLRIGHT
-00000078  BA7C 0001                 61              CMP     #1,D5
-0000007C  6600 0016                 62              BNE     .GSTNOTCOLISION
-00000080  303C 0000                 63              MOVE.W  #0,D0
-Line 64 ERROR: Symbol value differs between first and second pass
-00000084                            64  .GSTNOTCOLISION
-00000084  BA7C 0004                 65              CMP     #4,D5
-00000088  6600 001A                 66              BNE     .GSTNOTTP
+00000038                            35  .GSTNOTINRNG
+00000038  4240                      36              CLR     D0
+0000003A  4241                      37              CLR     D1
+0000003C  383C 0000                 38              MOVE.W  #0,D4
+Line 39 ERROR: Undefined symbol
+00000040  13FC 0001 005455B8        39              MOVE.B  #1,(GSTINRNG)
+00000048  6000 001E                 40              BRA     .GSTMOVE
+Line 41 ERROR: Symbol value differs between first and second pass
+0000004C                            41  .GSTINRNG
+0000004C  383C 0000                 42              MOVE.W  #0,D4
+Line 43 ERROR: Undefined symbol
+00000050  13FC 0000 005455B8        43              MOVE.B  #0,(GSTINRNG)
+Line 44 ERROR: Symbol value differs between first and second pass
+00000058                            44  .GSTMOVE
+Line 45 ERROR: Undefined symbol
+00000058  1439 004DBD16             45              MOVE.B  (GSTCHDIR),D2
+0000005E                            46              ;CMP.B   #1,D2
+0000005E                            47              ;BGE     .GSTNOTMULT
+Line 48 ERROR: Undefined symbol
+0000005E  3439 004DBD16             48              MOVE.W  (GSTPOSX),D2
+Line 49 ERROR: Undefined symbol
+00000064  3639 004DBD16             49              MOVE.W  (GSTPOSY),D3
+0000006A                            50              
+0000006A  5042                      51              ADDQ.W  #8,D2              
+0000006C  5043                      52              ADDQ.W  #8,D3
+0000006E                            53  
+0000006E                            54              ;MASK OF THE LAST NIBBLE        
+0000006E  C47C 000F                 55              AND.W   #$000F,D2               ; COORDENADA X
+00000072  C67C 000F                 56              AND.W   #$000F,D3               ; COORDENADA Y
+00000076                            57              
+00000076                            58              ;CHECK IF COORDS ARE MULTIPLES OF 16
+00000076  B47C 0000                 59              CMP     #$0000,D2
+0000007A  6600 0146                 60              BNE     .GSTNOTMULT
+0000007E  B67C 0000                 61              CMP     #$0000,D3
+00000082  6600 013E                 62              BNE     .GSTNOTMULT
+Line 63 ERROR: Symbol value differs between first and second pass
+00000086                            63  .GSTMULT
+Line 64 ERROR: Undefined symbol
+00000086  4279 004DBD16             64              CLR     (GSTPOSMV)
+Line 65 ERROR: Undefined symbol
+0000008C  13FC 0003 005455B8        65              MOVE.B  #3,(GSTCHDIR)
+Line 66 ERROR: Symbol value differs between first and second pass
+00000094                            66  .GSTMULTRIGHT
 Line 67 ERROR: Undefined symbol
-0000008C  0479 01E0 005455B8        67              SUB.W   #30*16,(GSTPOSX)
-Line 68 ERROR: Symbol value differs between first and second pass
-00000094                            68  .GSTNOTTP
-Line 69 ERROR: Undefined symbol
-00000094  D179 005455B8             69              ADD.W   D0,(GSTPOSX)
-0000009A  6000 0076                 70              BRA     .GSTDONE
-Line 71 ERROR: Symbol value differs between first and second pass
-0000009E                            71  .GSTLEFTMOVE
-Line 72 ERROR: Undefined symbol
-0000009E  4EB9 004DBD16             72              JSR     GSTCOLWALLLEFT
-000000A4  BA7C 0001                 73              CMP     #1,D5
-000000A8  6600 0016                 74              BNE     .GSTNOTCOLISION2
-000000AC  303C 0000                 75              MOVE.W  #0,D0
-Line 76 ERROR: Symbol value differs between first and second pass
-000000B0                            76  .GSTNOTCOLISION2
-000000B0  BA7C 0004                 77              CMP     #4,D5
-000000B4  6600 001A                 78              BNE     .GSTNOTTP2
+00000094  4EB9 004DBD16             67              JSR     GSTCOLWALLRIGHT
+0000009A  BA7C 0001                 68              CMP     #1,D5
+0000009E  6700 001A                 69              BEQ     .GSTMULTLEFT
+Line 70 ERROR: Undefined symbol
+000000A2  5239 005455B8             70              ADD.B   #1,(GSTPOSMV)
+000000A8  5244                      71              ADDQ.W  #1,D4
+Line 72 ERROR: Symbol value differs between first and second pass
+000000AA                            72  .GSTMULTLEFT
+Line 73 ERROR: Undefined symbol
+000000AA  4EB9 004DBD16             73              JSR     GSTCOLWALLLEFT
+000000B0  BA7C 0001                 74              CMP     #1,D5
+000000B4  6700 001A                 75              BEQ     .GSTMULTDOWN
+Line 76 ERROR: Undefined symbol
+000000B8  5439 005455B8             76              ADD.B   #2,(GSTPOSMV)
+000000BE  5244                      77              ADDQ.W  #1,D4
+Line 78 ERROR: Symbol value differs between first and second pass
+000000C0                            78  .GSTMULTDOWN
 Line 79 ERROR: Undefined symbol
-000000B8  0679 01E0 005455B8        79              ADD.W   #30*16,(GSTPOSX)
-Line 80 ERROR: Symbol value differs between first and second pass
-000000C0                            80  .GSTNOTTP2
-Line 81 ERROR: Undefined symbol
-000000C0  9179 005455B8             81              SUB.W   D0,(GSTPOSX)
-000000C6  6000 004A                 82              BRA     .GSTDONE
-000000CA                            83      
+000000C0  4EB9 004DBD16             79              JSR     GSTCOLWALLDOWN
+000000C6  BA7C 0001                 80              CMP     #1,D5
+000000CA  6700 001A                 81              BEQ     .GSTMULTUP
+Line 82 ERROR: Undefined symbol
+000000CE  5839 005455B8             82              ADD.B   #4,(GSTPOSMV)
+000000D4  5244                      83              ADDQ.W  #1,D4
 Line 84 ERROR: Symbol value differs between first and second pass
-000000CA                            84  .GSTDOWNMOVE
+000000D6                            84  .GSTMULTUP
 Line 85 ERROR: Undefined symbol
-000000CA  4EB9 004DBD16             85              JSR     GSTCOLWALLDOWN
-000000D0  BA7C 0001                 86              CMP     #1,D5
-000000D4  6600 0016                 87              BNE     .GSTNOTCOLISION3
-000000D8  303C 0000                 88              MOVE.W  #0,D0
-Line 89 ERROR: Symbol value differs between first and second pass
-000000DC                            89  .GSTNOTCOLISION3
-Line 90 ERROR: Undefined symbol
-000000DC  D179 005455B8             90              ADD.W   D0,(GSTPOSY)
-000000E2  6000 002E                 91              BRA     .GSTDONE
-Line 92 ERROR: Symbol value differs between first and second pass
-000000E6                            92  .GSTUPMOVE    
+000000D6  4EB9 004DBD16             85              JSR     GSTCOLWALLUP
+000000DC  BA7C 0001                 86              CMP     #1,D5
+000000E0  6700 001A                 87              BEQ     .GSTDECISSION
+Line 88 ERROR: Undefined symbol
+000000E4  5039 005455B8             88              ADD.B   #8,(GSTPOSMV)
+000000EA  5244                      89              ADDQ.W  #1,D4
+Line 90 ERROR: Symbol value differs between first and second pass
+000000EC                            90  .GSTDECISSION
+000000EC  B87C 0002                 91              CMP     #2,D4
+000000F0  6F00 0044                 92              BLE     .GST2MOVES
 Line 93 ERROR: Undefined symbol
-000000E6  4EB9 004DBD16             93              JSR     GSTCOLWALLUP
-000000EC  BA7C 0001                 94              CMP     #1,D5
-000000F0  6600 0016                 95              BNE     .GSTNOTCOLISION4
-000000F4  303C 0000                 96              MOVE.W  #0,D0
-Line 97 ERROR: Symbol value differs between first and second pass
-000000F8                            97  .GSTNOTCOLISION4
-Line 98 ERROR: Undefined symbol
-000000F8  9179 005455B8             98              SUB.W   D0,(GSTPOSY)
-000000FE  6000 0012                 99              BRA     .GSTDONE
-00000102                           100  
-Line 101 ERROR: Symbol value differs between first and second pass
-00000102                           101  .GSTDONE
-Line 102 ERROR: Undefined symbol
-00000102  13C4 005455B8            102              MOVE.B  D4,(GSTLAMO)
-00000108                           103  
-00000108  4CDF 003F                104              MOVEM.L (A7)+,D0-D5
-0000010C                           105              
-0000010C  4E75                     106              RTS
-0000010E                           107              
-0000010E                           108  ; ------------------------------------------------------------------------------
-Line 109 ERROR: Symbol value differs between first and second pass
-0000010E                           109  GSTPLOT
-0000010E                           110  ; PLOT THE GHOST.
-0000010E                           111  ; INPUT    : NONE 
-0000010E                           112  ; OUTPUT   : NONE
-0000010E                           113  ; MODIFIES : NONE
-0000010E                           114  ; ------------------------------------------------------------------------------
-0000010E  48E7 F800                115              MOVEM.L D0-D4,-(A7)
-00000112                           116              
-00000112                           117              ;SET PEN COLOR
-00000112  303C 0050                118              MOVE.W  #80,D0
-Line 119 ERROR: Undefined symbol
-00000116  223C 004DBD16            119              MOVE.L  #GSTCOL1,D1
-0000011C  4E4F                     120              TRAP    #15
-0000011E                           121              
-0000011E                           122              ;SET FILL COLOR
-0000011E  303C 0051                123              MOVE.W  #81,D0
-Line 124 ERROR: Undefined symbol
-00000122  223C 004DBD16            124              MOVE.L  #GSTFCOL1,D1
-00000128  4E4F                     125              TRAP    #15
-0000012A                           126              
-0000012A                           127              ;SET COORDS
-Line 128 ERROR: Undefined symbol
-0000012A  3239 004DBD16            128              MOVE.W  (GSTPOSX),D1
+000000F4  4EB9 004DBD16             93              JSR     UTLRAND
+000000FA  C0BC 00000006             94              AND.L   #$00000006,D0
+Line 95 ERROR: Undefined symbol
+00000100  43F9 004DBD16             95              LEA     GSTDECVEC,A1
+00000106  3231 0000                 96              MOVE.W  (A1,D0),D1
+0000010A  B27C 0001                 97              CMP     #1,D1
+0000010E  6700 0072                 98              BEQ     .GSTRANRIGHT
+00000112  B27C 0002                 99              CMP     #2,D1
+00000116  6700 007A                100              BEQ     .GSTRANLEFT
+0000011A  B27C 0003                101              CMP     #3,D1
+0000011E  6700 0082                102              BEQ     .GSTRANDOWN
+00000122  6000 008E                103              BRA     .GSTRANUP
+Line 104 ERROR: Symbol value differs between first and second pass
+00000126                           104  .GST2MOVES
+00000126  4EB9 000002A0            105              JSR     GST2DECISSIONS
+0000012C  B87C 0000                106              CMP     #0,D4
+00000130  6600 0090                107              BNE     .GSTNOTMULT
+Line 108 ERROR: Undefined symbol
+00000134  1839 004DBD16            108              MOVE.B  (GSTLAMO),D4
+0000013A  B87C 0001                109              CMP     #1,D4
+0000013E  6700 001E                110              BEQ     .2MLAMOX
+00000142  B87C 0002                111              CMP     #2,D4
+00000146  6700 0016                112              BEQ     .2MLAMOX
+0000014A  6000 0024                113              BRA     .2MLAMOY
+Line 114 ERROR: Symbol value differs between first and second pass
+0000014E                           114  .2MLAMOX
+Line 115 ERROR: Undefined symbol
+0000014E  4EB9 004DBD16            115              JSR     GSTCOLWALLUP
+00000154  BA7C 0001                116              CMP     #1,D5
+00000158  6600 011C                117              BNE     .GSTUPMOVE
+0000015C  6000 00F4                118              BRA     .GSTDOWNMOVE
+Line 119 ERROR: Symbol value differs between first and second pass
+00000160                           119  .2MLAMOY
+Line 120 ERROR: Undefined symbol
+00000160  4EB9 004DBD16            120              JSR     GSTCOLWALLRIGHT
+00000166  BA7C 0001                121              CMP     #1,D5
+0000016A  6600 010A                122              BNE     .GSTUPMOVE
+0000016E  6000 00E2                123              BRA     .GSTDOWNMOVE  
+Line 124 ERROR: Symbol value differs between first and second pass
+00000172                           124  .GSTRANRIGHT
+Line 125 ERROR: Undefined symbol
+00000172  0839 0000 005455B8       125              BTST.B  #0,(GSTPOSMV)
+0000017A  6780                     126              BEQ     .GSTDECISSION
+0000017C  6000 006C                127              BRA     .GSTRIGHTMOVE
+Line 128 ERROR: Symbol value differs between first and second pass
+00000180                           128  .GSTRANLEFT
 Line 129 ERROR: Undefined symbol
-00000130  0441 BD16                129              SUB.W   #GSTRAD,D1
-Line 130 ERROR: Undefined symbol
-00000134  3439 004DBD16            130              MOVE.W  (GSTPOSY),D2
-Line 131 ERROR: Undefined symbol
-0000013A  0442 BD16                131              SUB.W   #GSTRAD,D2
-0000013E                           132              
-0000013E  3601                     133              MOVE.W  D1,D3
-Line 134 ERROR: Invalid syntax
-00000140                           134              ADD.W   #GSTRAD*2,D3
-00000140  3802                     135              MOVE.W  D2,D4
-Line 136 ERROR: Invalid syntax
-00000142                           136              ADD.W   #GSTRAD*2,D4
-00000142                           137              
-00000142                           138              ;DRAW GHOST
-00000142  303C 0058                139              MOVE.W  #88,D0
-00000146  4E4F                     140              TRAP    #15
-00000148                           141              
-00000148                           142              ;SET RANGE COORDS
-Line 143 ERROR: Undefined symbol
-00000148  3239 004DBD16            143              MOVE.W  (GSTPOSX),D1
-Line 144 ERROR: Invalid syntax
-0000014E                           144              SUB.W   #GSTRNG*16,D1
-Line 145 ERROR: Undefined symbol
-0000014E  3439 004DBD16            145              MOVE.W  (GSTPOSY),D2
-Line 146 ERROR: Invalid syntax
-00000154                           146              SUB.W   #GSTRNG*16,D2
-00000154                           147              
-00000154  3601                     148              MOVE.W  D1,D3
-Line 149 ERROR: Invalid syntax
-00000156                           149              ADD.W   #GSTRNG*16*2,D3
-00000156  3802                     150              MOVE.W  D2,D4
-Line 151 ERROR: Invalid syntax
-00000158                           151              ADD.W   #GSTRNG*16*2,D4
-00000158                           152              
-00000158                           153              ;DRAW GHOST RANGE
-00000158  303C 005B                154              MOVE.W  #91,D0
-0000015C  4E4F                     155              TRAP    #15
-0000015E                           156              
-0000015E  4CDF 001F                157              MOVEM.L (A7)+,D0-D4
-00000162                           158              
-00000162                           159  
-00000162  4E75                     160              RTS
-00000164                           161  
-00000164                           162  
-00000164                           163  
-00000164                           164  
-00000164                           165  
-Line 166 WARNING: END directive missing, starting address not set
+00000180  0839 0001 005455B8       129              BTST.B  #1,(GSTPOSMV)
+00000188  6700 FF72                130              BEQ     .GSTDECISSION
+0000018C  6000 0090                131              BRA     .GSTLEFTMOVE
+Line 132 ERROR: Symbol value differs between first and second pass
+00000190                           132  .GSTRANDOWN
+Line 133 ERROR: Undefined symbol
+00000190  0839 0002 005455B8       133              BTST.B  #2,(GSTPOSMV)
+00000198  6700 FF62                134              BEQ     .GSTDECISSION
+0000019C  6000 00B4                135              BRA     .GSTDOWNMOVE
+Line 136 ERROR: Symbol value differs between first and second pass
+000001A0                           136  .GSTRANUP
+Line 137 ERROR: Undefined symbol
+000001A0  0839 0003 005455B8       137              BTST.B  #3,(GSTPOSMV)
+000001A8  6700 FF52                138              BEQ     .GSTDECISSION
+000001AC  6000 00C8                139              BRA     .GSTUPMOVE
+Line 140 ERROR: Symbol value differs between first and second pass
+000001B0                           140  .GSTNOTMULT 
+Line 141 ERROR: Undefined symbol
+000001B0  5339 005455B8            141              SUB.B   #1,(GSTCHDIR)
+Line 142 ERROR: Undefined symbol
+000001B6  1839 004DBD16            142              MOVE.B  (GSTLAMO),D4           
+000001BC  B87C 0001                143              CMP     #1,D4
+000001C0  6700 0028                144              BEQ     .GSTRIGHTMOVE
+000001C4  B87C 0002                145              CMP     #2,D4
+000001C8  6700 0054                146              BEQ     .GSTLEFTMOVE
+000001CC  B87C 0003                147              CMP     #3,D4
+000001D0  6700 0080                148              BEQ     .GSTDOWNMOVE
+000001D4  6000 00A0                149              BRA     .GSTUPMOVE
+000001D8                           150  
+000001D8                           151              ;UPDATE COORDS
+000001D8                           152              
+Line 153 ERROR: Symbol value differs between first and second pass
+000001D8                           153  .GSTRIGHTMOVE
+Line 154 ERROR: Undefined symbol
+000001D8  4EB9 004DBD16            154              JSR     GSTCOLWALLRIGHT
+000001DE  BA7C 0001                155              CMP     #1,D5
+000001E2  6600 0018                156              BNE     .GSTNOTCOLISION
+000001E6  303C 0000                157              MOVE.W  #0,D0
+Line 158 ERROR: Symbol value differs between first and second pass
+000001EA                           158  .GSTNOTCOLISION
+000001EA  BA7C 0004                159              CMP     #4,D5
+000001EE  6600 001C                160              BNE     .GSTNOTTP
+Line 161 ERROR: Undefined symbol
+000001F2  0479 01E0 005455B8       161              SUB.W   #30*16,(GSTPOSX)
+Line 162 ERROR: Symbol value differs between first and second pass
+000001FA                           162  .GSTNOTTP
+Line 163 ERROR: Undefined symbol
+000001FA  D179 005455B8            163              ADD.W   D0,(GSTPOSX)
+Line 164 ERROR: Undefined symbol
+00000200  13FC 0001 005455B8       164              MOVE.B  #1,(GSTLAMO)
+00000208  6000 0090                165              BRA     .GSTDONE
+Line 166 ERROR: Symbol value differs between first and second pass
+0000020C                           166  .GSTLEFTMOVE
+Line 167 ERROR: Undefined symbol
+0000020C  4EB9 004DBD16            167              JSR     GSTCOLWALLLEFT
+00000212  BA7C 0001                168              CMP     #1,D5
+00000216  6600 0018                169              BNE     .GSTNOTCOLISION2
+0000021A  303C 0000                170              MOVE.W  #0,D0
+Line 171 ERROR: Symbol value differs between first and second pass
+0000021E                           171  .GSTNOTCOLISION2
+0000021E  BA7C 0004                172              CMP     #4,D5
+00000222  6600 001C                173              BNE     .GSTNOTTP2
+Line 174 ERROR: Undefined symbol
+00000226  0679 01E0 005455B8       174              ADD.W   #30*16,(GSTPOSX)
+Line 175 ERROR: Symbol value differs between first and second pass
+0000022E                           175  .GSTNOTTP2
+Line 176 ERROR: Undefined symbol
+0000022E  9179 005455B8            176              SUB.W   D0,(GSTPOSX)
+Line 177 ERROR: Undefined symbol
+00000234  13FC 0002 005455B8       177              MOVE.B  #2,(GSTLAMO)
+0000023C  6000 005C                178              BRA     .GSTDONE
+00000240                           179      
+Line 180 ERROR: Symbol value differs between first and second pass
+00000240                           180  .GSTDOWNMOVE
+Line 181 ERROR: Undefined symbol
+00000240  4EB9 004DBD16            181              JSR     GSTCOLWALLDOWN
+00000246  BA7C 0001                182              CMP     #1,D5
+0000024A  6600 0018                183              BNE     .GSTNOTCOLISION3
+0000024E  303C 0000                184              MOVE.W  #0,D0
+Line 185 ERROR: Symbol value differs between first and second pass
+00000252                           185  .GSTNOTCOLISION3
+Line 186 ERROR: Undefined symbol
+00000252  D179 005455B8            186              ADD.W   D0,(GSTPOSY)
+Line 187 ERROR: Undefined symbol
+00000258  13FC 0003 005455B8       187              MOVE.B  #3,(GSTLAMO)
+00000260  6000 0038                188              BRA     .GSTDONE
+Line 189 ERROR: Symbol value differs between first and second pass
+00000264                           189  .GSTUPMOVE    
+Line 190 ERROR: Undefined symbol
+00000264  4EB9 004DBD16            190              JSR     GSTCOLWALLUP
+0000026A  BA7C 0001                191              CMP     #1,D5
+0000026E  6600 0018                192              BNE     .GSTNOTCOLISION4
+00000272  303C 0000                193              MOVE.W  #0,D0
+Line 194 ERROR: Symbol value differs between first and second pass
+00000276                           194  .GSTNOTCOLISION4
+Line 195 ERROR: Undefined symbol
+00000276  9179 005455B8            195              SUB.W   D0,(GSTPOSY)
+Line 196 ERROR: Undefined symbol
+0000027C  13FC 0004 005455B8       196              MOVE.B  #4,(GSTLAMO)
+00000284  6000 0014                197              BRA     .GSTDONE
+00000288                           198  
+Line 199 ERROR: Symbol value differs between first and second pass
+00000288                           199  .GSTDONE
+00000288                           200  
+00000288  4CDF 003F                201              MOVEM.L (A7)+,D0-D5
+0000028C                           202              
+0000028C  4E75                     203              RTS
+0000028E                           204              
+0000028E                           205  ; SUBRUTINES FOR GHOST UPDATE --------------------------------------------------
+0000028E                           206  
+Line 207 ERROR: Symbol value differs between first and second pass
+0000028E                           207  GST2DECISSIONS
+0000028E                           208  
+0000028E  48E7 8000                209              MOVEM.L D0,-(A7)
+00000292                           210              
+Line 211 ERROR: Undefined symbol
+00000292  1039 004DBD16            211              MOVE.B  (GSTLAMO),D0
+00000298  B07C 0001                212              CMP     #1,D0
+0000029C  6700 0028                213              BEQ     .LAMORIGHT
+000002A0  B07C 0002                214              CMP     #2,D0
+000002A4  6700 0034                215              BEQ     .LAMOLEFT
+000002A8  B07C 0003                216              CMP     #3,D0
+000002AC  6700 0040                217              BEQ     .LAMODOWN
+000002B0  6000 0050                218              BRA     .LAMOUP
+000002B4                           219              
+Line 220 ERROR: Symbol value differs between first and second pass
+000002B4                           220  .LAMORIGHT
+Line 221 ERROR: Undefined symbol
+000002B4  0839 0000 005455B8       221              BTST.B  #0,(GSTPOSMV)
+000002BC  6700 0058                222              BEQ     .RETURN0
+000002C0  383C 0001                223              MOVE.W  #1,D4
+000002C4  6000 0054                224              BRA     .GST2DECEND
+Line 225 ERROR: Symbol value differs between first and second pass
+000002C8                           225  .LAMOLEFT
+Line 226 ERROR: Undefined symbol
+000002C8  0839 0001 005455B8       226              BTST.B  #1,(GSTPOSMV)
+000002D0  6700 0044                227              BEQ     .RETURN0
+000002D4  383C 0001                228              MOVE.W  #1,D4
+000002D8  6000 0040                229              BRA     .GST2DECEND
+Line 230 ERROR: Symbol value differs between first and second pass
+000002DC                           230  .LAMODOWN
+Line 231 ERROR: Undefined symbol
+000002DC  0839 0002 005455B8       231              BTST.B  #2,(GSTPOSMV)
+000002E4  6700 0030                232              BEQ     .RETURN0
+000002E8  383C 0001                233              MOVE.W  #1,D4
+000002EC  6000 002C                234              BRA     .GST2DECEND
+Line 235 ERROR: Symbol value differs between first and second pass
+000002F0                           235  .LAMOUP
+Line 236 ERROR: Undefined symbol
+000002F0  0839 0003 005455B8       236              BTST.B  #3,(GSTPOSMV)
+000002F8  6700 001C                237              BEQ     .RETURN0
+000002FC  383C 0001                238              MOVE.W  #1,D4
+00000300  6000 0018                239              BRA     .GST2DECEND
+Line 240 ERROR: Symbol value differs between first and second pass
+00000304                           240  .RETURN0
+00000304  383C 0000                241              MOVE.W  #0,D4
+00000308                           242              
+Line 243 ERROR: Symbol value differs between first and second pass
+00000308                           243  .GST2DECEND
+00000308                           244  
+00000308  4CDF 0001                245              MOVEM.L (A7)+,D0
+0000030C  4E75                     246              RTS
+0000030E                           247  
+0000030E                           248              
+0000030E                           249  ; ------------------------------------------------------------------------------
+Line 250 ERROR: Symbol value differs between first and second pass
+0000030E                           250  GSTPLOT
+0000030E                           251  ; PLOT THE GHOST.
+0000030E                           252  ; INPUT    : NONE 
+0000030E                           253  ; OUTPUT   : NONE
+0000030E                           254  ; MODIFIES : NONE
+0000030E                           255  ; ------------------------------------------------------------------------------
+0000030E  48E7 F800                256              MOVEM.L D0-D4,-(A7)
+00000312                           257              
+00000312                           258              ;SET PEN COLOR
+00000312  303C 0050                259              MOVE.W  #80,D0
+Line 260 ERROR: Undefined symbol
+00000316  223C 004DBD16            260              MOVE.L  #GSTCOL1,D1
+0000031C  4E4F                     261              TRAP    #15
+0000031E                           262              
+0000031E                           263              ;SET FILL COLOR
+0000031E  303C 0051                264              MOVE.W  #81,D0
+Line 265 ERROR: Undefined symbol
+00000322  223C 004DBD16            265              MOVE.L  #GSTFCOL1,D1
+00000328  4E4F                     266              TRAP    #15
+0000032A                           267              
+0000032A                           268              ;SET COORDS
+Line 269 ERROR: Undefined symbol
+0000032A  3239 004DBD16            269              MOVE.W  (GSTPOSX),D1
+Line 270 ERROR: Undefined symbol
+00000330  0441 BD16                270              SUB.W   #GSTRAD,D1
+Line 271 ERROR: Undefined symbol
+00000334  3439 004DBD16            271              MOVE.W  (GSTPOSY),D2
+Line 272 ERROR: Undefined symbol
+0000033A  0442 BD16                272              SUB.W   #GSTRAD,D2
+0000033E                           273              
+0000033E  3601                     274              MOVE.W  D1,D3
+Line 275 ERROR: Invalid syntax
+00000340                           275              ADD.W   #GSTRAD*2,D3
+00000340  3802                     276              MOVE.W  D2,D4
+Line 277 ERROR: Invalid syntax
+00000342                           277              ADD.W   #GSTRAD*2,D4
+00000342                           278              
+00000342                           279              ;DRAW GHOST
+00000342  303C 0058                280              MOVE.W  #88,D0
+00000346  4E4F                     281              TRAP    #15
+00000348                           282              
+00000348                           283              ;SET RANGE COORDS
+Line 284 ERROR: Undefined symbol
+00000348  3239 004DBD16            284              MOVE.W  (GSTPOSX),D1
+Line 285 ERROR: Invalid syntax
+0000034E                           285              SUB.W   #GSTRNG*16,D1
+Line 286 ERROR: Undefined symbol
+0000034E  3439 004DBD16            286              MOVE.W  (GSTPOSY),D2
+Line 287 ERROR: Invalid syntax
+00000354                           287              SUB.W   #GSTRNG*16,D2
+00000354                           288              
+00000354  3601                     289              MOVE.W  D1,D3
+Line 290 ERROR: Invalid syntax
+00000356                           290              ADD.W   #GSTRNG*16*2,D3
+00000356  3802                     291              MOVE.W  D2,D4
+Line 292 ERROR: Invalid syntax
+00000358                           292              ADD.W   #GSTRNG*16*2,D4
+00000358                           293              
+00000358                           294              ;DRAW GHOST RANGE
+00000358  303C 005B                295              MOVE.W  #91,D0
+0000035C  4E4F                     296              TRAP    #15
+0000035E                           297              
+0000035E  4CDF 001F                298              MOVEM.L (A7)+,D0-D4
+00000362                           299              
+00000362                           300  
+00000362  4E75                     301              RTS
+00000364                           302  
+00000364                           303  
+00000364                           304  
+00000364                           305  
+00000364                           306  
+00000364                           307  
+00000364                           308  
+00000364                           309  
+Line 310 WARNING: END directive missing, starting address not set
 
-53 errors detected
+105 errors detected
 1 warning generated
 
 
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
+GST2DECISSIONS      2A0
+GST2DECISSIONS:GST2DECEND  31A
+GST2DECISSIONS:LAMODOWN  2EE
+GST2DECISSIONS:LAMOLEFT  2DA
+GST2DECISSIONS:LAMORIGHT  2C6
+GST2DECISSIONS:LAMOUP  302
+GST2DECISSIONS:RETURN0  316
 GSTINIT             0
-GSTPLOT             11E
-GSTUPD              2A
-GSTUPD:GSTDONE      112
-GSTUPD:GSTDOWNMOVE  DA
-GSTUPD:GSTINRNG     3E
-GSTUPD:GSTLEFTMOVE  AE
-GSTUPD:GSTMOVE      46
-GSTUPD:GSTMULT      60
-GSTUPD:GSTNOTCOLISION  94
-GSTUPD:GSTNOTCOLISION2  C0
-GSTUPD:GSTNOTCOLISION3  EC
-GSTUPD:GSTNOTCOLISION4  108
-GSTUPD:GSTNOTINRNG  32
-GSTUPD:GSTNOTMULT   66
-GSTUPD:GSTNOTTP     A4
-GSTUPD:GSTNOTTP2    D0
-GSTUPD:GSTRIGHTMOVE  82
-GSTUPD:GSTUPMOVE    F6
+GSTPLOT             320
+GSTUPD              32
+GSTUPD:2MLAMOX      15E
+GSTUPD:2MLAMOY      170
+GSTUPD:GST2MOVES    136
+GSTUPD:GSTDECISSION  FC
+GSTUPD:GSTDONE      29A
+GSTUPD:GSTDOWNMOVE  252
+GSTUPD:GSTINRNG     5C
+GSTUPD:GSTLEFTMOVE  21E
+GSTUPD:GSTMOVE      68
+GSTUPD:GSTMULT      96
+GSTUPD:GSTMULTDOWN  D0
+GSTUPD:GSTMULTLEFT  BA
+GSTUPD:GSTMULTRIGHT  A4
+GSTUPD:GSTMULTUP    E6
+GSTUPD:GSTNOTCOLISION  1FC
+GSTUPD:GSTNOTCOLISION2  230
+GSTUPD:GSTNOTCOLISION3  264
+GSTUPD:GSTNOTCOLISION4  288
+GSTUPD:GSTNOTINRNG  48
+GSTUPD:GSTNOTMULT   1C2
+GSTUPD:GSTNOTTP     20C
+GSTUPD:GSTNOTTP2    240
+GSTUPD:GSTRANDOWN   1A2
+GSTUPD:GSTRANLEFT   192
+GSTUPD:GSTRANRIGHT  182
+GSTUPD:GSTRANUP     1B2
+GSTUPD:GSTRIGHTMOVE  1EA
+GSTUPD:GSTUPMOVE    276

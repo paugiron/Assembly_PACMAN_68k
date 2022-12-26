@@ -13,7 +13,7 @@ GSTINIT
             MOVE.W  #GSTINY1*16+64-8,(GSTPOSY)
             MOVE.W  #GSTSPEED,(GSTVELX)
             MOVE.W  #GSTSPEED,(GSTVELY)
-            MOVE.B  #1,(GSTLAMO)
+            MOVE.B  #2,(GSTLAMO)
             MOVE.B  #0,(GSTCHDIR)
             RTS
             
@@ -89,7 +89,7 @@ GSTUPD
             ADDQ.W  #1,D4
 .GSTDECISSION
             CMP     #2,D4
-            BLE     .GSTNOTMULT
+            BLE     .GST2MOVES
             JSR     UTLRAND
             AND.L   #$00000006,D0
             LEA     GSTDECVEC,A1
@@ -100,7 +100,28 @@ GSTUPD
             BEQ     .GSTRANLEFT
             CMP     #3,D1
             BEQ     .GSTRANDOWN
-            BRA     .GSTRANUP          
+            BRA     .GSTRANUP
+.GST2MOVES
+            JSR     GST2DECISSIONS
+            CMP     #0,D4
+            BNE     .GSTNOTMULT
+            MOVE.B  (GSTLAMO),D4
+            CMP     #1,D4
+            BEQ     .2MLAMOX
+            CMP     #2,D4
+            BEQ     .2MLAMOX
+            BRA     .2MLAMOY
+.2MLAMOX
+            JSR     GSTCOLWALLUP
+            CMP     #1,D5
+            BNE     .GSTUPMOVE
+            BRA     .GSTDOWNMOVE
+.2MLAMOY
+            JSR     GSTCOLWALLRIGHT
+            CMP     #1,D5
+            BNE     .GSTRIGHTMOVE
+            BRA     .GSTLEFTMOVE
+
 .GSTRANRIGHT
             BTST.B  #0,(GSTPOSMV)
             BEQ     .GSTDECISSION
@@ -186,14 +207,45 @@ GSTUPD
 
 GST2DECISSIONS
 
-            MOVEM.L D0-D4,-(A7)
+            MOVEM.L D0,-(A7)
             
-            MOVE.B  (GSTPOSMV),D0
-            MOVE.B  (GSTPOSMV),D1
-            MOVE.B  (GSTPOSMV),D2
-            MOVE.B  (GSTPOSMV),D3
+            MOVE.B  (GSTLAMO),D0
+            CMP     #1,D0
+            BEQ     .LAMORIGHT
+            CMP     #2,D0
+            BEQ     .LAMOLEFT
+            CMP     #3,D0
+            BEQ     .LAMODOWN
+            BRA     .LAMOUP
             
-            MOVEM.L (A7)+,D0-D4
+.LAMORIGHT
+            BTST.B  #0,(GSTPOSMV)
+            BEQ     .RETURN0
+            MOVE.W  #1,D4
+            BRA     .GST2DECEND
+.LAMOLEFT
+            BTST.B  #1,(GSTPOSMV)
+            BEQ     .RETURN0
+            MOVE.W  #1,D4
+            BRA     .GST2DECEND
+.LAMODOWN
+            BTST.B  #2,(GSTPOSMV)
+            BEQ     .RETURN0
+            MOVE.W  #1,D4
+            BRA     .GST2DECEND
+.LAMOUP
+            BTST.B  #3,(GSTPOSMV)
+            BEQ     .RETURN0
+            MOVE.W  #1,D4
+            BRA     .GST2DECEND
+.RETURN0
+            MOVE.W  #0,D4
+            
+.GST2DECEND
+
+            MOVEM.L (A7)+,D0
+            RTS
+
             
 ; ------------------------------------------------------------------------------
 GSTPLOT
@@ -248,6 +300,7 @@ GSTPLOT
             
 
             RTS
+
 
 
 
