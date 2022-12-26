@@ -177,11 +177,23 @@ GSTUPD
             BRA     .GSTDONE
 
 .GSTDONE
-            MOVE.B  D4,(GSTLAMO)
 
             MOVEM.L (A7)+,D0-D5
             
             RTS
+            
+; SUBRUTINES FOR GHOST UPDATE --------------------------------------------------
+
+GST2DECISSIONS
+
+            MOVEM.L D0-D4,-(A7)
+            
+            MOVE.B  (GSTPOSMV),D0
+            MOVE.B  (GSTPOSMV),D1
+            MOVE.B  (GSTPOSMV),D2
+            MOVE.B  (GSTPOSMV),D3
+            
+            MOVEM.L (A7)+,D0-D4
             
 ; ------------------------------------------------------------------------------
 GSTPLOT
@@ -236,6 +248,7 @@ GSTPLOT
             
 
             RTS
+
 
 
 
