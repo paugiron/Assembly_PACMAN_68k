@@ -18,11 +18,11 @@ GSTPOSX     DS.W    1                       ; GST X COORDINATE
 GSTPOSY     DS.W    1                       ; GST Y COORDINATE
 GSTVELX     DS.W    1                       ; GST X VELOCITY
 GSTVELY     DS.W    1                       ; GST Y VELOCITY
-GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
 GSTLAMO     DS.B    1                       ; GST LAST MOVEMENT (X OR Y)
+GSTPOSMV    DS.B    1                       ; GST POSSIBLE MOVEMENTS (R,L,U,D)
+GSTDEAD     DS.B    1                       ; GST BOOLEAN DEAD
 GSTINRNG    DS.B    1                       ; GST IS IN RANGE
 GSTTARG     DS.B    1                       ; GST TARGET (0-PACMAN, 1-RANDOM)
-GSTPOSMV    DS.B    1                       ; GST POSSIBLE MOVEMENTS (R,L,U,D)
 GSTCHDIR    DS.B    1                       ; GST HAS CHANGED DIR IN LAST FRAME
             DS.B    0
 
@@ -39,6 +39,7 @@ ISCTIMER    DS.W    1                       ; INTRO TIMER
 
 STACUR      DS.W    1                       ; CURRENT STATE
 STANEXT     DS.W    1                       ; NEXT STATE
+
 
 
 

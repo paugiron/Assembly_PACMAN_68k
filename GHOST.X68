@@ -61,7 +61,7 @@ GSTUPD
             CMP     #$0000,D3
             BNE     .GSTNOTMULT
 .GSTMULT
-            CLR     (GSTPOSMV)
+            MOVE.B  #0,(GSTPOSMV)
             MOVE.B  #3,(GSTCHDIR)
 .GSTMULTRIGHT
             JSR     GSTCOLWALLRIGHT
@@ -300,6 +300,7 @@ GSTPLOT
             
 
             RTS
+
 
 
 
