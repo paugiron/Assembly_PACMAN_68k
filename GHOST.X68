@@ -1,11 +1,17 @@
 ; ==============================================================================
-; GHOST MANAGEMENT
+; GHOST MANAGEMENT (AGENT)
+; GSTPOSX (W) (A0)
+; GSTPOSY (W) 2(A0)
+; GSTVELX (W) 4(A0)
+; GSTVELY (W) 6(A0)
+; GSTPOSMV(W) 8(A0)
+; GSTLAMO (W) 9(A0)
 ; ==============================================================================
             
 ; ------------------------------------------------------------------------------
 GSTINIT
 ; INITIALIZE GHOST.
-; INPUT    : NONE 
+; INPUT    : A0 POINTER TO THE INSTANCE VARIABLES 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
@@ -14,37 +20,19 @@ GSTINIT
             MOVE.W  #GSTSPEED,(GSTVELX)
             MOVE.W  #GSTSPEED,(GSTVELY)
             MOVE.B  #2,(GSTLAMO)
-            MOVE.B  #0,(GSTCHDIR)
             RTS
             
 ; ------------------------------------------------------------------------------
 GSTUPD
 ; UPDATES THE GHOST.
-; INPUT    : NONE 
+; INPUT    : A0 POINTER TO THE INSTANCE VARIABLES 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
             MOVEM.L D0-D5,-(A7)
             
-            ;MOVE.W  (PMPOSX)/16*(PMPOSX)/16+(PMPOSY)/16*(PMPOSY)/16,D0
-            MOVE.W  #GSTRNG,D1
-            MULU.W  #GSTRNG,D1
-            SUB.W   D0,D1
             MOVE.W  #GSTSPEED,D0
-            BNE     .GSTINRNG
-.GSTNOTINRNG
-            CLR     D0
-            CLR     D1
-            MOVE.W  #0,D4
-            MOVE.B  #1,(GSTINRNG)
-            BRA     .GSTMOVE
-.GSTINRNG
-            MOVE.W  #0,D4
-            MOVE.B  #0,(GSTINRNG)
-.GSTMOVE
-            MOVE.B  (GSTCHDIR),D2
-            ;CMP.B   #1,D2
-            ;BGE     .GSTNOTMULT
+            
             MOVE.W  (GSTPOSX),D2
             MOVE.W  (GSTPOSY),D3
             
@@ -62,7 +50,6 @@ GSTUPD
             BNE     .GSTNOTMULT
 .GSTMULT
             MOVE.B  #0,(GSTPOSMV)
-            MOVE.B  #3,(GSTCHDIR)
 .GSTMULTRIGHT
             JSR     GSTCOLWALLRIGHT
             CMP     #1,D5
@@ -139,7 +126,6 @@ GSTUPD
             BEQ     .GSTDECISSION
             BRA     .GSTUPMOVE
 .GSTNOTMULT 
-            SUB.B   #1,(GSTCHDIR)
             MOVE.B  (GSTLAMO),D4           
             CMP     #1,D4
             BEQ     .GSTRIGHTMOVE
@@ -250,7 +236,7 @@ GST2DECISSIONS
 ; ------------------------------------------------------------------------------
 GSTPLOT
 ; PLOT THE GHOST.
-; INPUT    : NONE 
+; INPUT    : A0 POINTER TO THE INSTANCE VARIABLES 
 ; OUTPUT   : NONE
 ; MODIFIES : NONE
 ; ------------------------------------------------------------------------------
@@ -258,7 +244,7 @@ GSTPLOT
             
             ;SET PEN COLOR
             MOVE.W  #80,D0
-            MOVE.L  #GSTCOL1,D1
+            MOVE.L  #GSTCONT,D1
             TRAP    #15
             
             ;SET FILL COLOR
@@ -300,6 +286,7 @@ GSTPLOT
             
 
             RTS
+
 
 
 

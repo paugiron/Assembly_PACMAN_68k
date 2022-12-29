@@ -15,7 +15,7 @@ MAPINIT
             ;MOVE.L  #DIBFIGBPOINT,($80+4*4)          ;INSTALL SUBRUTINE TO TRAP #4
             
             MOVEM.L D0-D6,-(A7)
-            MOVEM.L A0-A1,-(A7)
+            MOVEM.L A0-A3,-(A7)
             
             LEA.L   MAPMAT,A0
             LEA.L   MAPVAR,A1
@@ -52,7 +52,7 @@ ZERO
             DBRA    D1,BUCLE_COLUMNA  
             DBRA    D2,BUCLE_FILA
             
-            MOVEM.L (A7)+,A0-A1
+            MOVEM.L (A7)+,A0-A3
             MOVEM.L (A7)+,D0-D6
 
 
@@ -68,7 +68,7 @@ MAPPLOT
 ; ------------------------------------------------------------------------------            
 
             MOVEM.L D0-D6,-(A7)
-            MOVEM.L A0,-(A7)
+            MOVEM.L A0-A3,-(A7)
 
             LEA.L   MAPVAR,A0
             MOVE.W  #48,D6
@@ -105,7 +105,7 @@ ZERO2
             
             DBRA    D2,BUCLE_FILA2
             
-            MOVEM.L (A7)+,A0
+            MOVEM.L (A7)+,A0-A3
             MOVEM.L (A7)+,D0-D6
             
             
@@ -119,6 +119,7 @@ DIBFIGWALL
 ; MODIFIES : NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D6,-(A7)
+            MOVEM.L A0-A3,-(A7)
             ; SET CONTOURN COLOR
             MOVE.B  #80,D0
             MOVE.L  #$00AA0000,D1
@@ -141,6 +142,7 @@ DIBFIGWALL
             MOVE.B  #87,D0
             TRAP    #15
             
+            MOVEM.L (A7)+,A0-A3
             MOVEM.L (A7)+,D0-D6
 
             RTS
@@ -153,6 +155,7 @@ DIBFIGPOINT
 ; MODIFIES : NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D6,-(A7)
+            MOVEM.L A0-A3,-(A7)
             ; SET CONTOURN COLOR
             MOVE.B  #80,D0
             MOVE.L  #$0000AAAA,D1
@@ -180,6 +183,7 @@ DIBFIGPOINT
             MOVE.B  #88,D0
             TRAP    #15
             
+            MOVEM.L (A7)+,A0-A3
             MOVEM.L (A7)+,D0-D6
             
             RTS
@@ -193,6 +197,7 @@ DIBFIGBPOINT
 ; MODIFIES : NONE
 ; -----------------------------------------------------------------------------
             MOVEM.L D0-D6,-(A7)
+            MOVEM.L A0-A3,-(A7)
             ; SET CONTOURN COLOR
             MOVE.B  #80,D0
             MOVE.L  #$0000AAAA,D1
@@ -220,9 +225,11 @@ DIBFIGBPOINT
             MOVE.B  #88,D0
             TRAP    #15
             
+            MOVEM.L (A7)+,A0-A3
             MOVEM.L (A7)+,D0-D6
             
             RTS
+
 
 
 
