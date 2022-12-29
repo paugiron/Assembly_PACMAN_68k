@@ -42,7 +42,7 @@ ISCPLOT
             MOVE.B  #81,D0
             TRAP    #15
             
-            JSR     IMGPLOT
+            ;JSR     IMGPLOT
             
             BTST.B  #4,(SCRCYCCT)
             BEQ     .DONE
@@ -72,18 +72,7 @@ OPENFILE
             MOVE    #53,D0
             TRAP    #15
             
-            MOVE.L  #FILESIZE,D3
-            
-.convert_loop 
-            TST.B   D3
-            BEQ     .END
-            SUB.B   #$30,(A1)+
-            SUB.B   #1,D3
-            BRA     .convert_loop           
-.END        
-
-         
-          
+    
             
             RTS
 ; ------------------------------------------------------------------------------
@@ -159,6 +148,7 @@ DRAW
             MOVEM.L (A7)+,D0-D6
 
             RTS
+
 
 
 

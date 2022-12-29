@@ -24,9 +24,10 @@ POSCON      DS.W    1
 
 ; --- TITLE RELATED VARIABLE -----------------------------------------------------
 
-BUFFER      DS.B    2700
+BUFFER      DS.B    86000
             DS.B    0
             
+
 
 
 
